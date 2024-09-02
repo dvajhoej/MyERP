@@ -1,4 +1,4 @@
-﻿using MyERP.View;
+﻿using MyERP.VirksomhedsView;
 using TECHCOOL.UI;
 
 namespace MyERP
@@ -7,8 +7,8 @@ namespace MyERP
     {
         static void Main()
         {
-            VirksomhedSkærm virksomhedSkærm = new VirksomhedSkærm();
-            Screen.Display(virksomhedSkærm);
+            VirksomhedListeSkærm virksomhedListeSkærm = new();
+            Screen.Display(virksomhedListeSkærm);
         }
     }
 }
