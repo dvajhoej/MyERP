@@ -2,12 +2,6 @@
 
 namespace MyERP.VirksomhedsView
 {
-    public class Virksomheder
-    {
-        public string Firmanavn { get; set; }
-        public string Land { get; set; }
-        public Currency Valuta { get; set; }
-    }
 
     public class VirksomhedListeSkærm : Screen
     {
@@ -17,12 +11,12 @@ namespace MyERP.VirksomhedsView
         {
             Clear();
 
-            ListPage<Virksomheder> listPage = new();
+            ListPage<Virksomhed> listPage = new();
 
-            listPage.Add(new Virksomheder { Firmanavn = "Dansk Import", Land = "Danmark", Valuta = Currency.DKK });
-            listPage.Add(new Virksomheder { Firmanavn = "Svensk Import", Land = "Sverige", Valuta = Currency.SEK });
-            listPage.Add(new Virksomheder { Firmanavn = "US Import", Land = "USA", Valuta = Currency.USD });
-            listPage.Add(new Virksomheder { Firmanavn = "EU Import", Land = "Tyskland", Valuta = Currency.EUR });
+            listPage.Add(new Virksomhed { Firmanavn = "Dansk Import", Land = "Danmark", Valuta = Currency.DKK });
+            listPage.Add(new Virksomhed { Firmanavn = "Svensk Import", Land = "Sverige", Valuta = Currency.SEK });
+            listPage.Add(new Virksomhed { Firmanavn = "US Import", Land = "USA", Valuta = Currency.USD });
+            listPage.Add(new Virksomhed { Firmanavn = "EU Import", Land = "Tyskland", Valuta = Currency.EUR });
 
             listPage.AddColumn("Firmanavn", "Firmanavn");
             listPage.AddColumn("Land", "Land");

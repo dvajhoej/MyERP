@@ -2,26 +2,18 @@
 
 namespace MyERP.VirksomhedsView
 {
-        public class VirksomhedVisning : Virksomheder
-    {
-        public string Vej { get; set; }
-        public int Husnummer { get; set; }
-        public int Postnummer { get; set; }
-        public string By { get; set; }
-    }
-
+ 
     public class VirksomhedVisningSkærm : Screen
     {
-        public VirksomhedVisning virksomhedsVisning { get; set; }
+        public Virksomhed virksomhedsVisning { get; set; }
 
-        public VirksomhedVisningSkærm(Virksomheder item)
+        public VirksomhedVisningSkærm(Virksomhed v)
         {
-            // Assuming some details are filled with default values or pulled from another source
-            virksomhedsVisning = new VirksomhedVisning
+            virksomhed = new Virksomhed
             {
-                Firmanavn = item.Firmanavn,
-                Land = item.Land,
-                Valuta = item.Valuta,
+                Firmanavn = v.Firmanavn,
+                Land = v.Land,
+                Valuta = v.Valuta,
                 Vej = "Example Road",
                 Husnummer = 123,
                 Postnummer = 8000,
@@ -30,14 +22,15 @@ namespace MyERP.VirksomhedsView
         }
 
         public override string Title { get; set; } = "Virksomhed Visning";
+        public Virksomhed virksomhed { get; private set; }
 
         protected override void Draw()
         {
             Clear();
 
-            ListPage<VirksomhedVisning> listPage = new();
+            ListPage<Virksomhed> listPage = new();
 
-            listPage.Add(virksomhedsVisning);
+            listPage.Add(virksomhed);
 
             listPage.AddColumn("Firmanavn", "Firmanavn");
             listPage.AddColumn("Vej", "Vej");
