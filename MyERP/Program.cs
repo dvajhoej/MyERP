@@ -1,10 +1,14 @@
-﻿namespace MyERP
+﻿using MyERP.View;
+using TECHCOOL.UI;
+
+namespace MyERP
 {
     internal class Program
     {
-        static void Main(string[] args)
+        static void Main()
         {
-            Console.WriteLine("Hello, World!");
+            VirksomhedSkærm virksomhedSkærm = new VirksomhedSkærm();
+            Screen.Display(virksomhedSkærm);
         }
     }
 }
