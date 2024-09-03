@@ -11,6 +11,7 @@ namespace MyERP.StartScreen
     public class MyMenuScreen : Screen
     {
         public override string Title { get; set; } = "LNE Security A/S";
+
         protected override void Draw()
         {
             Menu menu = new Menu();

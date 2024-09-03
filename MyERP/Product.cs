@@ -8,7 +8,7 @@ namespace MyERP
 {
     public class Product
     {
-        public string ProductNumber { get; set; }
+        public int ProductNumber { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
         public decimal SalePrice { get; set; }
@@ -31,7 +31,7 @@ namespace MyERP
         public decimal StockQuantity { get; set; }
         public UnitType Unit { get; set; }
 
-        public Product(string productNumber, string name, string description, decimal salePrice, decimal purchasePrice, string location, decimal stockQuantity, UnitType unit)
+        public Product(int productNumber, string name, string description, decimal salePrice, decimal purchasePrice, string location, decimal stockQuantity, UnitType unit)
         {
             ProductNumber = productNumber;
             Name = name;

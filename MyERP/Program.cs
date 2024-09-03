@@ -1,5 +1,5 @@
-﻿using MyERP.StartSkærm;
-using MyERP.VirksomhedsView;
+﻿using MyERP.StartScreen;
+using MyERP.CompanyViews;
 using TECHCOOL.UI;
 namespace MyERP
 {
@@ -12,7 +12,7 @@ namespace MyERP
 
         }
 
-    
+
     }
 }
 
