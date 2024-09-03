@@ -8,7 +8,7 @@ namespace MyERP
 {
     public class Produkt
     {
-        public string Varenummer { get; set; }
+        public int Varenummer { get; set; }
         public string Navn { get; set; }
         public string Beskrivelse { get; set; }
         public decimal Salgspris { get; set; }
@@ -31,7 +31,7 @@ namespace MyERP
         public decimal AntalPåLager { get; set; }
         public Enhedstype Enhed { get; set; }
 
-        public Produkt(string varenummer, string navn, string beskrivelse, decimal salgspris, decimal indkøbspris, string lokation, decimal antalPåLager, Enhedstype enhed)
+        public Produkt(int varenummer, string navn, string beskrivelse, decimal salgspris, decimal indkøbspris, string lokation, decimal antalPåLager, Enhedstype enhed)
         {
             Varenummer = varenummer;
             Navn = navn;

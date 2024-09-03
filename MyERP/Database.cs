@@ -24,15 +24,26 @@ namespace MyERP
         }
 
         private List<Virksomhed> virksomheder;
+        private List<Produkt> produkter;
+
 
         private Database()
         {
             virksomheder = new List<Virksomhed>();
+            produkter = new List<Produkt>();
+
+
         }
 
         public List<Virksomhed> Virksomheder
         {
             get { return virksomheder; }
+        }
+        public List<Produkt> Produkter
+        {
+            get { return produkter; }
+
+
         }
     }
 }
