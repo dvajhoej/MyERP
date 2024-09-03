@@ -26,7 +26,15 @@ namespace MyERP.VirksomhedsView
             editor.TextBox("By", "By");
             editor.TextBox("Land", "Land");
             editor.SelectBox("Valuta", "Valuta");
+            editor.AddOption("Valuta", "DKK", Currency.DKK);
+            editor.AddOption("Valuta", "SEK", Currency.SEK);
+            editor.AddOption("Valuta", "USD", Currency.USD);
+            editor.AddOption("Valuta", "EUR", Currency.EUR);
 
+
+
+
+     
             editor.Edit(_virksomhed);
 
         
