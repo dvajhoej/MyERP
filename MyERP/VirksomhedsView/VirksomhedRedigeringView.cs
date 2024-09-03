@@ -30,7 +30,7 @@ namespace MyERP.VirksomhedsView
             editor.IntBox("Postnummer", "Postnummer");
             editor.TextBox("By", "By");
             editor.TextBox("Land", "Land");
-            editor.TextBox("Valuta", "Valuta");
+            editor.SelectBox("Valuta", "Valuta");
 
             editor.Edit(_virksomhed);
 
