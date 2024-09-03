@@ -14,10 +14,10 @@ namespace MyERP.VirksomhedsView
                 Firmanavn = v.Firmanavn,
                 Land = v.Land,
                 Valuta = v.Valuta,
-                Vej = "Example Road",
-                Husnummer = 123,
-                Postnummer = 8000,
-                By = "Example City"
+                Vej = v.Vej,
+                Husnummer = v.Husnummer,
+                Postnummer = v.Postnummer,
+                By = v.By,
             };
         }
 
@@ -41,6 +41,16 @@ namespace MyERP.VirksomhedsView
             listPage.AddColumn("Valuta", "Valuta");
 
             listPage.Select();
+
+            var selected = listPage.Select();
+            if (selected != null)
+            {
+                Screen.Display(new VirksomhedRedigeringView(selected));
+            }
+            else
+            {
+            }
         }
+
     }
 }

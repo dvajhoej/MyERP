@@ -11,9 +11,9 @@ namespace MyERP.VirksomhedsView
     {
         public override string Title { get; set; } = "Rediger Virksomhed";
 
-        private Virksomheder _virksomhed;
+        private Virksomhed _virksomhed;
 
-        public VirksomhedRedigeringView(Virksomheder virksomhed)
+        public VirksomhedRedigeringView(Virksomhed virksomhed)
         {
             _virksomhed = virksomhed;
         }
@@ -22,12 +22,12 @@ namespace MyERP.VirksomhedsView
         {
             Clear();
 
-            Form<Virksomheder> editor = new Form<Virksomheder>();
+            Form<Virksomhed> editor = new Form<Virksomhed>();
 
             editor.TextBox("Firmanavn", "Firmanavn");
             editor.TextBox("Vej", "Vej");
-            editor.TextBox("Husnummer", "Husnummer");
-            editor.TextBox("Postnummer", "Postnummer");
+            editor.IntBox("Husnummer", "Husnummer");
+            editor.IntBox("Postnummer", "Postnummer");
             editor.TextBox("By", "By");
             editor.TextBox("Land", "Land");
             editor.TextBox("Valuta", "Valuta");
@@ -36,6 +36,7 @@ namespace MyERP.VirksomhedsView
 
             Clear();
             Console.WriteLine($"Virksomhed {_virksomhed.Firmanavn} er blevet opdateret.");
+            this.Quit();
         }
     }
 }
