@@ -11,6 +11,8 @@ namespace MyERP
 {
     public class Virksomhed
     {
+
+
         public int ID { get; set; }
         public string Firmanavn { get; set; }
         public string Vej { get; set; }

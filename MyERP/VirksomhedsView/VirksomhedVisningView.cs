@@ -9,12 +9,13 @@ namespace MyERP.VirksomhedsView
         public VirksomhedListeSkærm()
         {
             listPage = new ListPage<Virksomhed>();
+            listPage.Add(new Virksomhed { Firmanavn = "Dansk Import", By = "Aalborg", Husnummer = 13, Postnummer = 9000, Land = "Danmark", Vej = "Danmarksgade", Valuta = Currency.DKK, ID = 0 });
+            listPage.Add(new Virksomhed { Firmanavn = "Svensk Import", By = "Malmø", Husnummer = 51, Postnummer = 58200, Land = "Sverige", Vej = "Sverigesvej", Valuta = Currency.SEK, ID = 0 });
+            listPage.Add(new Virksomhed { Firmanavn = "USA Import", By = "Las Vegas", Husnummer = 67, Postnummer = 1500, Land = "Nevada", Vej = "Casinoroad", Valuta = Currency.USD, ID = 0 });
+            listPage.Add(new Virksomhed { Firmanavn = "EURO Import", By = "Berlin", Husnummer = 661, Postnummer = 6712, Land = "Tyskland", Vej = "BerlinStrabe", Valuta = Currency.EUR, ID = 0 });
 
-            InitializeData();
         }
-
         public override string Title { get; set; } = "Virksomhed";
-
         protected override void Draw()
         {
             Clear();
@@ -22,7 +23,6 @@ namespace MyERP.VirksomhedsView
             Console.WriteLine("Tryk F1 for at oprette virksomhed");
             Console.WriteLine("Tryk F2 for at redigere virksomhed");
             Console.WriteLine("Tryk F5 for at slette virksomhed");
-
             listPage.AddKey(ConsoleKey.F1, Opretvirksomhed);
             listPage.AddKey(ConsoleKey.F2, RedigerVirksomhed);
             listPage.AddKey(ConsoleKey.F5, SletVirksomhed);
@@ -31,6 +31,7 @@ namespace MyERP.VirksomhedsView
             listPage.AddColumn("Land", "Land");
             listPage.AddColumn("Valuta", "Valuta");
 
+            // Show the list and get the selected item
             var selected = listPage.Select();
             if (selected != null)
             {
@@ -40,19 +41,13 @@ namespace MyERP.VirksomhedsView
             Quit();
         }
 
-        private void InitializeData()
-        {
-            listPage.Add(new Virksomhed(0, "Dansk Import", "Danmarksgade", 13, 9000, "Aalborg", "Danmark", Currency.DKK));
-            listPage.Add(new Virksomhed(1, "Svensk Import", "Sverigesvej", 51, 58200, "Malmø", "Sverige", Currency.SEK));
-            listPage.Add(new Virksomhed(2, "USA Import", "Casinoroad", 67, 1500, "Las Vegas", "USA", Currency.USD));
-            listPage.Add(new Virksomhed(3, "EURO Import", "BerlinStrabe", 661, 6712, "Berlin", "Tyskland", Currency.EUR));
-        }
-
         private void Opretvirksomhed(Virksomhed virksomhed)
         {
+
             var newVirksomhed = new Virksomhed();
             listPage.Add(newVirksomhed);
             Screen.Display(new VirksomhedOpretView(newVirksomhed));
+
         }
 
         private void RedigerVirksomhed(Virksomhed selected)
@@ -67,6 +62,7 @@ namespace MyERP.VirksomhedsView
                 listPage.Remove(selected);
                 Console.WriteLine($"Virksomhed '{selected.Firmanavn}' er blevet slettet.");
             }
+
         }
     }
 }

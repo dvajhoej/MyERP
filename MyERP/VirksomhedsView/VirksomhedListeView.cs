@@ -41,7 +41,7 @@ namespace MyERP.VirksomhedsView
             listPage.AddColumn("Valuta", "Valuta");
 
             listPage.Select();
-           
+
             var selected = listPage.Select();
             if (selected != null)
             {

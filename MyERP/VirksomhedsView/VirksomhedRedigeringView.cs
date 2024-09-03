@@ -34,10 +34,10 @@ namespace MyERP.VirksomhedsView
 
 
 
-     
+
             editor.Edit(_virksomhed);
 
-        
+
             Console.WriteLine($"Virksomhed {_virksomhed.Firmanavn} er blevet opdateret.");
             this.Quit();
         }
