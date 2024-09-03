@@ -2,7 +2,7 @@
 
 namespace MyERP.VirksomhedsView
 {
- 
+
     public class VirksomhedVisningSkærm : Screen
     {
         public Virksomhed virksomhedsVisning { get; set; }
@@ -41,14 +41,14 @@ namespace MyERP.VirksomhedsView
             listPage.AddColumn("Valuta", "Valuta");
 
             listPage.Select();
-
+           
             var selected = listPage.Select();
             if (selected != null)
             {
-                Screen.Display(new VirksomhedRedigeringView(selected));
             }
             else
             {
+                Quit();
             }
         }
 

@@ -2,13 +2,13 @@
 
 namespace MyERP.VirksomhedsView
 {
-    public class VirksomhedRedigeringView : Screen
+    public class VirksomhedOpretView : Screen
     {
-        public override string Title { get; set; } = "Rediger Virksomhed";
+        public override string Title { get; set; } = "Opret Virksomhed";
 
         private Virksomhed _virksomhed;
 
-        public VirksomhedRedigeringView(Virksomhed virksomhed)
+        public VirksomhedOpretView(Virksomhed virksomhed)
         {
             _virksomhed = virksomhed;
         }
@@ -32,12 +32,9 @@ namespace MyERP.VirksomhedsView
             editor.AddOption("Valuta", "EUR", Currency.EUR);
 
 
-
-
-     
             editor.Edit(_virksomhed);
 
-        
+
             Console.WriteLine($"Virksomhed {_virksomhed.Firmanavn} er blevet opdateret.");
             this.Quit();
         }
