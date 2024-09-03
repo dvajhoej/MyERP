@@ -1,4 +1,4 @@
-﻿using MyERP.VirksomhedsView;
+﻿using MyERP.CompanyViews;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,16 +23,16 @@ namespace MyERP
             }
         }
 
-        private List<Virksomhed> virksomheder;
+        private List<Company> companies;
 
         private Database()
         {
-            virksomheder = new List<Virksomhed>();
+            companies = new List<Company>();
         }
 
-        public List<Virksomhed> Virksomheder
+        public List<Company> Virksomheder
         {
-            get { return virksomheder; }
+            get { return companies; }
         }
     }
 }
