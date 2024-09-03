@@ -12,11 +12,13 @@ namespace MyERP.StartSkærm
     {
         public override string Title { get; set; } = "LNE Security A/S";
         private VirksomhedListeSkærm virk = new VirksomhedListeSkærm();
+        private SalesListView sale = new SalesListView();
 
         protected override void Draw()
         {
             Menu menu = new Menu();
             menu.Add(virk);
+            menu.Add(sale);
 
             menu.Start(this);
         }

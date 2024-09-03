@@ -14,7 +14,7 @@ namespace MyERP
         Pakket,
         Færdig
     }
-
+   
     public class Salgsordrehoved
     {
         public int Ordrenummer { get; set; }
@@ -32,6 +32,10 @@ namespace MyERP
             }
         }
 
+        public Salgsordrehoved()
+        {
+            
+        }
         public Salgsordrehoved(int ordrenummer, int kundenummer)
         {
             Ordrenummer = ordrenummer;

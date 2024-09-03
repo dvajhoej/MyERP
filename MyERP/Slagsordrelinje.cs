@@ -28,5 +28,9 @@ namespace MyERP
             Antal = antal;
             Pris = pris;
         }
+        public Salgsordrelinje()
+        {
+            
+        }
     }
 }
