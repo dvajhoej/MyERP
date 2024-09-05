@@ -1,12 +1,4 @@
-﻿using MyERP.VirksomhedsView;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Cryptography.X509Certificates;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace MyERP
+﻿namespace MyERP
 {
     public partial class Database
     {
@@ -27,6 +19,7 @@ namespace MyERP
         private List<Virksomhed> virksomheder;
         private List<Produkt> produkter;
         private List<Salgsordrehoved> sales;
+        private List<Kunde> kunder;
 
 
         private Database()
@@ -34,22 +27,28 @@ namespace MyERP
             virksomheder = new List<Virksomhed>();
             produkter = new List<Produkt>();
             sales = new List<Salgsordrehoved>();
+            kunder = new List<Kunde>();
 
 
         }
+        public List<Kunde> Kunder
+        {
+            get { return Kunder; }
+        }
+
         public List<Salgsordrehoved> Sales
         {
             get { return Sales; }
         }
+
         public List<Virksomhed> Virksomheder
         {
             get { return virksomheder; }
         }
+
         public List<Produkt> Produkter
         {
             get { return produkter; }
-
-
         }
     }
 }

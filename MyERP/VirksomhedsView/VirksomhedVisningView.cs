@@ -20,9 +20,9 @@ namespace MyERP.VirksomhedsView
         {
             Clear();
 
-            Console.WriteLine("Tryk F1 for at oprette virksomhed");
+            Console.WriteLine("Tryk F1 for at oprette  virksomhed");
             Console.WriteLine("Tryk F2 for at redigere virksomhed");
-            Console.WriteLine("Tryk F5 for at slette virksomhed");
+            Console.WriteLine("Tryk F5 for at slette   virksomhed");
             listPage.AddKey(ConsoleKey.F1, Opretvirksomhed);
             listPage.AddKey(ConsoleKey.F2, RedigerVirksomhed);
             listPage.AddKey(ConsoleKey.F5, SletVirksomhed);
@@ -37,8 +37,11 @@ namespace MyERP.VirksomhedsView
             {
                 Screen.Display(new VirksomhedVisningSkærm(selected));
             }
-
-            Quit();
+            else
+            {
+                Quit();
+            }
+            
         }
 
         private void Opretvirksomhed(Virksomhed virksomhed)

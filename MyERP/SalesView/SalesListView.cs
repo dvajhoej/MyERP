@@ -2,69 +2,83 @@
 
 namespace MyERP.VirksomhedsView
 {
-    public class SalesListView : Screen
+    public class SalesListSkærm : Screen
     {
         private ListPage<Salgsordrehoved> listPage;
 
-        public SalesListView()
+        public SalesListSkærm()
         {
+
             listPage = new ListPage<Salgsordrehoved>();
-            listPage.Add(new Salgsordrehoved {
+
+            // Creating Salgsordrehoved objects with associated Salgsordrelinje objects
+            var ordre1 = new Salgsordrehoved
+            {
                 Ordrenummer = 0,
                 Oprettelsestidspunkt = new DateTime(2024, 9, 1, 10, 30, 0),
                 Gennemførelsestidspunkt = new DateTime(2024, 9, 3, 15, 45, 0),
                 Kundenummer = 123,
-                Tilstand = OrdreTilstand.Færdig,     
-             });
+                Tilstand = OrdreTilstand.Færdig
+            };
 
-            listPage.Add(new Salgsordrehoved
+            // Add Salgsordrelinje to the order
+            ordre1.TilføjOrdrelinje(new Salgsordrelinje
+            {
+                Varenummer = 101,
+                Navn = "Product A",
+                Antal = 2,
+                Pris = 100m // Price per item
+            });
+
+            ordre1.TilføjOrdrelinje(new Salgsordrelinje
+            {
+                Varenummer = 102,
+                Navn = "Product B",
+                Antal = 1,
+                Pris = 50m
+            });
+
+            listPage.Add(ordre1);
+
+            var ordre2 = new Salgsordrehoved
             {
                 Ordrenummer = 1,
                 Oprettelsestidspunkt = new DateTime(2024, 9, 1, 10, 30, 0),
                 Gennemførelsestidspunkt = new DateTime(2024, 9, 3, 15, 45, 0),
                 Kundenummer = 451,
-                Tilstand = OrdreTilstand.Færdig,
+                Tilstand = OrdreTilstand.Færdig
+            };
+
+            ordre2.TilføjOrdrelinje(new Salgsordrelinje
+            {
+                Varenummer = 103,
+                Navn = "Product C",
+                Antal = 3,
+                Pris = 200m
             });
 
-            listPage.Add(new Salgsordrehoved
-            {
-                Ordrenummer = 2,
-                Oprettelsestidspunkt = new DateTime(2024, 9, 1, 10, 30, 0),
-                Gennemførelsestidspunkt = new DateTime(2024, 9, 3, 15, 45, 0),
-                Kundenummer = 717,
-                Tilstand = OrdreTilstand.Færdig,
-                
-            });
-
-            listPage.Add(new Salgsordrehoved
-            {
-                Ordrenummer = 3,
-                Oprettelsestidspunkt = new DateTime(2024, 9, 1, 10, 30, 0),
-                Gennemførelsestidspunkt = new DateTime(2024, 9, 3, 15, 45, 0),
-                Kundenummer = 182,
-                Tilstand = OrdreTilstand.Færdig,
-                ord
-                
-            });
+            listPage.Add(ordre2);
+            
         }
         public override string Title { get; set; } = "Salgsordrehoveder";
         protected override void Draw()
         {
             Clear();
 
-            Console.WriteLine("Tryk F1 for at oprette virksomhed");
-            Console.WriteLine("Tryk F2 for at redigere virksomhed");
-            Console.WriteLine("Tryk F5 for at slette virksomhed");
+            Console.WriteLine("Tryk F1 for at oprette  ordre");
+            Console.WriteLine("Tryk F2 for at redigere ordre");
+            Console.WriteLine("Tryk F5 for at slette   ordre");
             //listPage.AddKey(ConsoleKey.F1, Opretvirksomhed);
             //listPage.AddKey(ConsoleKey.F2, RedigerVirksomhed);
             //listPage.AddKey(ConsoleKey.F5, SletVirksomhed);
 
-            listPage.AddColumn("Ordrenummer", "Ordrenummer");
-            listPage.AddColumn("Oprettelsestidspunkt", "Oprettelsestidspunkt");
-            listPage.AddColumn("Kundenummer", "Kundenummer");
-            listPage.AddColumn("Navn", "Navn")
-            listPage.AddColumn("Tilstand", "Tilstand");
-            //listPage.AddColumn("Beløb", "Beløb");
+            listPage.AddColumn("Ordrenummer", "Ordrenummer", 25);
+            listPage.AddColumn("Oprettelsestidspunkt", "Oprettelsestidspunkt", 25);
+            listPage.AddColumn("Gennemførelsestidspunkt", "Gennemførelsestidspunkt", 25);
+            listPage.AddColumn("Kundenummer", "Kundenummer", 25);
+            listPage.AddColumn("Tilstand", "Tilstand", 25);
+/*            listPage.AddColumn("Navn", "FørsteVareNavn")*/;
+            //listPage.AddColumn("Pris", "Pris");
 
             // Show the list and get the selected item
             var selected = listPage.Select();
@@ -76,28 +90,6 @@ namespace MyERP.VirksomhedsView
             Quit();
         }
 
-        //private void Opretvirksomhed(Salgsordrehoved virksomhed)
-        //{
 
-        //    var newVirksomhed = new Salgsordrehoved();
-        //    listPage.Add(newVirksomhed);
-        //    Screen.Display(new VirksomhedOpretView(newVirksomhed));
-
-        //}
-
-        //private void RedigerVirksomhed(Salgsordrehoved selected)
-        //{
-        //    Screen.Display(new VirksomhedRedigeringView(selected));
-        //}
-
-        //public void SletVirksomhed(Virksomhed selected)
-        //{
-        //    if (selected != null)
-        //    {
-        //        listPage.Remove(selected);
-        //        Console.WriteLine($"Virksomhed '{selected.Firmanavn}' er blevet slettet.");
-        //    }
-
-        //}
     }
 }

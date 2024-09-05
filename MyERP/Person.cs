@@ -18,7 +18,10 @@ namespace MyERP
         {
             get => $"\"{Fornavn} {Efternavn}\"";
         }
-
+        public Person()
+        {
+            
+        }
         public Person(string fornavn, string efternavn, Adresse adresse, string email, string telefon)
         {
             Fornavn = fornavn;

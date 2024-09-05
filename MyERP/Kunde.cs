@@ -17,6 +17,10 @@ namespace MyERP
             Kundenummer = kundenummer;
             SidsteKøbDato = sidsteKøbDato;
         }
+        public Kunde()
+        {
+            
+        }
 
         public override string ToString()
         {
