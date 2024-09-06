@@ -34,7 +34,7 @@ namespace MyERP.CompanyView
             listPage.AddColumn("Company Name", "CompanyName");
             listPage.AddColumn("Street", "Street");
             listPage.AddColumn("House Number", "HouseNumber");
-            listPage.AddColumn("Postal Code", "PostalCode");
+            listPage.AddColumn("Postal Code", "ZipCode");
             listPage.AddColumn("City", "City");
             listPage.AddColumn("Country", "Country");
             listPage.AddColumn("Currency", "Currency");

@@ -19,21 +19,21 @@ namespace MyERP.CompanyView
 
             Form<Company> editor = new Form<Company>();
 
-            editor.TextBox("Company Name", "CompanyName");
-            editor.TextBox("Street", "Street");
-            editor.IntBox("House Number", "HouseNumber");
-            editor.IntBox("Postal Code", "PostalCode");
-            editor.TextBox("City", "City");
-            editor.TextBox("Country", "Country");
-            editor.SelectBox("Currency", "Currency");
-            editor.AddOption("Currency", "DKK", Currency.DKK);
-            editor.AddOption("Currency", "SEK", Currency.SEK);
-            editor.AddOption("Currency", "USD", Currency.USD);
-            editor.AddOption("Currency", "EUR", Currency.EUR);
+            editor.TextBox("Virksomheds Navn", "CompanyName");
+            editor.TextBox("Vej", "Street");
+            editor.IntBox("Hus nummer", "HouseNumber");
+            editor.IntBox("Post nummer", "ZipCode");
+            editor.TextBox("By", "City");
+            editor.TextBox("Land", "Country");
+            editor.SelectBox("Valuta", "Currency");
+            editor.AddOption("Valuta", "DKK", Currency.DKK);
+            editor.AddOption("Valuta", "SEK", Currency.SEK);
+            editor.AddOption("Valuta", "USD", Currency.USD);
+            editor.AddOption("Valuta", "EUR", Currency.EUR);
 
             editor.Edit(_company);
 
-            Console.WriteLine($"Company {_company.CompanyName} has been updated.");
+            Console.WriteLine($"Virksomhed: {_company.CompanyName} er blevet opdateret.");
             this.Quit();
         }
     }
