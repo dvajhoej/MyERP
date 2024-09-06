@@ -7,6 +7,7 @@ namespace MyERP.CompanyView
     {
         public override string Title { get; set; } = "Rediger Virksomhed";
 
+
         private Company _company;
 
         public CompanyCreateScreen(Company company)
@@ -34,11 +35,6 @@ namespace MyERP.CompanyView
 
             editor.Edit(_company);
 
-            if (_company.CompanyName == null)
-            {
-                 //Remove(_company);
-            }
-            this.Quit();
         }
     }
 }

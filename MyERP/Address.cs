@@ -22,7 +22,10 @@ namespace MyERP
             City = city;
             Country = country;
         }
-
+        public Address()
+        {
+            
+        }
         public override string ToString()
         {
             return $"{Street} {HouseNumber}, {ZipCode} {City}, {Country}";
