@@ -23,6 +23,20 @@ namespace MyERP
                 location = value;
             }
         }
+        public string MarginPercentage
+        {
+            get
+            {
+                try
+                {
+                    return CalculateMarginPercentage().ToString("F2") + "%";
+                }
+                catch (DivideByZeroException)
+                {
+                    return "N/A";
+                }
+            }
+        }
 
         public decimal QuantityInStock { get; set; }
         public UnitType Unit { get; set; }
@@ -56,6 +70,11 @@ namespace MyERP
                 throw new DivideByZeroException("Purchase price cannot be 0 when calculating margin percentage.");
             }
             return (CalculateProfit() / PurchasePrice) * 100;
+        }
+
+        public string GetMarginPercentageFormatted()
+        {
+            return CalculateMarginPercentage().ToString("F2") + "%";
         }
 
         private bool IsAlphanumeric(string value)
