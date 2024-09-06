@@ -1,4 +1,4 @@
-﻿using MyERP.VirksomhedsView;
+﻿using MyERP.CompanyView;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using TECHCOOL.UI;
 
-namespace MyERP.KundeView
+namespace MyERP.CustomerView
 {
     public class CostumerCreateView : Screen
     {

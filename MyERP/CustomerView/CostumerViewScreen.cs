@@ -1,4 +1,4 @@
-﻿using MyERP.VirksomhedsView;
+﻿using MyERP.CompanyView;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using TECHCOOL.UI;
 
-namespace MyERP.KundeView
+namespace MyERP.CustomerView
 {
     public class KundeListSkærm : Screen
     {
@@ -16,7 +16,7 @@ namespace MyERP.KundeView
         {
             listPage = new ListPage<Kunde>();
 
-            listPage.Add(new Kunde { Fornavn = "Lars", Efternavn = "Jensen", Kundenummer = 12345, Email = "tor@tor.dk", Telefon = "80123123"});
+            listPage.Add(new Kunde { FirstName = "Lars", LastName = "Jensen", Kundenummer = 12345, Email = "tor@tor.dk", Phone = "80123123" });
 
         }
         public override string Title { get; set; } = "Kunde";
@@ -57,7 +57,7 @@ namespace MyERP.KundeView
                 Quit();
 
             }
-                      
+
 
         }
         private void CreateCostumer(Kunde costumer)
@@ -65,21 +65,21 @@ namespace MyERP.KundeView
 
             var NewCostumer = new Kunde();
             listPage.Add(NewCostumer);
-            Screen.Display(new CostumerCreateView(NewCostumer));
+            Display(new CostumerCreateView(NewCostumer));
 
         }
 
-        private void EditCostumer(Kunde selected)
-        {
-            Screen.Display(new costumerEditScreen(selected));
-        }
+        //private void EditCostumer(Kunde selected)
+        //{
+        //    Screen.Display(new costumerEditScreen(selected));
+        //}
 
         public void DeleteCostumer(Kunde selected)
         {
             if (selected != null)
             {
                 listPage.Remove(selected);
-                Console.WriteLine($"Kunde '{selected.FuldtNavn}' er blevet slettet.");
+                Console.WriteLine($"Kunde '{selected.FullName}' er blevet slettet.");
             }
 
         }

@@ -15,18 +15,18 @@ namespace MyERP
         public string CompanyName { get; set; }
         public string Street { get; set; }
         public int HouseNumber { get; set; }
-        public int PostalCode { get; set; }
+        public int ZipCode { get; set; }
         public string City { get; set; }
         public string Country { get; set; }
         public Currency Currency { get; set; }
 
-        public Company(int id, string companyName, string street, int houseNumber, int postalCode, string city, string country, Currency currency)
+        public Company(int id, string companyName, string street, int houseNumber, int zipCode, string city, string country, Currency currency)
         {
             ID = id;
             CompanyName = companyName;
             Street = street;
             HouseNumber = houseNumber;
-            PostalCode = postalCode;
+            ZipCode = zipCode;
             City = city;
             Country = country;
             Currency = currency;

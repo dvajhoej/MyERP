@@ -15,7 +15,7 @@ namespace MyERP.CompanyView
                 Currency = c.Currency,
                 Street = c.Street,
                 HouseNumber = c.HouseNumber,
-                PostalCode = c.PostalCode,
+                Zipcode = c.Zipcode,
                 City = c.City,
             };
         }

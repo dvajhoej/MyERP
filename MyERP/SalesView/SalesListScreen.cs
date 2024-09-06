@@ -4,24 +4,24 @@ namespace MyERP.SalesView
 {
     public class SalesListScreen : Screen
     {
-        private ListPage<Salgsordrehoved> listPage;
+        private ListPage<SalesOrderHeader> listPage;
 
         public SalesListScreen()
         {
-            listPage = new ListPage<Salgsordrehoved>();
+            listPage = new ListPage<SalesOrderHeader>();
 
             // Creating Salgsordrehoved objects with associated Salgsordrelinje objects
-            var order1 = new Salgsordrehoved
+            var order1 = new SalesOrderHeader
             {
                 OrderNumber = 0,
-                CreationTime = new DateTime(2024, 9, 1, 10, 30, 0),
-                CompletionTime = new DateTime(2024, 9, 3, 15, 45, 0),
+                CreationDate = new DateTime(2024, 9, 1, 10, 30, 0),
+                CompletionDate = new DateTime(2024, 9, 3, 15, 45, 0),
                 CustomerNumber = 123,
                 Status = OrderStatus.Completed
             };
 
             // Adding Salgsordrelinje (order lines) to the order
-            order1.AddOrderLine(new Salgsordrelinje
+            order1.AddOrderLine(new SalesOrderLine
             {
                 ProductNumber = 101,
                 Name = "Product A",
@@ -29,7 +29,7 @@ namespace MyERP.SalesView
                 Price = 100m // Price per item
             });
 
-            order1.AddOrderLine(new Salgsordrelinje
+            order1.AddOrderLine(new SalesOrderLine
             {
                 ProductNumber = 102,
                 Name = "Product B",
@@ -39,16 +39,16 @@ namespace MyERP.SalesView
 
             listPage.Add(order1);
 
-            var order2 = new Salgsordrehoved
+            var order2 = new SalesOrderHeader
             {
                 OrderNumber = 1,
-                CreationTime = new DateTime(2024, 9, 1, 10, 30, 0),
-                CompletionTime = new DateTime(2024, 9, 3, 15, 45, 0),
+                CreationDate = new DateTime(2024, 9, 1, 10, 30, 0),
+                CompletionDate = new DateTime(2024, 9, 3, 15, 45, 0),
                 CustomerNumber = 451,
                 Status = OrderStatus.Completed
             };
 
-            order2.AddOrderLine(new Salgsordrelinje
+            order2.AddOrderLine(new SalesOrderLine
             {
                 ProductNumber = 103,
                 Name = "Product C",
