@@ -59,7 +59,7 @@ namespace MyERP.SalesView
             listPage.Add(order2);
         }
 
-        public override string Title { get; set; } = "Sales Orders";
+        public override string Title { get; set; } = "Ordre";
 
         protected override void Draw()
         {
@@ -70,10 +70,10 @@ namespace MyERP.SalesView
             Console.WriteLine("Press F5 to delete an order");
 
             listPage.AddColumn("Order Number", "OrderNumber", 25);
-            listPage.AddColumn("Creation Time", "CreationTime", 25);
-            listPage.AddColumn("Completion Time", "CompletionTime", 25);
-            listPage.AddColumn("Customer Number", "CustomerNumber", 25);
-            listPage.AddColumn("Status", "Status", 25);
+            //listPage.AddColumn("Creation Time", "CreationTime", 25);
+            //listPage.AddColumn("Completion Time", "CompletionTime", 25);
+            //listPage.AddColumn("Customer Number", "CustomerNumber", 25);
+            //listPage.AddColumn("Status", "Status", 25);
 
             // Display the list and get the selected item
             var selected = listPage.Select();

@@ -26,17 +26,22 @@ namespace MyERP.CustomerView
 
             Form<Customer> editor = new Form<Customer>();
 
-            editor.TextBox("Fornavn", "Fornavn");
-            editor.TextBox("Efternavn", "Efternavn");
-            editor.TextBox("Telefon", "Telefon");
+
+
+            editor.TextBox("Fornavn", "FirstName");
+            editor.TextBox("Efternavn", "LastName");
+            editor.TextBox("Telefon", "Phone");
             editor.TextBox("Email", "Email");
-            editor.TextBox("Vej", "Streetname");
-            editor.IntBox("Husnummer", "Husnummer");
-            editor.IntBox("Postnummer", "Postnummer");
+            editor.TextBox("Vej", "Street");
+            editor.TextBox("Husnummer", "HouseNumber");
+            editor.TextBox("Postnummer", "ZipCode");
             editor.TextBox("By", "City");
             editor.TextBox("Land", "Country");
-            editor.TextBox("Telefon", "Telefon");
 
+            editor.Edit(_customer);
+
+
+            this.Quit();
         }
     }
 }

@@ -20,6 +20,7 @@ namespace MyERP
             get => $"{FirstName} {LastName}";
 
         }
+        
         public Person()
         {
             
