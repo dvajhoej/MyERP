@@ -1,14 +1,14 @@
 ﻿using TECHCOOL.UI;
 
-namespace MyERP.CompanyViews
+namespace MyERP.CompanyView
 {
-    public class CompanyCreateView : Screen
+    public class CompanyEditView : Screen
     {
-        public override string Title { get; set; } = "Create Company";
+        public override string Title { get; set; } = "Edit Company";
 
         private Company _company;
 
-        public CompanyCreateView(Company company)
+        public CompanyEditView(Company company)
         {
             _company = company;
         }
@@ -19,10 +19,10 @@ namespace MyERP.CompanyViews
 
             Form<Company> editor = new Form<Company>();
 
-            editor.TextBox("Company Name", "Company Name");
+            editor.TextBox("Company Name", "CompanyName");
             editor.TextBox("Street", "Street");
-            editor.IntBox("House Number", "House Number");
-            editor.IntBox("Postal Code", "Postal Code");
+            editor.IntBox("House Number", "HouseNumber");
+            editor.IntBox("Postal Code", "PostalCode");
             editor.TextBox("City", "City");
             editor.TextBox("Country", "Country");
             editor.SelectBox("Currency", "Currency");
@@ -33,7 +33,7 @@ namespace MyERP.CompanyViews
 
             editor.Edit(_company);
 
-            Console.WriteLine($"Company {_company.CompanyName} has been created.");
+            Console.WriteLine($"Company {_company.CompanyName} has been updated.");
             this.Quit();
         }
     }

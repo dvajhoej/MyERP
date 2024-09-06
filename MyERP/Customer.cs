@@ -18,6 +18,11 @@ namespace MyERP
             LastPurchaseDate = lastPurchaseDate;
         }
 
+        public Customer()
+        {
+
+        }
+
         public override string ToString()
         {
             return $"{base.ToString()}, Customer Number: {CustomerNumber}, Last Purchase: {LastPurchaseDate.ToShortDateString()}";

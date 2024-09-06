@@ -1,15 +1,6 @@
 ﻿using System.Text;
 using System.Threading.Tasks;
 
-using System.Text;
-using System.Threading.Tasks;
-
-using System.Text;
-using System.Threading.Tasks;
-
-using System.Text;
-using System.Threading.Tasks;
-
 namespace MyERP
 {
     public partial class Database
@@ -28,29 +19,27 @@ namespace MyERP
             }
         }
 
-        private List<Virksomhed> virksomheder;
-        private List<Produkt> produkter;
-        private List<Salgsordrehoved> sales;
-        private List<Kunde> kunder;
-
+        private List<Company> companies;
+        private List<Product> products;
+        private List<SalesOrderHeader> sales;
+        private List<Customer> customers;
 
         private Database()
         {
-            virksomheder = new List<Virksomhed>();
-            produkter = new List<Produkt>();
-            sales = new List<Salgsordrehoved>();
-            kunder = new List<Kunde>();
-
-
-        }
-        public List<Kunde> Kunder
-        {
-            get { return Kunder; }
+            companies = new List<Company>();
+            products = new List<Product>();
+            sales = new List<SalesOrderHeader>();
+            customers = new List<Customer>();
         }
 
-        public List<Salgsordrehoved> Sales
+        public List<Customer> Customers
         {
-            get { return Sales; }
+            get { return customers; }
+        }
+
+        public List<SalesOrderHeader> Sales
+        {
+            get { return sales; }
         }
 
         public List<Product> Products
@@ -58,9 +47,9 @@ namespace MyERP
             get { return products; }
         }
 
-        public List<Produkt> Produkter
+        public List<Product> Produkter
         {
-            get { return produkter; }
+            get { return products; }
         }
     }
 }

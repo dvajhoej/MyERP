@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MyERP
 {
@@ -11,7 +7,7 @@ namespace MyERP
         public int ProductNumber { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
-        public decimal SalePrice { get; set; }
+        public decimal SellingPrice { get; set; }
         public decimal PurchasePrice { get; set; }
 
         private string location;
@@ -20,44 +16,44 @@ namespace MyERP
             get => location;
             set
             {
-                if (value.Length != 4 || !IsLetterOrDigit(value))
+                if (value.Length != 4 || !IsAlphanumeric(value))
                 {
-                    throw new ArgumentException("Location must be exactly 4 digits or letters.");
+                    throw new ArgumentException("Location must be exactly 4 alphanumeric characters.");
                 }
                 location = value;
             }
         }
 
-        public decimal StockQuantity { get; set; }
+        public decimal QuantityInStock { get; set; }
         public UnitType Unit { get; set; }
 
-        public Product(int productNumber, string name, string description, decimal salePrice, decimal purchasePrice, string location, decimal stockQuantity, UnitType unit)
+        public Product(int productNumber, string name, string description, decimal sellingPrice, decimal purchasePrice, string location, decimal quantityInStock, UnitType unit)
         {
             ProductNumber = productNumber;
             Name = name;
             Description = description;
-            SalePrice = salePrice;
+            SellingPrice = sellingPrice;
             PurchasePrice = purchasePrice;
             Location = location;
-            StockQuantity = stockQuantity;
+            QuantityInStock = quantityInStock;
             Unit = unit;
         }
 
         public decimal CalculateProfit()
         {
-            return SalePrice - PurchasePrice;
+            return SellingPrice - PurchasePrice;
         }
 
-        public decimal CalculateProfitMarginPercentage()
+        public decimal CalculateMarginPercentage()
         {
             if (PurchasePrice == 0)
             {
-                throw new DivideByZeroException("Purchase price cannot be 0 when calculating profit margin percentage.");
+                throw new DivideByZeroException("Purchase price cannot be 0 when calculating margin percentage.");
             }
             return (CalculateProfit() / PurchasePrice) * 100;
         }
 
-        private bool IsLetterOrDigit(string value)
+        private bool IsAlphanumeric(string value)
         {
             foreach (char c in value)
             {

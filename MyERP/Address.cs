@@ -10,22 +10,22 @@ namespace MyERP
     {
         public string Street { get; set; }
         public string HouseNumber { get; set; }
-        public string PostalCode { get; set; }
+        public string ZipCode { get; set; }
         public string City { get; set; }
         public string Country { get; set; }
 
-        public Address(string street, string houseNumber, string postalCode, string city, string country)
+        public Address(string street, string houseNumber, string zipCode, string city, string country)
         {
             Street = street;
             HouseNumber = houseNumber;
-            PostalCode = postalCode;
+            ZipCode = zipCode;
             City = city;
             Country = country;
         }
 
         public override string ToString()
         {
-            return $"{Street} {HouseNumber}, {PostalCode} {City}, {Country}";
+            return $"{Street} {HouseNumber}, {ZipCode} {City}, {Country}";
         }
 
     }

@@ -6,36 +6,37 @@ namespace MyERP
 {
     public partial class Database
     {
-        public Salgsordrehoved HentSalgsOrdreHovedUdFraId(int ordrenummer)
+        public SalesOrderHeader GetSalesOrderHeaderById(int orderNumber)
         {
-            return sales.FirstOrDefault(sale => sale.Ordrenummer == ordrenummer);
+            return sales.FirstOrDefault(sale => sale.OrderNumber == orderNumber);
         }
 
-        public List<Salgsordrehoved> salgsordrehoveder()
+        public List<SalesOrderHeader> GetAllSalesOrderHeaders()
         {
-            return new List<Salgsordrehoved>(sales);
+            return new List<SalesOrderHeader>(sales);
         }
 
-        public void InsætSalgsordrehovede(Salgsordrehoved sale)
+        public void InsertSalesOrderHeader(SalesOrderHeader sale)
         {
-            if (sale.Ordrenummer == 0)
+            if (sale.OrderNumber == 0)
             {
                 sales.Add(sale);
             }
         }
 
-        public void OpdaterSalgsOrdreHoved(Salgsordrehoved updatesale)
+        public void UpdateSalesOrderHeader(SalesOrderHeader updateSale)
         {
-            var existingsale = HentSalgsOrdreHovedUdFraId(updatesale.Ordrenummer);
-            if (existingsale != null)
+            var existingSale = GetSalesOrderHeaderById(updateSale.OrderNumber);
+            if (existingSale != null)
             {
-                int index = sales.IndexOf(existingsale);
-                sales[index] = updatesale;
+                int index = sales.IndexOf(existingSale);
+                sales[index] = updateSale;
             }
         }
-        public void SletSalgsOrdreHoved(int ordrenummer)
+
+        public void DeleteSalesOrderHeader(int orderNumber)
         {
-            var sale = HentSalgsOrdreHovedUdFraId(ordrenummer);
+            var sale = GetSalesOrderHeaderById(orderNumber);
             if (sale != null)
             {
                 sales.Remove(sale);

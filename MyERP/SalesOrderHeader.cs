@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MyERP
 {
@@ -32,6 +30,11 @@ namespace MyERP
             }
         }
 
+        public SalesOrderHeader()
+        {
+
+        }
+
         public SalesOrderHeader(int orderNumber, int customerNumber)
         {
             OrderNumber = orderNumber;
@@ -50,4 +53,19 @@ namespace MyERP
             return OrderLines.AsReadOnly();
         }
     }
+
+    /*public class SalesOrderLine
+    {
+        public int ProductNumber { get; set; }
+        public string Name { get; set; }
+        public int Quantity { get; set; }
+        public decimal Price { get; set; }
+        public decimal Amount
+        {
+            get
+            {
+                return Quantity * Price;
+            }
+        }
+    }*/
 }

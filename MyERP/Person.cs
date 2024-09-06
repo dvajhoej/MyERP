@@ -22,7 +22,7 @@ namespace MyERP
         {
             
         }
-        public Person(string fornavn, string efternavn, Adresse adresse, string email, string telefon)
+        public Person(string firstName, string lastName, Address address, string email, string phone)
         {
             FirstName = firstName;
             LastName = lastName;

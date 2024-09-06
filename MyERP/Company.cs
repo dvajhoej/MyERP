@@ -36,8 +36,6 @@ namespace MyERP
         {
 
         }
-
     }
 }
-
 // Fejl på commit navngivning, Dette er # D2

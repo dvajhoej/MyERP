@@ -1,4 +1,4 @@
-﻿using MyERP.CompanyViews;
+﻿using MyERP.CompanyView;
 using System;
 using System.Collections.Generic;
 using System.Linq;

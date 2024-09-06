@@ -1,14 +1,14 @@
 ﻿using TECHCOOL.UI;
 
-namespace MyERP.CompanyViews
+namespace MyERP.CompanyView
 {
-    public class CompanyViewScreen : Screen
+    public class CompanyDisplayScreen : Screen
     {
-        public Company CompanyView { get; set; }
+        public Company companyDisplay { get; set; }
 
-        public CompanyViewScreen(Company c)
+        public CompanyDisplayScreen(Company c)
         {
-            Company = new Company
+            company = new Company
             {
                 CompanyName = c.CompanyName,
                 Country = c.Country,
@@ -16,12 +16,12 @@ namespace MyERP.CompanyViews
                 Street = c.Street,
                 HouseNumber = c.HouseNumber,
                 PostalCode = c.PostalCode,
-                City = c.City
+                City = c.City,
             };
         }
 
-        public override string Title { get; set; } = "Company View";
-        public Company Company { get; private set; }
+        public override string Title { get; set; } = "Company Display";
+        public Company company { get; private set; }
 
         protected override void Draw()
         {
@@ -29,12 +29,12 @@ namespace MyERP.CompanyViews
 
             ListPage<Company> listPage = new();
 
-            listPage.Add(Company);
+            listPage.Add(company);
 
-            listPage.AddColumn("Company Name", "Company Name");
+            listPage.AddColumn("Company Name", "CompanyName");
             listPage.AddColumn("Street", "Street");
-            listPage.AddColumn("House Number", "House Number");
-            listPage.AddColumn("Postal Code", "Postal Code");
+            listPage.AddColumn("House Number", "HouseNumber");
+            listPage.AddColumn("Postal Code", "PostalCode");
             listPage.AddColumn("City", "City");
             listPage.AddColumn("Country", "Country");
             listPage.AddColumn("Currency", "Currency");
@@ -44,7 +44,6 @@ namespace MyERP.CompanyViews
             var selected = listPage.Select();
             if (selected != null)
             {
-                
             }
             else
             {
