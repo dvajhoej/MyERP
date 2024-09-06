@@ -39,6 +39,11 @@ namespace MyERP
             Unit = unit;
         }
 
+        public Product()
+        {
+            
+        }
+
         public decimal CalculateProfit()
         {
             return SellingPrice - PurchasePrice;
