@@ -2,11 +2,11 @@
 
 namespace MyERP.CompanyView
 {
-    public class CompanyDisplayScreen : Screen
+    public class CompanyViewScreen : Screen
     {
         public Company companyDisplay { get; set; }
 
-        public CompanyDisplayScreen(Company c)
+        public CompanyViewScreen(Company c)
         {
             company = new Company
             {

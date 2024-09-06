@@ -48,12 +48,12 @@ namespace MyERP.CompanyView
         {
             var newCompany = new Company();
             listPage.Add(newCompany);
-            Screen.Display(new CompanyCreateView(newCompany));
+            //Screen.Display(new CompanyCreateScreen(newCompany));
         }
 
         private void EditCompany(Company selected)
         {
-            Screen.Display(new CompanyEditView(selected));
+            Screen.Display(new CompanyEditScreen(selected));
         }
 
         public void DeleteCompany(Company selected)

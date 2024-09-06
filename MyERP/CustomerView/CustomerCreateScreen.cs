@@ -9,22 +9,22 @@ using TECHCOOL.UI;
 
 namespace MyERP.CustomerView
 {
-    public class CostumerCreateView : Screen
+    public class CustomerCreateScreen : Screen
     {
         public override string Title { get; set; } = "Opret kunde";
 
-        private Kunde _kunde;
+        private Customer _customer;
 
-        public CostumerCreateView(Kunde kunde)
+        public CustomerCreateScreen(Customer kunde)
         {
-            _kunde = kunde;
+            _customer = kunde;
         }
 
         protected override void Draw()
         {
             Clear();
 
-            Form<Kunde> editor = new Form<Kunde>();
+            Form<Customer> editor = new Form<Customer>();
 
             editor.TextBox("Fornavn", "Fornavn");
             editor.TextBox("Efternavn", "Efternavn");

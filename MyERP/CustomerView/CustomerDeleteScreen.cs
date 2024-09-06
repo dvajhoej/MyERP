@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MyERP.CustomerView
 {
-    internal class CostumerDeleteScreen
+    internal class CustomerDeleteScreen
     {
     }
 }

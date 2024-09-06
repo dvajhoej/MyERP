@@ -10,13 +10,13 @@ namespace MyERP.CustomerView
 {
     public class KundeListSkærm : Screen
     {
-        private ListPage<Kunde> listPage;
+        private ListPage<Customer> listPage;
 
         public KundeListSkærm()
         {
-            listPage = new ListPage<Kunde>();
+            listPage = new ListPage<Customer>();
 
-            listPage.Add(new Kunde { FirstName = "Lars", LastName = "Jensen", Kundenummer = 12345, Email = "tor@tor.dk", Phone = "80123123" });
+            listPage.Add(new Customer { FirstName = "Lars", LastName = "Jensen", CustomerNumber = 12345, Email = "tor@tor.dk", Phone = "80123123" });
 
         }
         public override string Title { get; set; } = "Kunde";
@@ -60,12 +60,12 @@ namespace MyERP.CustomerView
 
 
         }
-        private void CreateCostumer(Kunde costumer)
+        private void CreateCostumer(Customer costumer)
         {
 
-            var NewCostumer = new Kunde();
-            listPage.Add(NewCostumer);
-            Display(new CostumerCreateView(NewCostumer));
+            var newCustomer = new Customer();
+            listPage.Add(newCustomer);
+            Display(new CustomerCreateScreen(newCustomer));
 
         }
 
@@ -74,7 +74,7 @@ namespace MyERP.CustomerView
         //    Screen.Display(new costumerEditScreen(selected));
         //}
 
-        public void DeleteCostumer(Kunde selected)
+        public void DeleteCostumer(Customer selected)
         {
             if (selected != null)
             {
