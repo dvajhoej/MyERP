@@ -4,7 +4,7 @@ namespace MyERP.CompanyView
 {
     public class CompanyEditScreen : Screen
     {
-        public override string Title { get; set; } = "Edit Company";
+        public override string Title { get; set; } = "Rediger Virksomhed";
 
         private Company _company;
 

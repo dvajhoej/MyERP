@@ -15,7 +15,7 @@ namespace MyERP.CompanyView
             listPage.Add(new Company { CompanyName = "EURO Import", City = "Berlin", HouseNumber = 661, ZipCode = 6712, Country = "Germany", Street = "BerlinStrabe", Currency = Currency.EUR, ID = 0 });
         }
 
-        public override string Title { get; set; } = "Company";
+        public override string Title { get; set; } = "Virksomhed";
 
         protected override void Draw()
         {
@@ -48,7 +48,14 @@ namespace MyERP.CompanyView
         {
             var newCompany = new Company();
             listPage.Add(newCompany);
-            //Screen.Display(new CompanyCreateScreen(newCompany));
+            Screen.Display(new CompanyCreateScreen(newCompany));
+
+            //if (newCompany.CompanyName != null)
+            //{
+            //    listPage.Add(newCompany);
+            //}
+
+            // AFVENTER IMPLEMENTERING
         }
 
         private void EditCompany(Company selected)

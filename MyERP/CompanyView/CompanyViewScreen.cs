@@ -20,7 +20,7 @@ namespace MyERP.CompanyView
             };
         }
 
-        public override string Title { get; set; } = "Company Display";
+        public override string Title { get; set; } = "Virksomheds Visning";
         public Company company { get; private set; }
 
         protected override void Draw()
