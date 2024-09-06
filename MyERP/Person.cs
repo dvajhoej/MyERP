@@ -16,11 +16,24 @@ namespace MyERP
 
         public string FullName
         {
-
             get => $"{FirstName} {LastName}";
-
-        }
+            set
+            {
+                var nameParts = value?.Split(' ');
+                if (nameParts != null && nameParts.Length > 1)
+                {
+                    FirstName = nameParts[0];
+                    LastName = string.Join(" ", nameParts.Skip(1)); 
+                }
+                else if (nameParts?.Length == 1)
+                {
         
+                    FirstName = nameParts[0];
+                    LastName = string.Empty;
+                }
+            }
+        }
+
         public Person()
         {
             

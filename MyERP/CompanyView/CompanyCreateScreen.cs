@@ -7,7 +7,6 @@ namespace MyERP.CompanyView
     {
         public override string Title { get; set; } = "Rediger Virksomhed";
 
-
         private Company _company;
 
         public CompanyCreateScreen(Company company)
@@ -34,6 +33,7 @@ namespace MyERP.CompanyView
             editor.AddOption("Valuta", "EUR", Currency.EUR);
 
             editor.Edit(_company);
+            this.Quit();
 
         }
     }

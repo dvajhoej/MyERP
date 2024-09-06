@@ -35,7 +35,7 @@ namespace MyERP.CustomerView
             var selected = listPage.Select();
             if (selected != null)
             {
-                //Screen.Display(new CustomerListScreen(selected));
+                Screen.Display(new CustomerViewScreen(selected));
             }
             else
             {
