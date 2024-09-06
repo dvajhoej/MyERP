@@ -1,6 +1,14 @@
-﻿using MyERP.CompanyViews;
-using System;
-using System.Collections.Generic;
+﻿using System.Text;
+using System.Threading.Tasks;
+
+using System.Text;
+using System.Threading.Tasks;
+
+using System.Text;
+using System.Threading.Tasks;
+
+using System.Text;
+using System.Threading.Tasks;
 
 namespace MyERP
 {
@@ -20,30 +28,39 @@ namespace MyERP
             }
         }
 
-        private List<Company> companies;
-        private List<Product> products;
-        private List<SalesOrderHeader> salesOrders;
+        private List<Virksomhed> virksomheder;
+        private List<Produkt> produkter;
+        private List<Salgsordrehoved> sales;
+        private List<Kunde> kunder;
+
 
         private Database()
         {
-            companies = new List<Company>();
-            products = new List<Product>();
-            salesOrders = new List<SalesOrderHeader>();
+            virksomheder = new List<Virksomhed>();
+            produkter = new List<Produkt>();
+            sales = new List<Salgsordrehoved>();
+            kunder = new List<Kunde>();
+
+
+        }
+        public List<Kunde> Kunder
+        {
+            get { return Kunder; }
         }
 
-        public List<SalesOrderHeader> SalesOrders
+        public List<Salgsordrehoved> Sales
         {
-            get { return salesOrders; }
-        }
-
-        public List<Company> Companies
-        {
-            get { return companies; }
+            get { return Sales; }
         }
 
         public List<Product> Products
         {
             get { return products; }
+        }
+
+        public List<Produkt> Produkter
+        {
+            get { return produkter; }
         }
     }
 }

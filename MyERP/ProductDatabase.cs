@@ -6,43 +6,43 @@ namespace MyERP
 {
     public partial class Database
     {
-        public Product GetProductByNumber(int productNumber)
+        public Produkt HentProduktUdFraId(int varenummer)
         {
-            return products.FirstOrDefault(p => p.ProductNumber == productNumber);
+            return produkter.FirstOrDefault(prot => prot.Varenummer == varenummer);
         }
 
-        public List<Product> GetAllProducts()
+        public List<Produkt> HentAlleProducter()
         {
-            return new List<Product>(products);
+            return new List<Produkt>(produkter);
         }
 
-        public void AddProduct(Product product)
+        public void InsætProduct(Produkt produkt)
         {
-            if (product.ProductNumber == 0)
+            if (produkt.Varenummer == 0)
             {
-                products.Add(product);
+                produkter.Add(produkt);
             }
         }
 
-        public void UpdateProduct(Product updatedProduct)
+        public void OpdaterProduct(Produkt updateproduct)
         {
-            if (updatedProduct.ProductNumber != 0)
+            if (updateproduct.Varenummer != 0)
             {
-                var existingProduct = GetProductByNumber(updatedProduct.ProductNumber);
-                if (existingProduct != null)
+                var existingproduct = HentVirksomhedUdFraId(updateproduct.Varenummer);
+                if (existingproduct != null)
                 {
-                    int index = products.IndexOf(existingProduct);
-                    products[index] = updatedProduct;
+                    int index = virksomheder.IndexOf(existingproduct);
+                    produkter[index] = updateproduct;
                 }
             }
         }
 
-        public void DeleteProductByNumber(int productNumber)
+        public void SletProductUdFraId(int varenummer)
         {
-            var product = GetProductByNumber(productNumber);
+            var product = HentProduktUdFraId(varenummer);
             if (product != null)
             {
-                products.Remove(product);
+                produkter.Remove(product);
             }
         }
     }

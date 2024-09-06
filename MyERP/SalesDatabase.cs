@@ -6,40 +6,39 @@ namespace MyERP
 {
     public partial class Database
     {
-        public SalesOrderHeader GetSalesOrderHeaderByNumber(int orderNumber)
+        public Salgsordrehoved HentSalgsOrdreHovedUdFraId(int ordrenummer)
         {
-            return salesOrders.FirstOrDefault(sale => sale.OrderNumber == orderNumber);
+            return sales.FirstOrDefault(sale => sale.Ordrenummer == ordrenummer);
         }
 
-        public List<SalesOrderHeader> GetAllSalesOrderHeaders()
+        public List<Salgsordrehoved> salgsordrehoveder()
         {
-            return new List<SalesOrderHeader>(salesOrders);
+            return new List<Salgsordrehoved>(sales);
         }
 
-        public void AddSalesOrderHeader(SalesOrderHeader sale)
+        public void InsætSalgsordrehovede(Salgsordrehoved sale)
         {
-            if (sale.OrderNumber == 0)
+            if (sale.Ordrenummer == 0)
             {
-                salesOrders.Add(sale);
+                sales.Add(sale);
             }
         }
 
-        public void UpdateSalesOrderHeader(SalesOrderHeader updatedSale)
+        public void OpdaterSalgsOrdreHoved(Salgsordrehoved updatesale)
         {
-            var existingSale = GetSalesOrderHeaderByNumber(updatedSale.OrderNumber);
-            if (existingSale != null)
+            var existingsale = HentSalgsOrdreHovedUdFraId(updatesale.Ordrenummer);
+            if (existingsale != null)
             {
-                int index = salesOrders.IndexOf(existingSale);
-                salesOrders[index] = updatedSale;
+                int index = sales.IndexOf(existingsale);
+                sales[index] = updatesale;
             }
         }
-
-        public void DeleteSalesOrderHeader(int orderNumber)
+        public void SletSalgsOrdreHoved(int ordrenummer)
         {
-            var sale = GetSalesOrderHeaderByNumber(orderNumber);
+            var sale = HentSalgsOrdreHovedUdFraId(ordrenummer);
             if (sale != null)
             {
-                salesOrders.Remove(sale);
+                sales.Remove(sale);
             }
         }
     }
