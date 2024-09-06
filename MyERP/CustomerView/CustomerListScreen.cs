@@ -23,7 +23,7 @@ namespace MyERP.CustomerView
             Console.WriteLine("Tryk F2 for at redigere en kunde");
             Console.WriteLine("Tryk F5 for at slette   en kunde");
             listPage.AddKey(ConsoleKey.F1, CreateCustomer);
-            //listPage.AddKey(ConsoleKey.F2, EditCustomer);
+            listPage.AddKey(ConsoleKey.F2, EditCustomer);
             listPage.AddKey(ConsoleKey.F5, DeleteCustomer);
 
             listPage.AddColumn("Fornavn", "FirstName");
@@ -56,10 +56,10 @@ namespace MyERP.CustomerView
             // AFVENTER IMPLEMENTERING
         }
 
-        //private void EditCustomer(Customer selected)
-        //{
-        //    Screen.Display(new CustomerEditScreen(selected));
-        //}
+        private void EditCustomer(Customer selected)
+        {
+            Screen.Display(new CustomerEditScreen(selected));
+        }
 
         public void DeleteCustomer(Customer selected)
         {

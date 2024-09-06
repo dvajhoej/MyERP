@@ -33,8 +33,8 @@ namespace MyERP.CustomerView
             editor.TextBox("Telefon", "Phone");
             editor.TextBox("Email", "Email");
             editor.TextBox("Vej", "Street");
-            editor.IntBox("Husnummer", "HouseNumber");
-            editor.IntBox("Postnummer", "ZipCode");
+            editor.TextBox("Husnummer", "HouseNumber");
+            editor.TextBox("Postnummer", "ZipCode");
             editor.TextBox("By", "City");
             editor.TextBox("Land", "Country");
 
