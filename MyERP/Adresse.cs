@@ -22,6 +22,10 @@ namespace MyERP
             By = by;
             Land = land;
         }
+        public Adresse()
+        {
+            
+        }
 
         public override string ToString()
         {

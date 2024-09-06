@@ -26,5 +26,7 @@ namespace MyERP
         {
             return $"{base.ToString()}, Kundenummer: {Kundenummer}, Sidste køb: {SidsteKøbDato.ToShortDateString()}";
         }
+
+       
     }
 }

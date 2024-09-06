@@ -16,7 +16,7 @@ namespace MyERP
 
         public string FuldtNavn
         {
-            get => $"\"{Fornavn} {Efternavn}\"";
+            get => $"{Fornavn} {Efternavn}";
         }
         public Person()
         {

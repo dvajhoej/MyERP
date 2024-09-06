@@ -44,13 +44,14 @@ namespace MyERP
             Tilstand = OrdreTilstand.Oprettet;
         }
 
-        //public string FørsteVareNavn
-        //{
-        //    get
-        //    {
-        //        return Ordrelinjer.FirstOrDefault()?.Navn ?? "Ingen varelinjer";
-        //    }
-        //}
+        public string FørsteVareNavn
+        {
+            get
+            {
+                return Ordrelinjer.FirstOrDefault()?.Navn ?? "Ingen varelinjer";
+            }
+        }
+
         public void TilføjOrdrelinje(Salgsordrelinje ordrelinje)
         {
             Ordrelinjer.Add(ordrelinje);
