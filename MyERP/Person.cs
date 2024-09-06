@@ -8,32 +8,34 @@ namespace MyERP
 {
     public class Person
     {
-        public string Fornavn { get; set; }
-        public string Efternavn { get; set; }
-        public Adresse Adresse { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public Address Address { get; set; }
         public string Email { get; set; }
-        public string Telefon { get; set; }
+        public string Phone { get; set; }
 
-        public string FuldtNavn
+        public string FullName
         {
-            get => $"{Fornavn} {Efternavn}";
+
+            get => $"{FirstName} {LastName}";
+
         }
         public Person()
         {
             
         }
-        public Person(string fornavn, string efternavn, Adresse adresse, string email, string telefon)
+        public Person(string firstName, string lastName, Address address, string email, string phone)
         {
-            Fornavn = fornavn;
-            Efternavn = efternavn;
-            Adresse = adresse;
+            FirstName = firstName;
+            LastName = lastName;
+            Address = address;
             Email = email;
-            Telefon = telefon;
+            Phone = phone;
         }
 
         public override string ToString()
         {
-            return $"{FuldtNavn}, {Adresse}, Email: {Email}, Telefon: {Telefon}";
+            return $"{FullName}, {Address}, Email: {Email}, Phone: {Phone}";
         }
     }
 }

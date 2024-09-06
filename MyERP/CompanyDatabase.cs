@@ -1,4 +1,4 @@
-﻿using MyERP.VirksomhedsView;
+﻿using MyERP.CompanyView;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,43 +9,48 @@ namespace MyERP
 {
     public partial class Database
     {
-        public Virksomhed HentVirksomhedUdFraId(int id)
+        // Fetch a company by ID
+        public Company GetCompanyById(int id)
         {
-            return virksomheder.FirstOrDefault(company => company.ID == id);
+            return companies.FirstOrDefault(company => company.ID == id);
         }
 
-        public List<Virksomhed> HentAlleVirksomheder()
+        // Fetch all companies
+        public List<Company> GetAllCompanies()
         {
-            return new List<Virksomhed>(virksomheder);
+            return new List<Company>(companies);
         }
 
-        public void IndsætVirksomhed(Virksomhed virksomhed)
+        // Insert a company
+        public void InsertCompany(Company company)
         {
-            if (virksomhed.ID == 0)
+            if (company.ID == 0)
             {
-                virksomheder.Add(virksomhed);
+                companies.Add(company);
             }
         }
 
-        public void OpdaterVirksomhed(Virksomhed updatedvirksomhed)
+        // Update an existing company
+        public void UpdateCompany(Company updatedCompany)
         {
-            if (updatedvirksomhed.ID != 0)
+            if (updatedCompany.ID != 0)
             {
-                var existingCompany = HentVirksomhedUdFraId(updatedvirksomhed.ID);
+                var existingCompany = GetCompanyById(updatedCompany.ID);
                 if (existingCompany != null)
                 {
-                    int index = virksomheder.IndexOf(existingCompany);
-                    virksomheder[index] = updatedvirksomhed;
+                    int index = companies.IndexOf(existingCompany);
+                    companies[index] = updatedCompany;
                 }
             }
         }
 
-        public void SletVirksomhedUdFraId(int id)
+        // Delete a company by ID
+        public void DeleteCompanyById(int id)
         {
-            var virksomhed = HentVirksomhedUdFraId(id);
-            if (virksomhed != null)
+            var company = GetCompanyById(id);
+            if (company != null)
             {
-                virksomheder.Remove(virksomhed);
+                companies.Remove(company);
             }
         }
     }
