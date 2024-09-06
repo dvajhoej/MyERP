@@ -12,9 +12,9 @@ namespace MyERP.ProductView
             listPage = new ListPage<Product>();
 
             listPage.Add(new Product { ProductNumber = 01, Name = "Reb", Description = "Et langt reb", SellingPrice = 100.00m, PurchasePrice = 99.00m, Location = "223A", QuantityInStock = 55, Unit = UnitType.Meter });
-            listPage.Add(new Product { ProductNumber = 02, Name = "Dæk", Description = "Et lækkert dæk", SellingPrice = 100.00m, PurchasePrice = 30.00m, Location = "283E", QuantityInStock = 10, Unit = UnitType.Piece });
-            listPage.Add(new Product { ProductNumber = 03, Name = "Dukke", Description = "En dukke for piger", SellingPrice = 100.00m, PurchasePrice = 80.00m, Location = "648N", QuantityInStock = 20, Unit = UnitType.Piece });
-            listPage.Add(new Product { ProductNumber = 04, Name = "Gummiand", Description = "Den bedste ting i verden", SellingPrice = 200.00m, PurchasePrice = 175.00m, Location = "42AA", QuantityInStock = 1, Unit = UnitType.Piece });
+            listPage.Add(new Product { ProductNumber = 02, Name = "Dæk", Description = "Et lækkert dæk", SellingPrice = 100.00m, PurchasePrice = 30.00m, Location = "283E", QuantityInStock = 10, Unit = UnitType.Styk });
+            listPage.Add(new Product { ProductNumber = 03, Name = "Dukke", Description = "En dukke for piger", SellingPrice = 100.00m, PurchasePrice = 80.00m, Location = "648N", QuantityInStock = 20, Unit = UnitType.Styk });
+            listPage.Add(new Product { ProductNumber = 04, Name = "Gummiand", Description = "Den bedste ting i verden", SellingPrice = 200.00m, PurchasePrice = 175.00m, Location = "42AA", QuantityInStock = 1, Unit = UnitType.Styk });
         }
 
         public override string Title { get; set; } = "Produkter";
@@ -42,7 +42,7 @@ namespace MyERP.ProductView
             var selected = listPage.Select();
             if (selected != null)
             {
-                //Screen.Display(new ProductViewScreen(selected));
+                Screen.Display(new ProductViewScreen(selected));
             }
             else
             {

@@ -37,6 +37,13 @@ namespace MyERP
                 }
             }
         }
+        public decimal Profit
+        {
+            get
+            {
+                return SellingPrice - PurchasePrice;
+            }
+        }
 
         public decimal QuantityInStock { get; set; }
         public UnitType Unit { get; set; }
@@ -58,18 +65,13 @@ namespace MyERP
             
         }
 
-        public decimal CalculateProfit()
-        {
-            return SellingPrice - PurchasePrice;
-        }
-
         public decimal CalculateMarginPercentage()
         {
             if (PurchasePrice == 0)
             {
                 throw new DivideByZeroException("Purchase price cannot be 0 when calculating margin percentage.");
             }
-            return (CalculateProfit() / PurchasePrice) * 100;
+            return (Profit / PurchasePrice) * 100;
         }
 
         public string GetMarginPercentageFormatted()
@@ -92,8 +94,8 @@ namespace MyERP
 
     public enum UnitType
     {
-        Piece,
-        Hour,
+        Styk,
+        time,
         Meter
     }
 }
