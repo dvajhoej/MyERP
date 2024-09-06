@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using TECHCOOL.UI;
 using MyERP.SalesView;
+using MyERP.ProductView;
 
 namespace MyERP.StartScreen
 {
@@ -16,6 +17,7 @@ namespace MyERP.StartScreen
         private CompanyListScreen companyListScreen = new CompanyListScreen();
         private SalesListScreen salesListScreen = new SalesListScreen();
         private CustomerListScreen customerListScreen = new CustomerListScreen();
+        private ProductListScreen productListScreen = new ProductListScreen();
 
         protected override void Draw()
         {
@@ -23,6 +25,7 @@ namespace MyERP.StartScreen
             menu.Add(companyListScreen);
             menu.Add(salesListScreen);
             menu.Add(customerListScreen);
+            menu.Add(productListScreen);
             menu.Start(this);
         }
     }
