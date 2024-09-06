@@ -11,13 +11,13 @@ namespace MyERP.ProductView
         {
             listPage = new ListPage<Product>();
 
-            listPage.Add(new Product { ProductNumber = 01, Name = "Reb", Description = "Et langt reb", SellingPrice = 10.50m, PurchasePrice = 5.25m, Location = "223A", QuantityInStock = 55, Unit = UnitType.Meter });
-            listPage.Add(new Product { ProductNumber = 02, Name = "Dæk", Description = "Et lækkert dæk", SellingPrice = 50.00m, PurchasePrice = 45.60m, Location = "283E", QuantityInStock = 10, Unit = UnitType.Piece });
-            listPage.Add(new Product { ProductNumber = 03, Name = "Dukke", Description = "En dukke for piger", SellingPrice = 25.00m, PurchasePrice = 20.50m, Location = "648N", QuantityInStock = 20, Unit = UnitType.Piece });
-            listPage.Add(new Product { ProductNumber = 04, Name = "Gummiand", Description = "Den bedste ting i verden", SellingPrice = 200.75m, PurchasePrice = 100.50m, Location = "42AA", QuantityInStock = 1, Unit = UnitType.Piece });
+            listPage.Add(new Product { ProductNumber = 01, Name = "Reb", Description = "Et langt reb", SellingPrice = 100.00m, PurchasePrice = 99.00m, Location = "223A", QuantityInStock = 55, Unit = UnitType.Meter });
+            listPage.Add(new Product { ProductNumber = 02, Name = "Dæk", Description = "Et lækkert dæk", SellingPrice = 100.00m, PurchasePrice = 30.00m, Location = "283E", QuantityInStock = 10, Unit = UnitType.Piece });
+            listPage.Add(new Product { ProductNumber = 03, Name = "Dukke", Description = "En dukke for piger", SellingPrice = 100.00m, PurchasePrice = 80.00m, Location = "648N", QuantityInStock = 20, Unit = UnitType.Piece });
+            listPage.Add(new Product { ProductNumber = 04, Name = "Gummiand", Description = "Den bedste ting i verden", SellingPrice = 200.00m, PurchasePrice = 175.00m, Location = "42AA", QuantityInStock = 1, Unit = UnitType.Piece });
         }
 
-        public override string Title { get; set; } = "Produkt Liste";
+        public override string Title { get; set; } = "Produkter";
 
         protected override void Draw()
         {
@@ -26,6 +26,7 @@ namespace MyERP.ProductView
             Console.WriteLine("Tryk F1 for at skabe et produkt");
             Console.WriteLine("Tryk F2 for at tilpasse et produkt");
             Console.WriteLine("Tryk F5 for at slette et produkt");
+
             //listPage.AddKey(ConsoleKey.F1, CreateProduct);
             //listPage.AddKey(ConsoleKey.F2, EditProduct);
             listPage.AddKey(ConsoleKey.F5, DeleteProduct);
@@ -35,18 +36,18 @@ namespace MyERP.ProductView
             listPage.AddColumn("Antal På Lager", "QuantityInStock");
             listPage.AddColumn("Indkøbspris", "PurchasePrice");
             listPage.AddColumn("Salgspris", "SellingPrice");
-            listPage.AddColumn("Margin", "CalculateMarginPercentage");
+            listPage.AddColumn("Avance (%)", "MarginPercentage");
 
 
-            //var selected = listPage.Select();
-            //if (selected != null)
-            //{
-            //    Screen.Display(new ProductViewScreen(selected));
-            //}
-            //else
-            //{
-            //    Quit();
-            //}
+            var selected = listPage.Select();
+            if (selected != null)
+            {
+                //Screen.Display(new ProductViewScreen(selected));
+            }
+            else
+            {
+                Quit();
+            }
         }
 
         //private void CreateProduct(Product product)
