@@ -95,7 +95,8 @@ namespace MyERP
 
     public enum UnitType
     {
-        Styk,
+        Stk,
+        Pakke,
         Time,
         Meter
     }

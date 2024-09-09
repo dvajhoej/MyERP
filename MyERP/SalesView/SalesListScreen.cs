@@ -1,4 +1,6 @@
-﻿using TECHCOOL.UI;
+﻿using MyERP.productView;
+using MyERP.ProductView;
+using TECHCOOL.UI;
 
 namespace MyERP.SalesView
 {
@@ -26,7 +28,7 @@ namespace MyERP.SalesView
                 ProductNumber = 101,
                 Name = "Product A",
                 Quantity = 2,
-                Price = 100m // Price per item
+                Price = 100 // Price per item
             });
 
             order1.AddOrderLine(new SalesOrderLine
@@ -34,7 +36,8 @@ namespace MyERP.SalesView
                 ProductNumber = 102,
                 Name = "Product B",
                 Quantity = 1,
-                Price = 50m
+                Price = 50,
+                
             });
 
             listPage.Add(order1);
@@ -53,7 +56,7 @@ namespace MyERP.SalesView
                 ProductNumber = 103,
                 Name = "Product C",
                 Quantity = 3,
-                Price = 200m
+                Price = 200
             });
 
             listPage.Add(order2);
@@ -69,10 +72,15 @@ namespace MyERP.SalesView
             Console.WriteLine("Press F2 to edit an order");
             Console.WriteLine("Press F5 to delete an order");
 
-            listPage.AddColumn("Order Number", "OrderNumber", 25);
-            //listPage.AddColumn("Creation Time", "CreationTime", 25);
-            //listPage.AddColumn("Completion Time", "CompletionTime", 25);
-            //listPage.AddColumn("Customer Number", "CustomerNumber", 25);
+            //listPage.AddKey(ConsoleKey.F1, CreateOrder);
+            //listPage.AddKey(ConsoleKey.F2, EditOrder);
+            //listPage.AddKey(ConsoleKey.F5, DeleteOrder);
+
+            listPage.AddColumn("Ordre nummer", "OrderNumber", 25);
+            listPage.AddColumn("Oprettelse", "CreationDate", 25);
+            listPage.AddColumn("Færdig", "CompletionDate", 25);
+            listPage.AddColumn("Kunde nummer", "CustomerNumber", 25);
+            listPage.AddColumn("Kunde Navn", "Fullname", 25);
             //listPage.AddColumn("Status", "Status", 25);
 
             // Display the list and get the selected item
@@ -83,6 +91,27 @@ namespace MyERP.SalesView
             }
 
             Quit();
+        }
+
+        private void CreateProduct(SalesOrderHeader order)
+        {
+            var newOrder = new SalesOrderHeader();
+            listPage.Add(newOrder);
+            //Screen.Display(new OrderCreateScreen(newOrder));
+        }
+
+        private void EditProduct(SalesOrderHeader selected)
+        {
+            //Screen.Display(new OrdertEditScreen(selected));
+        }
+
+        private void DeleteProduct(SalesOrderHeader selected)
+        {
+            if (selected != null)
+            {
+                listPage.Remove(selected);
+                Console.WriteLine($"Ordre nr '{selected.OrderNumber}' er blevet slettet.");
+            }
         }
     }
 }

@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Windows.Markup;
 
 namespace MyERP
 {
@@ -22,7 +20,7 @@ namespace MyERP
         public OrderStatus Status { get; set; } = OrderStatus.None;
         private List<SalesOrderLine> OrderLines { get; set; } = new List<SalesOrderLine>();
 
-        public decimal OrderAmount
+        public double OrderAmount
         {
             get
             {
@@ -52,20 +50,40 @@ namespace MyERP
         {
             return OrderLines.AsReadOnly();
         }
-    }
 
-    /*public class SalesOrderLine
-    {
-        public int ProductNumber { get; set; }
-        public string Name { get; set; }
-        public int Quantity { get; set; }
-        public decimal Price { get; set; }
-        public decimal Amount
+        private SalesOrderLine _productNumber = new SalesOrderLine();
+        private SalesOrderLine _name = new SalesOrderLine();
+        private SalesOrderLine _quantity = new SalesOrderLine();
+        private SalesOrderLine _price = new SalesOrderLine();
+        private Person _fullName = new Person();
+
+        public string Fullname
         {
-            get
-            {
-                return Quantity * Price;
-            }
+            get { return _fullName.FullName; }
+            set { _fullName.FullName = value; }
         }
-    }*/
+
+        public int ProductNumber
+        {
+            get { return _productNumber.ProductNumber; }
+            set { _productNumber.ProductNumber = value; }
+        }
+        public string Name
+        {
+            get { return _name.Name; }
+            set { _name.Name = value; }
+        }
+        public double Quantity
+        {
+            get { return _quantity.Quantity; }
+            set { _quantity.Quantity = value; }
+        }
+        public double Price
+        {
+            get { return _price.Price; }
+            set { _price.Price = value; }
+
+
+        }
+    }
 }
