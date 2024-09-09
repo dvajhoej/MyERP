@@ -29,7 +29,8 @@ namespace MyERP.productView
             editor.SelectBox("Enhed", "Unit");
 
 
-            editor.AddOption("Enhed", "Styk", UnitType.Styk);
+            editor.AddOption("Enhed", "Stk", UnitType.Stk);
+            editor.AddOption("Enhed", "Pakker", UnitType.Pakke);
             editor.AddOption("Enhed", "time", UnitType.Meter);
             editor.AddOption("Enhed", "Meter", UnitType.Time);
           

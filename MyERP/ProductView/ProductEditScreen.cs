@@ -32,7 +32,8 @@ namespace MyERP.ProductView
             editor.TextBox("Lokation", "Location");
             editor.DoubleBox("Antal på lager", "QuantityInStock");
             editor.SelectBox("Enhed", "Unit");
-            editor.AddOption("Enhed", "Styk", UnitType.Styk);
+            editor.AddOption("Enhed", "Styk", UnitType.Stk);
+            editor.AddOption("Enhed", "Pakke", UnitType.Pakke);
             editor.AddOption("Enhed", "time", UnitType.Meter);
             editor.AddOption("Enhed", "Meter", UnitType.Time);
 
