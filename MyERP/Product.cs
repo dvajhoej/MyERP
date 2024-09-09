@@ -1,4 +1,5 @@
 ﻿using System;
+using TECHCOOL.UI;
 
 namespace MyERP
 {
@@ -7,8 +8,8 @@ namespace MyERP
         public int ProductNumber { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
-        public decimal SellingPrice { get; set; }
-        public decimal PurchasePrice { get; set; }
+        public double SellingPrice { get; set; }
+        public double PurchasePrice { get; set; }
 
         private string location;
         public string Location
@@ -37,7 +38,7 @@ namespace MyERP
                 }
             }
         }
-        public decimal Profit
+        public double Profit
         {
             get
             {
@@ -45,10 +46,10 @@ namespace MyERP
             }
         }
 
-        public decimal QuantityInStock { get; set; }
+        public double QuantityInStock { get; set; }
         public UnitType Unit { get; set; }
 
-        public Product(int productNumber, string name, string description, decimal sellingPrice, decimal purchasePrice, string location, decimal quantityInStock, UnitType unit)
+        public Product(int productNumber, string name, string description, double sellingPrice, double purchasePrice, string location, double quantityInStock, UnitType unit)
         {
             ProductNumber = productNumber;
             Name = name;
@@ -65,7 +66,7 @@ namespace MyERP
             
         }
 
-        public decimal CalculateMarginPercentage()
+        public double CalculateMarginPercentage()
         {
             if (PurchasePrice == 0)
             {
@@ -95,7 +96,7 @@ namespace MyERP
     public enum UnitType
     {
         Styk,
-        time,
+        Time,
         Meter
     }
 }

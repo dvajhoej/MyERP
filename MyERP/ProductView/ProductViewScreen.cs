@@ -38,7 +38,7 @@ namespace MyERP.ProductView
             listPage.AddColumn("Salgsspris", "SellingPrice");
             listPage.AddColumn("Indkøbspris", "PurchasePrice");
             listPage.AddColumn("Lokation", "Location");
-            listPage.AddColumn("Antal på lagerk", "QuantityInStock");
+            listPage.AddColumn("Antal på lager", "QuantityInStock");
             listPage.AddColumn("Enhed", "Unit");
             listPage.AddColumn("Avance (%)", "MarginPercentage");
             listPage.AddColumn("Avance (kr)", "Profit");
