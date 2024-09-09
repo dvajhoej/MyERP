@@ -1,4 +1,14 @@
--- #B2 
+---- DROP TABELS FOR RESET,
+
+DROP TABLE IF EXISTS SalesOrderLines
+DROP TABLE IF EXISTS SalesOrderHeader
+DROP TABLE IF EXISTS Products
+DROP TABLE IF EXISTS Customers
+DROP TABLE IF EXISTS Persons
+DROP TABLE IF EXISTS Addresses
+
+
+---- #B2 
 
 CREATE TABLE Products (
     productID INT PRIMARY KEY IDENTITY(1,1),
@@ -8,8 +18,8 @@ CREATE TABLE Products (
     purchasePrice DECIMAL(10,2),
     location VARCHAR(4),
     quantity DECIMAL(10,2),
-    unit VARCHAR(5),
-    CONSTRAINT chk_unit CHECK (unit IN ('Stk', 'Time', 'Meter')),
+    unit VARCHAR(6),
+    CONSTRAINT chk_unit CHECK (unit IN ('Stk', 'Pakker', 'Time', 'Meter')),
     CONSTRAINT chk_location CHECK (location LIKE '[A-Za-z0-9][A-Za-z0-9][A-Za-z0-9][A-Za-z0-9]')
 );
 
@@ -55,11 +65,10 @@ CREATE TABLE Customers (
 
 CREATE TABLE SalesOrderHeader (
 	orderID INT PRIMARY KEY IDENTITY(1,1),
-	creationDate DATETIME,
+	creationDate DATETIME DEFAULT GETDATE(),
 	completionDate DATETIME,
 	customerID INT FOREIGN KEY  REFERENCES Customers(customerID),
 	status VARCHAR(15),
-	orderLines int,
 	CONSTRAINT chk_status CHECK (status IN ('None', 'Created', 'Confirmed', 'Packed', 'Completed')),
 	);
 
@@ -68,9 +77,9 @@ CREATE TABLE SalesOrderHeader (
 --#B7
 
 CREATE TABLE SalesOrderLines (
-    salesOrderID INT FOREIGN KEY REFERENCES SalesOrderHeader(OrderID),
+	salesOrderID INT PRIMARY KEY IDENTITY(1,1),
+    salesOrderHeadID INT FOREIGN KEY REFERENCES SalesOrderHeader(OrderID),
     productID INT FOREIGN KEY REFERENCES Products(productID),
-    quantity DECIMAL(10,2),
-    unitPrice DECIMAL(10,2),
-    PRIMARY KEY (salesOrderID, productID)
+    quantity DECIMAL(10,2)
 );
+
