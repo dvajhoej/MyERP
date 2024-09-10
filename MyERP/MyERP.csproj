@@ -1,10 +1,9 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-
-
   <ItemGroup>
-    <ProjectReference Include="..\..\TECHCOOL\TECHCOOL.csproj" />
+    <ProjectReference Include="..\..\TECHCOOL_FORK_V_Pmad\TECHCOOL.csproj" />
   </ItemGroup>
+
 
 
   <PropertyGroup>

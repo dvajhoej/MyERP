@@ -9,8 +9,8 @@ namespace MyERP.CustomerView
         public CustomerListScreen()
         {
             listPage = new ListPage<Customer>();
-            listPage.Add(new Customer { FirstName = "Peter", LastName = "Larsen", Street = "TEST" });
-            listPage.Add(new Customer { FirstName = "Jens", LastName = "Thorsen", Street = "TEST" });
+            List<Customer> customers = Database.Instance.GetAllCustomers(); // Fetch products
+            listPage.Add(customers); // Set the fetched products to the listPage
         }
 
         public override string Title { get; set; } = "Kunder";

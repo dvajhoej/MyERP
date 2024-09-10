@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 
 namespace MyERP
 {
+
     public partial class Database
     {
         private static Database instance;

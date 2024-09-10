@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using TECHCOOL.UI;
+﻿using TECHCOOL.UI;
 
 namespace MyERP.CustomerView
 {
@@ -13,17 +8,7 @@ namespace MyERP.CustomerView
 
         public CustomerViewScreen(Customer c)
         {
-            customer = new Customer
-            {
-                FullName = c.FullName,
-                Street = c.Street,
-                City = c.City,
-                Country = c.Country,
-                ZipCode = c.ZipCode,
-                HouseNumber = c.HouseNumber,
-                LastPurchaseDate = c.LastPurchaseDate,
-               
-            };
+            customer = c;
         }
 
         public override string Title { get; set; } = "Kunde Visning";
@@ -31,20 +16,10 @@ namespace MyERP.CustomerView
 
         protected override void Draw()
         {
-            Clear();
+            Console.WriteLine($"Fuldenavn : {customer.Fullname}");
+            Console.WriteLine($"Address : {customer.FullAddress}");
+            Console.WriteLine($"Sidste køb : {customer.LastPurchaseDate.ToShortDateString()}");
 
-            ListPage<Customer> listPage = new();
-
-            listPage.Add(customer);
-
-            listPage.AddColumn("Fulde navn", "Fullname");
-            listPage.AddColumn("Fulde navn", "Address");
-            listPage.AddColumn("Fulde navn", "LastPurchaseDate");
-
-
-            listPage.Select();
-
-            Quit();
         }
     }
 }

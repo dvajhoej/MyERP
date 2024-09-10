@@ -30,7 +30,7 @@ namespace MyERP.productView
 
 
             editor.AddOption("Enhed", "Stk", UnitType.Stk);
-            editor.AddOption("Enhed", "Pakker", UnitType.Pakke);
+            editor.AddOption("Enhed", "Pakker", UnitType.Pakker);
             editor.AddOption("Enhed", "time", UnitType.Meter);
             editor.AddOption("Enhed", "Meter", UnitType.Time);
           

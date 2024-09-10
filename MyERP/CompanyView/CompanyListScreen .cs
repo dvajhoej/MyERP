@@ -40,6 +40,7 @@ namespace MyERP.CompanyView
             }
             else
             {
+                
                 Quit();
             }
         }

@@ -8,17 +8,7 @@ namespace MyERP.ProductView
 
         public ProductViewScreen(Product p)
         {
-            product = new Product
-            {
-                ProductNumber = p.ProductNumber,
-                Name = p.Name,
-                Description = p.Description,
-                SellingPrice = p.SellingPrice,
-                PurchasePrice = p.PurchasePrice,
-                Location = p.Location,
-                QuantityInStock = p.QuantityInStock,
-                Unit = p.Unit
-            };
+            product = p;
         }
 
         public override string Title { get; set; } = "Produkt Visning";

@@ -12,6 +12,7 @@ DROP TABLE IF EXISTS Addresses
 
 CREATE TABLE Products (
     productID INT PRIMARY KEY IDENTITY(1,1),
+	itemNumber INT UNIQUE,
     name VARCHAR(50),
     description TEXT,
     sellingPrice DECIMAL(10,2),

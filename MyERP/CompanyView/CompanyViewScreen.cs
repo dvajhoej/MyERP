@@ -8,16 +8,7 @@ namespace MyERP.CompanyView
 
         public CompanyViewScreen(Company c)
         {
-            company = new Company
-            {
-                CompanyName = c.CompanyName,
-                Country = c.Country,
-                Currency = c.Currency,
-                Street = c.Street,
-                HouseNumber = c.HouseNumber,
-                Zipcode = c.Zipcode,
-                City = c.City,
-            };
+            company = c;
         }
 
         public override string Title { get; set; } = "Virksomheds Visning";

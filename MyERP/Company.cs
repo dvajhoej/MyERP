@@ -19,7 +19,7 @@ namespace MyERP
         public string City { get; set; }
         public string Country { get; set; }
         public Currency Currency { get; set; }
-        public object Zipcode { get; internal set; }
+
 
         public Company(int id, string companyName, string street, int houseNumber, int zipCode, string city, string country, Currency currency)
         {

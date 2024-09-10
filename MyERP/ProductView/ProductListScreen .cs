@@ -1,6 +1,8 @@
-﻿using TECHCOOL.UI;
+﻿using MyERP.productView;
+using TECHCOOL.UI;
+using System.Data.SqlClient;
 using System;
-using MyERP.productView;
+using System.Collections.Generic;
 
 namespace MyERP.ProductView
 {
@@ -11,11 +13,8 @@ namespace MyERP.ProductView
         public ProductListScreen()
         {
             listPage = new ListPage<Product>();
-
-            listPage.Add(new Product { ProductNumber = 01, Name = "Reb", Description = "Et langt reb", SellingPrice = 100.00, PurchasePrice = 99.00, Location = "223A", QuantityInStock = 55, Unit = UnitType.Meter });
-            listPage.Add(new Product { ProductNumber = 02, Name = "Dæk", Description = "Et lækkert dæk", SellingPrice = 100.00, PurchasePrice = 30.00, Location = "283E", QuantityInStock = 10, Unit = UnitType.Stk });
-            listPage.Add(new Product { ProductNumber = 03, Name = "Dukke", Description = "En dukke for piger", SellingPrice = 100.00, PurchasePrice = 80.00, Location = "648N", QuantityInStock = 20, Unit = UnitType.Stk });
-            listPage.Add(new Product { ProductNumber = 04, Name = "Gummiand", Description = "Den bedste ting i verden", SellingPrice = 200.00, PurchasePrice = 175.00, Location = "42AA", QuantityInStock = 1, Unit = UnitType.Stk });
+            List<Product> products = Database.Instance.GetAllProducts();
+            listPage.Add(products);
         }
 
         public override string Title { get; set; } = "Produkter";
@@ -72,5 +71,32 @@ namespace MyERP.ProductView
                 Console.WriteLine($"Produktet '{selected.Name}' er blevet slettet.");
             }
         }
+        //private void FetchProductFromDatabase()
+        //{
+        //    string connectionString = DatabaseString.ConnectionString;
+        //    using (SqlConnection connection = new SqlConnection(connectionString))
+        //    {
+        //        string query = "SELECT productID, name, description, sellingPrice, purchasePrice, location, quantity,  unit FROM Products";
+        //        SqlCommand command = new SqlCommand(query, connection);
+        //        connection.Open();
+        //        using (SqlDataReader reader = command.ExecuteReader())
+        //        {
+        //            while (reader.Read())
+        //            {
+        //                Product product = new Product
+        //                {
+        //                    ProductNumber = reader.GetInt32(0),
+        //                    Name = reader.GetString(1),
+        //                    Description = reader.GetString(2),
+        //                    SellingPrice = (double)reader.GetDecimal(3),
+        //                    PurchasePrice = (double)reader.GetDecimal(4),
+        //                    Location = reader.GetString(5),
+        //                    QuantityInStock = Convert.ToDouble(reader.GetDecimal(6)),
+        //                    Unit = (UnitType)Enum.Parse(typeof(UnitType), reader.GetString(7)) 
+        //                };
+        //                listPage.Add(product);
+        //            }
+        //        }
+        //    }
+        }
     }
-}

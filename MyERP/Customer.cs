@@ -4,29 +4,36 @@ namespace MyERP
 {
     public class Customer : Person
     {
-        public int CustomerID { get; private set; }
+        public int CustomerID { get; set; }
         public DateTime LastPurchaseDate { get; set; }
-        static int counter = 80000;
+        
 
         public Customer(string firstName, string lastName, Address address, string email, string phone, DateTime lastPurchaseDate)
             : base(firstName, lastName, address, email, phone)
         {
-            counter++;
-            CustomerID = counter;
+          
+           
             LastPurchaseDate = lastPurchaseDate;
       
         }
 
         public Customer()
         {
-            counter++;
-            CustomerID = counter;
+           
+           
         }
-
         private Address _address = new Address();
-        private Address _houseNumber = new Address();
-        private Address _zipCode = new Address();
-        private Address _Country = new Address();
+        private Address _fulladdress = new Address();
+
+
+        public string FullAddress
+        {
+            get { return Street +" "+ HouseNumber +", "+ ZipCode +", "+ City +", "+ Country; }
+        }
+        public string Fullname
+        {
+            get { return FirstName +" "+ LastName; }
+        }
 
         public string City
         {

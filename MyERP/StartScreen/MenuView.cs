@@ -26,7 +26,7 @@ namespace MyERP.StartScreen
             menu.Add(salesListScreen);
             menu.Add(customerListScreen);
             menu.Add(productListScreen);
-            menu.Start(this);
+            MyMenuScreen.Display(menu);
         }
     }
 }
