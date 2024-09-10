@@ -9,6 +9,7 @@ namespace MyERP.CompanyView
         public CompanyViewScreen(Company c)
         {
             company = c;
+            ExitOnEscape();
         }
 
         public override string Title { get; set; } = "Virksomheds Visning";
@@ -16,30 +17,12 @@ namespace MyERP.CompanyView
 
         protected override void Draw()
         {
-            Clear();
-
-            ListPage<Company> listPage = new();
-
-            listPage.Add(company);
-
-            listPage.AddColumn("Company Name", "CompanyName");
-            listPage.AddColumn("Street", "Street");
-            listPage.AddColumn("House Number", "HouseNumber");
-            listPage.AddColumn("Postal Code", "ZipCode");
-            listPage.AddColumn("City", "City");
-            listPage.AddColumn("Country", "Country");
-            listPage.AddColumn("Currency", "Currency");
-
-            listPage.Select();
-
-            var selected = listPage.Select();
-            if (selected != null)
-            {
-            }
-            else
-            {
-                Quit();
-            }
+            Console.WriteLine($"Navn:        {company.CompanyName}");
+            Console.WriteLine($"Address:     {company.Street} {company.HouseNumber}");
+            Console.WriteLine($"Postnummer:  {company.ZipCode}");
+            Console.WriteLine($"By:          {company.City}");
+            Console.WriteLine($"Land:        {company.Country}");
+            Console.WriteLine($"Currency:    {company.Currency}");
         }
     }
 }
