@@ -11,19 +11,19 @@ namespace MyERP
 {
     public class Company
     {
-        public int CompanyID { get; set; }
+        public int ID { get; set; }
         public string CompanyName { get; set; }
         public string Street { get; set; }
-        public string HouseNumber { get; set; }
-        public string ZipCode { get; set; }
+        public int HouseNumber { get; set; }
+        public int ZipCode { get; set; }
         public string City { get; set; }
         public string Country { get; set; }
         public Currency Currency { get; set; }
 
 
-        public Company(int companyID, string companyName, string street, string houseNumber, string zipCode, string city, string country, Currency currency)
+        public Company(int id, string companyName, string street, int houseNumber, int zipCode, string city, string country, Currency currency)
         {
-            CompanyID = companyID;
+            ID = id;
             CompanyName = companyName;
             Street = street;
             HouseNumber = houseNumber;

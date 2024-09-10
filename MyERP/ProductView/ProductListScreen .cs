@@ -30,7 +30,6 @@ namespace MyERP.ProductView
             listPage.AddKey(ConsoleKey.F1, CreateProduct);
             listPage.AddKey(ConsoleKey.F2, EditProduct);
             listPage.AddKey(ConsoleKey.F5, DeleteProduct);
-            listPage.AddKey(ConsoleKey.Escape, Quit);
 
             listPage.AddColumn("Varenummer", "ProductNumber");
             listPage.AddColumn("Navn", "Name");
@@ -46,12 +45,12 @@ namespace MyERP.ProductView
             {
                 Screen.Display(new ProductViewScreen(selected));
             }
-        
+            else
+            {
+                Quit();
+            }
         }
-        void Quit(Product _)
-        {
-            Quit();
-        }
+
         private void CreateProduct(Product product)
         {
             var newProduct = new Product();
