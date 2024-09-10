@@ -1,13 +1,13 @@
 -- DUMMY DATA,
 
 
-INSERT INTO Products (name, description, sellingPrice, purchasePrice, location, quantity, unit)
+INSERT INTO Products (itemNumber, name, description, sellingPrice, purchasePrice, location, quantity, unit)
 VALUES 
-('Product A', 'Description A', 100.00, 70.00, 'A123', 10, 'Stk'),
-('Product B', 'Description B', 150.00, 90.00, 'B456', 5, 'Pakker'),
-('Product C', 'Description C', 200.00, 120.00, 'C789', 20, 'Meter'),
-('Product D', 'Description D', 50.00, 35.00, 'D012', 15, 'Time'),
-('Product E', 'Description E', 75.00, 45.00, 'E345', 25, 'Stk');
+(1, 'Product A', 'Description A', 100.00, 70.00, 'A123', 10, 'Stk'),
+(2, 'Product B', 'Description B', 150.00, 90.00, 'B456', 5, 'Pakker'),
+(3, 'Product C', 'Description C', 200.00, 120.00, 'C789', 20, 'Meter'),
+(4, 'Product D', 'Description D', 50.00, 35.00, 'D012', 15, 'Time'),
+(5, 'Product E', 'Description E', 75.00, 45.00, 'E345', 25, 'Stk');
 
 GO
 
@@ -17,7 +17,12 @@ VALUES
 ('2nd Ave', '5B', '67890', 'City B', 'Country B'),
 ('Elm St', '22', '54321', 'City C', 'Country A'),
 ('Oak St', '14C', '09876', 'City D', 'Country C'),
-('Pine St', '33D', '13579', 'City E', 'Country D');
+('Pine St', '33D', '13579', 'City E', 'Country D'),
+('Nørregade', '123', '1000', 'København', 'Danmark'),
+('Østergade', '45B', '5000', 'Odense', 'Danmark'),
+('Søndergade', '7', '8000', 'Aarhus', 'Danmark'),
+('Vesterbrogade', '89', '9000', 'Aalborg', 'Danmark'),
+('Hovedgaden', '56A', '4000', 'Roskilde', 'Danmark');
 
 GO
 
@@ -82,5 +87,11 @@ VALUES
 (5, 4, 1),
 (5, 5, 5);
 
-
+INSERT INTO companies (name, addressID, currency)
+VALUES 
+('Flødebolle Fabrikken', 6, 'DKK'),
+('Snorkel Snedkeri', 7, 'SEK'),
+('Rundstykke Rockets', 8, 'USD'),
+('Pølse Paradis', 9, 'EUR'),
+('Kaffe & Klapvogne A/S', 10, 'DKK');
 

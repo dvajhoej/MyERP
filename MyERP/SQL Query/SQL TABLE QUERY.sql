@@ -1,5 +1,5 @@
 ---- DROP TABELS FOR RESET,
-
+DROP TABLE IF EXISTS companies
 DROP TABLE IF EXISTS SalesOrderLines
 DROP TABLE IF EXISTS SalesOrderHeader
 DROP TABLE IF EXISTS Products
@@ -7,7 +7,7 @@ DROP TABLE IF EXISTS Customers
 DROP TABLE IF EXISTS Persons
 DROP TABLE IF EXISTS Addresses
 
-
+---- #B1, ( B1 Kommer efter B3, grundet referencer og opsætning at 
 ---- #B2 
 
 CREATE TABLE Products (
@@ -37,7 +37,16 @@ CREATE TABLE Addresses (
 
 	);
 
+---- #B1
 
+CREATE TABLE Companies (
+	companyID INT PRIMARY KEY IDENTITY(1,1),
+	name VARCHAR(50),
+	addressID INT FOREIGN KEY  REFERENCES Addresses(addressID),
+	currency CHAR(3)
+	CONSTRAINT chk_currency CHECK (currency IN ('DKK', 'SEK', 'USD', 'EUR')),
+
+	);
 
 --#B4
 
