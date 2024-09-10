@@ -25,7 +25,7 @@ namespace MyERP.CustomerView
             listPage.AddKey(ConsoleKey.F1, CreateCustomer);
             listPage.AddKey(ConsoleKey.F2, EditCustomer);
             listPage.AddKey(ConsoleKey.F5, DeleteCustomer);
-
+            listPage.AddKey(ConsoleKey.Escape, Quit);
             listPage.AddColumn("Fornavn", "FirstName");
             listPage.AddColumn("Efternavn", "LastName");
             listPage.AddColumn("Kunde nummer", "CustomerID");
@@ -37,11 +37,15 @@ namespace MyERP.CustomerView
             {
                 Screen.Display(new CustomerViewScreen(selected));
             }
-            else
-            {
-                Quit();
-            }
+     
         }
+
+        void Quit(Customer _)
+        {
+            Quit(); 
+        }
+
+
         private void CreateCustomer(Customer customer)
         {
             var newCustomer = new Customer();

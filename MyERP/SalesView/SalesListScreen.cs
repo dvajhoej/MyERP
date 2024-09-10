@@ -25,9 +25,10 @@ namespace MyERP.SalesView
             Console.WriteLine("Press F2 to edit an order");
             Console.WriteLine("Press F5 to delete an order");
 
-            //listPage.AddKey(ConsoleKey.F1, CreateOrder);
-            //listPage.AddKey(ConsoleKey.F2, EditOrder);
-            //listPage.AddKey(ConsoleKey.F5, DeleteOrder);
+            listPage.AddKey(ConsoleKey.F1, CreateOrder);
+            listPage.AddKey(ConsoleKey.F2, EditOrder);
+            listPage.AddKey(ConsoleKey.F5, DeleteOrder);
+            listPage.AddKey(ConsoleKey.Escape, Quit);
 
             listPage.AddColumn("Ordre nummer", "OrderNumber", 25);
             listPage.AddColumn("Oprettelse", "CreationDate", 25);
@@ -42,22 +43,25 @@ namespace MyERP.SalesView
                 //Screen.Display(new OrderViewScreen(selected));
             }
 
+           
+        }
+        void Quit(SalesOrderHeader _)
+        {
             Quit();
         }
-
-        private void CreateProduct(SalesOrderHeader order)
+        private void CreateOrder(SalesOrderHeader order)
         {
             var newOrder = new SalesOrderHeader();
             listPage.Add(newOrder);
             //Screen.Display(new OrderCreateScreen(newOrder));
         }
 
-        private void EditProduct(SalesOrderHeader selected)
+        private void EditOrder(SalesOrderHeader selected)
         {
             //Screen.Display(new OrdertEditScreen(selected));
         }
 
-        private void DeleteProduct(SalesOrderHeader selected)
+        private void DeleteOrder(SalesOrderHeader selected)
         {
             if (selected != null)
             {
