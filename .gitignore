@@ -362,3 +362,5 @@ MigrationBackup/
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
 /MyERP/CustomerView/1.cs
+/MyERP/DbHelper.cs
+/MyERP/Database/DbHelper.cs
