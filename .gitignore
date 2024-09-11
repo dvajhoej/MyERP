@@ -9,7 +9,7 @@
 *.user
 *.userosscache
 *.sln.docstates
-
+*.csproj
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
 
@@ -364,3 +364,5 @@ FodyWeavers.xsd
 /MyERP/CustomerView/1.cs
 /MyERP/DbHelper.cs
 /MyERP/Database/DbHelper.cs
+MyERP/MyERP.csproj
+MyERP/MyERP.csproj

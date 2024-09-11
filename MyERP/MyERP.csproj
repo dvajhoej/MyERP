@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <ItemGroup>
-    <ProjectReference Include="..\..\TECHCOOL_FORK_V_Pmad\TECHCOOL.csproj" />
+    <ProjectReference Include="/workspaces/dotnet-mssql-3/TECHCOOL_FORK/TECHCOOL.csproj" />
   </ItemGroup>
 
 
