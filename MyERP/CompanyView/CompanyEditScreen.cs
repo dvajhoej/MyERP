@@ -21,8 +21,8 @@ namespace MyERP.CompanyView
 
             editor.TextBox("Virksomheds Navn", "CompanyName");
             editor.TextBox("Vej", "Street");
-            editor.IntBox("Hus nummer", "HouseNumber");
-            editor.IntBox("Post nummer", "ZipCode");
+            editor.TextBox("Hus nummer", "HouseNumber");
+            editor.TextBox("Post nummer", "ZipCode");
             editor.TextBox("By", "City");
             editor.TextBox("Land", "Country");
             editor.SelectBox("Valuta", "Currency");
