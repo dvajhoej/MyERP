@@ -12,6 +12,14 @@ namespace MyERP.CustomerView
         {
             listPage = new ListPage<Customer>();
             listPage.Add(Database.Instance.Customers);
+            listPage.AddKey(ConsoleKey.F1, CreateCustomer);
+            listPage.AddKey(ConsoleKey.F2, EditCustomer);
+            listPage.AddKey(ConsoleKey.F5, DeleteCustomer);
+            listPage.AddKey(ConsoleKey.Escape, Quit);
+            listPage.AddColumn("Fornavn", "FirstName");
+            listPage.AddColumn("Efternavn", "LastName");
+            listPage.AddColumn("Kunde nummer", "CustomerID");
+            listPage.AddColumn("Street", "Street");
 
         }
 
@@ -24,14 +32,7 @@ namespace MyERP.CustomerView
             Console.WriteLine("Tryk F1 for at oprette  en kunde");
             Console.WriteLine("Tryk F2 for at redigere en kunde");
             Console.WriteLine("Tryk F5 for at slette   en kunde");
-            listPage.AddKey(ConsoleKey.F1, CreateCustomer);
-            listPage.AddKey(ConsoleKey.F2, EditCustomer);
-            listPage.AddKey(ConsoleKey.F5, DeleteCustomer);
-            listPage.AddKey(ConsoleKey.Escape, Quit);
-            listPage.AddColumn("Fornavn", "FirstName");
-            listPage.AddColumn("Efternavn", "LastName");
-            listPage.AddColumn("Kunde nummer", "CustomerID");
-            listPage.AddColumn("Street", "Street");
+            
 
             var selected = listPage.Select();
             if (selected != null)
