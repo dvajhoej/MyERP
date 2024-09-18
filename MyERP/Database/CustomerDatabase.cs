@@ -6,7 +6,6 @@ namespace MyERP
 {
     public partial class Database
     {
-        //List<Customer> customers = Instance.GetAllCustomers();
 
 
         public Customer GetCustomerbyID(int id)
@@ -18,6 +17,7 @@ namespace MyERP
                 {
                     return customer;
                 }
+
             }
             return null;
         }
@@ -265,11 +265,28 @@ namespace MyERP
                         string deleteCustomerQuery = "DELETE FROM Customers WHERE customerID = @customerID";
                         using (SqlCommand command = new SqlCommand(deleteCustomerQuery, connection, transaction))
                         {
-                            command.Parameters.AddWithValue("@customerID", CostumerID);
+                            command.Parameters.AddWithValue("@customerID", customer.CustomerID);
                             command.ExecuteNonQuery();
                         }
 
+
+                        string deletePersonQuery = "DELETE FROM Persons WHERE personID = @personID";
+                        using (SqlCommand command = new SqlCommand(@deletePersonQuery, connection, transaction))
+                        {
+                            command.Parameters.AddWithValue("@personID", customer.PersonID);
+                            command.ExecuteNonQuery();
+                        }
+
+                        string deleteAddressQuery = "DELETE FROM Addresses WHERE addressID = @addressID";
+                        using (SqlCommand command = new SqlCommand(deleteAddressQuery, connection, transaction))
+                        {
+                            command.Parameters.AddWithValue("@addressID", customer.AddressID);
+                            command.ExecuteNonQuery();
+                        }
+
+
                         transaction.Commit();
+
                     }
                 }
                 catch (Exception ex)

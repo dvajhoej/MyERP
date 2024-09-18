@@ -2,14 +2,7 @@
 
 namespace MyERP
 {
-    public enum OrderStatus
-    {
-        None,
-        Created,
-        Confirmed,
-        Packed,
-        Completed
-    }
+   
 
     public class SalesOrderHeader
     {
@@ -32,7 +25,14 @@ namespace MyERP
         {
 
         }
-
+        public enum OrderStatus
+        {
+            None,
+            Created,
+            Confirmed,
+            Packed,
+            Completed
+        }
         public SalesOrderHeader(int orderNumber, int customerNumber)
         {
             OrderNumber = orderNumber;
@@ -55,12 +55,26 @@ namespace MyERP
         private SalesOrderLine _name = new SalesOrderLine();
         private SalesOrderLine _quantity = new SalesOrderLine();
         private SalesOrderLine _price = new SalesOrderLine();
-        private Person _fullName = new Person();
+        private Person _person = new Person();
+       
+        
+
+        public string Firstname
+        {
+            get { return _person.FirstName; }
+            set { _person.FirstName = value; }
+        }
+
+        public string Lastname
+        {
+            get { return _person.LastName; }
+            set { _person.LastName = value; }
+        }
 
         public string Fullname
         {
-            get { return _fullName.FullName; }
-            set { _fullName.FullName = value; }
+            get { return _person.FullName; }
+            set { _person.FullName = value; }
         }
 
         public int ProductNumber
