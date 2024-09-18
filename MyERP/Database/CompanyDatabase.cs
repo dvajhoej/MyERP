@@ -11,17 +11,13 @@ namespace MyERP
 {
     public partial class Database
     {
-        // Fetch a company by ID
         public Company GetCompanyById(int companyID)
         {
             return companies.FirstOrDefault(company => company.CompanyID == companyID);
         }
 
 
-//        SELECT companies.name, Addresses.street, Addresses.houseNumber, Addresses.zipCode, Addresses.city, Addresses.country, companies.currency
-//FROM            Addresses INNER JOIN
-//                         companies ON Addresses.addressID = companies.addressID
-        // Fetch all companies
+
         public List<Company> GetAllCompanies()
         {
             string connectionString = DatabaseString.ConnectionString;

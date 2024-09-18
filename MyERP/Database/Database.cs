@@ -14,7 +14,11 @@ namespace MyERP
             {
                 if (instance == null)
                 {
+
+                    
                     instance = new Database();
+                    //instance.customers = instance.GetAllCustomers();
+
                 }
                 return instance;
             }
@@ -25,12 +29,16 @@ namespace MyERP
         private List<SalesOrderHeader> sales;
         private List<Customer> customers;
 
-        private Database()
+        public Database()
         {
             companies = new List<Company>();
             products = new List<Product>();
             sales = new List<SalesOrderHeader>();
             customers = new List<Customer>();
+            GetAllCustomers();
+            GetAllCompanies();
+            GetAllProducts();
+            GetAllSalesOrderHeaders();
         }
 
         public List<Customer> Customers

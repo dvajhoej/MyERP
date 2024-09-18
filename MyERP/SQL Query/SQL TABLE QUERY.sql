@@ -42,7 +42,7 @@ CREATE TABLE Addresses (
 CREATE TABLE Companies (
 	companyID INT PRIMARY KEY IDENTITY(1,1),
 	name VARCHAR(50),
-	addressID INT FOREIGN KEY  REFERENCES Addresses(addressID),
+	addressID INT FOREIGN KEY  REFERENCES Addresses(addressID)ON DELETE CASCADE,
 	currency CHAR(3)
 	CONSTRAINT chk_currency CHECK (currency IN ('DKK', 'SEK', 'USD', 'EUR')),
 
@@ -62,12 +62,20 @@ CREATE TABLE Persons (
 
 --#B5
 
+
 CREATE TABLE Customers (
 	customerID INT PRIMARY KEY IDENTITY(1,1),
-	personID INT FOREIGN KEY  REFERENCES Persons(PersonID),
-	addressID INT FOREIGN KEY  REFERENCES Addresses(addressID),
+	personID INT FOREIGN KEY  REFERENCES Persons(PersonID) ON DELETE CASCADE,
+	addressID INT FOREIGN KEY  REFERENCES Addresses(addressID) ON DELETE CASCADE,
 	lastPurchaseDate DATETIME NULL
+	
 	);
+--CREATE TABLE Customers (
+--	customerID INT PRIMARY KEY IDENTITY(1,1),
+--	personID INT FOREIGN KEY  REFERENCES Persons(PersonID),
+--	addressID INT FOREIGN KEY  REFERENCES Addresses(addressID),
+--	lastPurchaseDate DATETIME NULL
+--	);
 
 
 
@@ -77,7 +85,7 @@ CREATE TABLE SalesOrderHeader (
 	orderID INT PRIMARY KEY IDENTITY(1,1),
 	creationDate DATETIME DEFAULT GETDATE(),
 	completionDate DATETIME,
-	customerID INT FOREIGN KEY  REFERENCES Customers(customerID),
+	customerID INT FOREIGN KEY  REFERENCES Customers(customerID) ON DELETE SET NULL,
 	status VARCHAR(15),
 	CONSTRAINT chk_status CHECK (status IN ('None', 'Created', 'Confirmed', 'Packed', 'Completed')),
 	);
@@ -88,8 +96,8 @@ CREATE TABLE SalesOrderHeader (
 
 CREATE TABLE SalesOrderLines (
 	salesOrderID INT PRIMARY KEY IDENTITY(1,1),
-    salesOrderHeadID INT FOREIGN KEY REFERENCES SalesOrderHeader(OrderID),
-    productID INT FOREIGN KEY REFERENCES Products(productID),
+    salesOrderHeadID INT FOREIGN KEY REFERENCES SalesOrderHeader(OrderID) ON DELETE SET NULL,
+    productID INT FOREIGN KEY REFERENCES Products(productID) ON DELETE SET NULL,
     quantity DECIMAL(10,2)
 );
 

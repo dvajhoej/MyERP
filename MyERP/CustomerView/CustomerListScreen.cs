@@ -1,16 +1,18 @@
-﻿using TECHCOOL.UI;
+﻿using System.ComponentModel;
+using TECHCOOL.UI;
 
 namespace MyERP.CustomerView
 {
     public class CustomerListScreen : Screen
     {
+
         private ListPage<Customer> listPage;
 
         public CustomerListScreen()
         {
             listPage = new ListPage<Customer>();
-            List<Customer> customers = Database.Instance.GetAllCustomers(); // Fetch products
-            listPage.Add(customers); // Set the fetched products to the listPage
+            listPage.Add(Database.Instance.Customers);
+
         }
 
         public override string Title { get; set; } = "Kunder";
@@ -31,18 +33,18 @@ namespace MyERP.CustomerView
             listPage.AddColumn("Kunde nummer", "CustomerID");
             listPage.AddColumn("Street", "Street");
 
-            // Show the list and get the selected item
             var selected = listPage.Select();
             if (selected != null)
             {
                 Screen.Display(new CustomerViewScreen(selected));
             }
-     
+         
+
         }
 
         void Quit(Customer _)
         {
-            Quit(); 
+            Quit();
         }
 
 
@@ -51,26 +53,26 @@ namespace MyERP.CustomerView
             var newCustomer = new Customer();
             listPage.Add(newCustomer);
             Screen.Display(new CustomerCreateScreen(newCustomer));
-
-            //if (newCompany.CompanyName != null)
-            //{
-            //    listPage.Add(newCompany);
-            //}
-
-            // AFVENTER IMPLEMENTERING
         }
 
         private void EditCustomer(Customer selected)
         {
-            Screen.Display(new CustomerEditScreen(selected));
+            Screen.Display(new CustomerEditScreen(selected, Database.Instance));
         }
+
 
         public void DeleteCustomer(Customer selected)
         {
             if (selected != null)
             {
+
                 listPage.Remove(selected);
-                Console.WriteLine($"Company '{selected.FullName}' has been deleted.");
+                Database.Instance.DeleteCustomerByID(selected.CustomerID);
+                Console.WriteLine($"'{selected.FullName}' er blevet slettet.");
+            }
+            else
+            {
+                Console.WriteLine("Ingen kunde valgt.");
             }
         }
     }

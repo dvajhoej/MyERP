@@ -17,13 +17,24 @@ namespace MyERP.CustomerView
 
         protected override void Draw()
         {
+            string lastPurchaseDateDisplay;
+
+            if (customer.LastPurchaseDate == new DateTime(1900, 1, 1))
+            {
+                lastPurchaseDateDisplay = "";
+            }
+            else
+            {
+                lastPurchaseDateDisplay = customer.LastPurchaseDate?.ToShortDateString();
+            }
+
             Console.WriteLine($"Navn:        {customer.Fullname}");
             Console.WriteLine($"Address:     {customer.Street} {customer.HouseNumber}");
             Console.WriteLine($"Postnummer:  {customer.ZipCode}");
             Console.WriteLine($"By:          {customer.City}");
             Console.WriteLine($"Land:        {customer.Country}");
-            Console.WriteLine($"Sidste køb:  {customer.LastPurchaseDate.ToShortDateString()}");
-
+            Console.WriteLine($"Sidste køb:  {lastPurchaseDateDisplay}");
         }
+
     }
 }
