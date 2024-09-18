@@ -2,14 +2,7 @@
 
 namespace MyERP
 {
-    public enum OrderStatus
-    {
-        None,
-        Created,
-        Confirmed,
-        Packed,
-        Completed
-    }
+   
 
     public class SalesOrderHeader
     {
@@ -32,7 +25,14 @@ namespace MyERP
         {
 
         }
-
+        public enum OrderStatus
+        {
+            None,
+            Created,
+            Confirmed,
+            Packed,
+            Completed
+        }
         public SalesOrderHeader(int orderNumber, int customerNumber)
         {
             OrderNumber = orderNumber;
@@ -51,37 +51,48 @@ namespace MyERP
             return OrderLines.AsReadOnly();
         }
 
-        private SalesOrderLine _productNumber = new SalesOrderLine();
-        private SalesOrderLine _name = new SalesOrderLine();
-        private SalesOrderLine _quantity = new SalesOrderLine();
-        private SalesOrderLine _price = new SalesOrderLine();
-        private Person _fullName = new Person();
+        private SalesOrderLine _salesOrderLine = new SalesOrderLine();
+        private Person _person = new Person();
+       
+        
+
+        public string Firstname
+        {
+            get { return _person.FirstName; }
+            set { _person.FirstName = value; }
+        }
+
+        public string Lastname
+        {
+            get { return _person.LastName; }
+            set { _person.LastName = value; }
+        }
 
         public string Fullname
         {
-            get { return _fullName.FullName; }
-            set { _fullName.FullName = value; }
+            get { return _person.FullName; }
+            set { _person.FullName = value; }
         }
 
         public int ProductNumber
         {
-            get { return _productNumber.ProductNumber; }
-            set { _productNumber.ProductNumber = value; }
+            get { return _salesOrderLine.ProductNumber; }
+            set { _salesOrderLine.ProductNumber = value; }
         }
         public string Name
         {
-            get { return _name.Name; }
-            set { _name.Name = value; }
+            get { return _salesOrderLine.Name; }
+            set { _salesOrderLine.Name = value; }
         }
         public double Quantity
         {
-            get { return _quantity.Quantity; }
-            set { _quantity.Quantity = value; }
+            get { return _salesOrderLine.Quantity; }
+            set { _salesOrderLine.Quantity = value; }
         }
         public double Price
         {
-            get { return _price.Price; }
-            set { _price.Price = value; }
+            get { return _salesOrderLine.Price; }
+            set { _salesOrderLine.Price = value; }
 
 
         }
