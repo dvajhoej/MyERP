@@ -11,6 +11,13 @@ namespace MyERP.CompanyView
             listPage = new ListPage<Company>();
             List<Company> companies = Database.Instance.GetAllCompanies();
             listPage.Add(companies);
+            listPage.AddKey(ConsoleKey.F1, CreateCompany);
+            listPage.AddKey(ConsoleKey.F2, EditCompany);
+            listPage.AddKey(ConsoleKey.F5, DeleteCompany);
+            listPage.AddKey(ConsoleKey.Escape, Quit);
+            listPage.AddColumn("Company Name", "CompanyName", 25);
+            listPage.AddColumn("Country", "Country");
+            listPage.AddColumn("Currency", "Currency");
         }
 
         public override string Title { get; set; } = "Virksomhed";
@@ -22,13 +29,7 @@ namespace MyERP.CompanyView
             Console.WriteLine("Press F1 to create a company");
             Console.WriteLine("Press F2 to edit a company");
             Console.WriteLine("Press F5 to delete a company");
-            listPage.AddKey(ConsoleKey.F1, CreateCompany);
-            listPage.AddKey(ConsoleKey.F2, EditCompany);
-            listPage.AddKey(ConsoleKey.F5, DeleteCompany);
-            listPage.AddKey(ConsoleKey.Escape, Quit);
-            listPage.AddColumn("Company Name", "CompanyName", 25);
-            listPage.AddColumn("Country", "Country");
-            listPage.AddColumn("Currency", "Currency");
+          
 
             // Show the list and get the selected item
             var selected = listPage.Select();
