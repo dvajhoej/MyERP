@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using TECHCOOL.UI;
 
 namespace MyERP.CustomerView
@@ -12,10 +8,12 @@ namespace MyERP.CustomerView
         public override string Title { get; set; } = "Rediger kunde";
 
         private Customer _customer;
+        private Database _database;
 
-        public CustomerEditScreen(Customer kunde)
+        public CustomerEditScreen(Customer customer, Database database)
         {
-            _customer = kunde;
+            _customer = customer;
+            _database = database;
         }
 
         protected override void Draw()
@@ -23,8 +21,6 @@ namespace MyERP.CustomerView
             Clear();
 
             Form<Customer> editor = new Form<Customer>();
-
-
 
             editor.TextBox("Fornavn", "FirstName");
             editor.TextBox("Efternavn", "LastName");
@@ -37,7 +33,7 @@ namespace MyERP.CustomerView
             editor.TextBox("Land", "Country");
 
             editor.Edit(_customer);
-
+            _database.UpdateCustomer(_customer);
 
             this.Quit();
         }

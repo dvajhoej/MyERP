@@ -1,38 +1,46 @@
-﻿using System;
-
-namespace MyERP
+﻿namespace MyERP
 {
     public class Customer : Person
     {
         public int CustomerID { get; set; }
-        public DateTime LastPurchaseDate { get; set; }
-        
+        public DateTime? LastPurchaseDate { get; set; }
+
 
         public Customer(string firstName, string lastName, Address address, string email, string phone, DateTime lastPurchaseDate)
             : base(firstName, lastName, address, email, phone)
         {
-          
-           
+
+
             LastPurchaseDate = lastPurchaseDate;
-      
+
         }
 
         public Customer()
         {
-           
-           
+
+
         }
         private Address _address = new Address();
         private Address _fulladdress = new Address();
+        private Person _person = new Person();
 
-
+        public int PersonID
+        {
+            get { return _person.PersonID; }
+            set { _person.PersonID = value; }
+        }
+        public int AddressID
+        {
+            get { return _address.AddressID; }
+            set { _address.AddressID = value; }
+        }
         public string FullAddress
         {
-            get { return Street +" "+ HouseNumber +", "+ ZipCode +", "+ City +", "+ Country; }
+            get { return Street + " " + HouseNumber + ", " + ZipCode + ", " + City + ", " + Country; }
         }
         public string Fullname
         {
-            get { return FirstName +" "+ LastName; }
+            get { return FirstName + " " + LastName; }
         }
 
         public string City
@@ -52,7 +60,7 @@ namespace MyERP
         }
         public string Street
         {
-            get { return _address.Street; }  
+            get { return _address.Street; }
             set { _address.Street = value; }
         }
 
@@ -64,7 +72,7 @@ namespace MyERP
 
         public override string ToString()
         {
-            return $"{base.ToString()}, Customer Number: {CustomerID}, Last Purchase: {LastPurchaseDate.ToShortDateString()}";
+            return $"{base.ToString()}, Customer Number: {CustomerID}, Last Purchase: {LastPurchaseDate?.ToShortDateString()}";
         }
     }
 }

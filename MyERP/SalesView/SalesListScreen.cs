@@ -10,9 +10,17 @@ namespace MyERP.SalesView
 
         public SalesListScreen()
         {
-            listPage = new ListPage<SalesOrderHeader>();
+            listPage = new ListPage<SalesOrderHeader>(); 
+            listPage.AddKey(ConsoleKey.F1, CreateOrder);
+            listPage.AddKey(ConsoleKey.F2, EditOrder);
+            listPage.AddKey(ConsoleKey.F5, DeleteOrder);
+            listPage.AddKey(ConsoleKey.Escape, Quit);
+            listPage.AddColumn("Ordre nummer", "OrderNumber", 25);
+            listPage.AddColumn("Oprettelse", "CreationDate", 25);
+            listPage.AddColumn("Færdig", "CompletionDate", 25);
+            listPage.AddColumn("Kunde nummer", "CustomerNumber", 25);
+            listPage.AddColumn("Kunde Navn", "Fullname", 25);
 
-           
         }
 
         public override string Title { get; set; } = "Ordre";
@@ -20,21 +28,11 @@ namespace MyERP.SalesView
         protected override void Draw()
         {
             Clear();
-
             Console.WriteLine("Press F1 to create an order");
             Console.WriteLine("Press F2 to edit an order");
             Console.WriteLine("Press F5 to delete an order");
-
-            listPage.AddKey(ConsoleKey.F1, CreateOrder);
-            listPage.AddKey(ConsoleKey.F2, EditOrder);
-            listPage.AddKey(ConsoleKey.F5, DeleteOrder);
-            listPage.AddKey(ConsoleKey.Escape, Quit);
-
-            listPage.AddColumn("Ordre nummer", "OrderNumber", 25);
-            listPage.AddColumn("Oprettelse", "CreationDate", 25);
-            listPage.AddColumn("Færdig", "CompletionDate", 25);
-            listPage.AddColumn("Kunde nummer", "CustomerNumber", 25);
-            listPage.AddColumn("Kunde Navn", "Fullname", 25);
+            
+            
             //listPage.AddColumn("Status", "Status", 25);
 
             var selected = listPage.Select();
