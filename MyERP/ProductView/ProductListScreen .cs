@@ -3,6 +3,7 @@ using TECHCOOL.UI;
 using System.Data.SqlClient;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 
 namespace MyERP.ProductView
 {
@@ -13,8 +14,7 @@ namespace MyERP.ProductView
         public ProductListScreen()
         {
             listPage = new ListPage<Product>();
-            List<Product> products = Database.Instance.GetAllProducts();
-            listPage.Add(products);
+            listPage.Add(Database.Instance.Products);
         }
 
         public override string Title { get; set; } = "Produkter";
