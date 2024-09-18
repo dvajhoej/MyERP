@@ -1,12 +1,5 @@
 ﻿using MyERP.DBHELPER;
-using Mysqlx.Crud;
-using System;
-using System.Collections.Generic;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Reflection;
-using TECHCOOL;
-using TECHCOOL.UI;
 
 namespace MyERP
 {
@@ -30,21 +23,29 @@ namespace MyERP
         public List<SalesOrderHeader> GetAllSalesOrderHeaders()
         {
             string connectionString = DatabaseString.ConnectionString;
-            customers.Clear();
+            sales.Clear();
 
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
-                string query = "SELECT" +
-                    " SalesOrderHeader.orderID," +
-                    " SalesOrderHeader.creationDate," +
-                    " SalesOrderHeader.completionDate," +
-                    " SalesOrderHeader.customerID," +
-                    " Persons.firstname," +
-                    " Persons.lastname " +
-                    " FROM " +
-                    " Customers " +
-                    " INNER JOIN Persons ON Customers.personID = Persons.personID" +
-                    " INNER JOIN SalesOrderHeader ON Customers.customerID = SalesOrderHeader.customerID";
+                string query = "SELECT SalesOrderHeader.orderID, " +
+                                "   SalesOrderHeader.creationDate, " +
+                                "   SalesOrderHeader.completionDate, " +
+                                "   SalesOrderHeader.customerID, " +
+                                "   Persons.firstname, " +
+                                "   Persons.lastname, " +
+                                "   COALESCE(SUM(SalesOrderLines.quantity * Products.sellingPrice), 0) AS totalSalePrice " +
+                                "   FROM SalesOrderHeader " +
+                                "   INNER JOIN Customers ON SalesOrderHeader.customerID = Customers.customerID " +
+                                "   INNER JOIN Persons ON Customers.personID = Persons.personID " +
+                                "   INNER JOIN SalesOrderLines ON SalesOrderHeader.orderID = SalesOrderLines.salesOrderHeadID " +
+                                "   INNER JOIN Products ON SalesOrderLines.productID = Products.productID " +
+                                "   GROUP BY SalesOrderHeader.orderID, " +
+                                "   SalesOrderHeader.creationDate, " +
+                                "   SalesOrderHeader.completionDate, " +
+                                "   SalesOrderHeader.customerID, " +
+                                "   Persons.firstname, " +
+                                "   Persons.lastname;";
+
 
                 SqlCommand command = new SqlCommand(query, connection);
                 connection.Open();
@@ -57,10 +58,11 @@ namespace MyERP
                         {
                             OrderNumber = reader.GetInt32(0),
                             CreationDate = reader.GetDateTime(1),
-                            CompletionDate = reader.IsDBNull(2) ? (DateTime?)null : reader.GetDateTime(2),
+                            CompletionDate = reader.IsDBNull(2) ? (DateTime?)null : reader.GetDateTime(10),
                             CustomerNumber = reader.GetInt32(3),
                             Firstname = reader.GetString(4),
                             Lastname = reader.GetString(5),
+                            TotalPrice = reader.GetDecimal(6),
                         };
 
                         sales.Add(sale);

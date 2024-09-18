@@ -12,7 +12,7 @@ namespace MyERP
         public int CustomerNumber { get; set; }
         public OrderStatus Status { get; set; } = OrderStatus.None;
         private List<SalesOrderLine> OrderLines { get; set; } = new List<SalesOrderLine>();
-
+        public decimal TotalPrice { get; set; }
         public double OrderAmount
         {
             get
@@ -53,8 +53,7 @@ namespace MyERP
 
         private SalesOrderLine _salesOrderLine = new SalesOrderLine();
         private Person _person = new Person();
-       
-        
+  
 
         public string Firstname
         {
