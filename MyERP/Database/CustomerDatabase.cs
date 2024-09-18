@@ -66,7 +66,7 @@ namespace MyERP
                             Country = reader.GetString(7),
                             Phone = reader.GetString(8),
                             Email = reader.GetString(9),
-                            LastPurchaseDate = reader.GetDateTime(10),
+                            LastPurchaseDate = reader.IsDBNull(10) ? (DateTime?)null : reader.GetDateTime(10),
                             AddressID = reader.GetInt32(11),
                             PersonID = reader.GetInt32(12)
                         };
