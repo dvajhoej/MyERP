@@ -51,10 +51,7 @@ namespace MyERP
             return OrderLines.AsReadOnly();
         }
 
-        private SalesOrderLine _productNumber = new SalesOrderLine();
-        private SalesOrderLine _name = new SalesOrderLine();
-        private SalesOrderLine _quantity = new SalesOrderLine();
-        private SalesOrderLine _price = new SalesOrderLine();
+        private SalesOrderLine _salesOrderLine = new SalesOrderLine();
         private Person _person = new Person();
        
         
@@ -79,23 +76,23 @@ namespace MyERP
 
         public int ProductNumber
         {
-            get { return _productNumber.ProductNumber; }
-            set { _productNumber.ProductNumber = value; }
+            get { return _salesOrderLine.ProductNumber; }
+            set { _salesOrderLine.ProductNumber = value; }
         }
         public string Name
         {
-            get { return _name.Name; }
-            set { _name.Name = value; }
+            get { return _salesOrderLine.Name; }
+            set { _salesOrderLine.Name = value; }
         }
         public double Quantity
         {
-            get { return _quantity.Quantity; }
-            set { _quantity.Quantity = value; }
+            get { return _salesOrderLine.Quantity; }
+            set { _salesOrderLine.Quantity = value; }
         }
         public double Price
         {
-            get { return _price.Price; }
-            set { _price.Price = value; }
+            get { return _salesOrderLine.Price; }
+            set { _salesOrderLine.Price = value; }
 
 
         }

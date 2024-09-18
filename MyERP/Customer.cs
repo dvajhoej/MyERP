@@ -21,7 +21,6 @@
 
         }
         private Address _address = new Address();
-        private Address _fulladdress = new Address();
         private Person _person = new Person();
 
         public int PersonID
