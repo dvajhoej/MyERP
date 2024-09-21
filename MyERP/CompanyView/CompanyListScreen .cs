@@ -9,8 +9,7 @@ namespace MyERP.CompanyView
         public CompanyListScreen()
         {
             listPage = new ListPage<Company>();
-            List<Company> companies = Database.Instance.GetAllCompanies();
-            listPage.Add(companies);
+            listPage.Add(Database.Instance.Companies);
             listPage.AddKey(ConsoleKey.F1, CreateCompany);
             listPage.AddKey(ConsoleKey.F2, EditCompany);
             listPage.AddKey(ConsoleKey.F5, DeleteCompany);
@@ -48,13 +47,9 @@ namespace MyERP.CompanyView
             var newCompany = new Company();
             listPage.Add(newCompany);
             Screen.Display(new CompanyCreateScreen(newCompany));
+            
 
-            //if (newCompany.CompanyName != null)
-            //{
-            //    listPage.Add(newCompany);
-            //}
-
-            // AFVENTER IMPLEMENTERING
+   
         }
 
         private void EditCompany(Company selected)
@@ -66,6 +61,7 @@ namespace MyERP.CompanyView
         {
             if (selected != null)
             {
+                Database.Instance.DeleteCompanyById(selected.CompanyID);
                 listPage.Remove(selected);
                 Console.WriteLine($"Company '{selected.CompanyName}' has been deleted.");
             }
