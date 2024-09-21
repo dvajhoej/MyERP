@@ -8,12 +8,10 @@ namespace MyERP.CustomerView
         public override string Title { get; set; } = "Rediger kunde";
 
         private Customer _customer;
-        private Database _database;
 
-        public CustomerEditScreen(Customer customer, Database database)
+        public CustomerEditScreen(Customer customer)
         {
             _customer = customer;
-            _database = database;
         }
 
         protected override void Draw()
@@ -33,8 +31,7 @@ namespace MyERP.CustomerView
             editor.TextBox("Land", "Country");
 
             editor.Edit(_customer);
-            _database.UpdateCustomer(_customer);
-
+            Database.Instance.UpdateCustomer(_customer);
             this.Quit();
         }
     }

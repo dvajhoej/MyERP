@@ -58,7 +58,7 @@ namespace MyERP.CustomerView
 
         private void EditCustomer(Customer selected)
         {
-            Screen.Display(new CustomerEditScreen(selected, Database.Instance));
+            Screen.Display(new CustomerEditScreen(selected));
         }
 
 
