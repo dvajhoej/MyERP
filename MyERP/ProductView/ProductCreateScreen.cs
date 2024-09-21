@@ -10,7 +10,7 @@ namespace MyERP.productView
 
         public ProductCreateScreen(Product product)
         {
-            _product = product ?? new Product();
+            _product = product;
         }
 
         protected override void Draw()

@@ -29,22 +29,22 @@ namespace MyERP
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 string query = "SELECT " +
-                         "Customers.customerID, " +
-                         "Persons.firstname, " +
-                         "Persons.lastname, " +
-                         "Addresses.street, " +
-                         "Addresses.houseNumber, " +
-                         "Addresses.zipCode, " +
-                         "Addresses.city, " +
-                         "Addresses.country, " +
-                         "Persons.phone, " +
-                         "Persons.email, " +
-                         "Customers.lastPurchaseDate, " +
-                         "Persons.personID, " +
-                         "Addresses.addressID " +
-                         "FROM Addresses " +
-                         "INNER JOIN Customers ON Addresses.addressID = Customers.addressID " +
-                         "INNER JOIN Persons ON Customers.personID = Persons.personID";
+                                      "Customers.customerID, " +
+                                      "Persons.firstname, " +
+                                      "Persons.lastname, " +
+                                      "Addresses.street, " +
+                                      "Addresses.houseNumber, " +
+                                      "Addresses.zipCode, " +
+                                      "Addresses.city, " +
+                                      "Addresses.country, " +
+                                      "Persons.phone, " +
+                                      "Persons.email, " +
+                                      "Customers.lastPurchaseDate, " +
+                                      "Persons.personID, " +
+                                      "Addresses.addressID " +
+                               "FROM Addresses " +
+                                      "INNER JOIN Customers ON Addresses.addressID = Customers.addressID " +
+                                      "INNER JOIN Persons ON Customers.personID = Persons.personID";
 
                 SqlCommand command = new SqlCommand(query, connection);
                 connection.Open();
@@ -89,19 +89,18 @@ namespace MyERP
                 {
                     // Insert into Addresses table
                     string insertAddressQuery = "INSERT INTO Addresses (" +
-                        " street," +
-                        " houseNumber," +
-                        " zipCode," +
-                        " city," +
-                        " country) " +
-
-                        " OUTPUT INSERTED.addressID" +
-                        " VALUES (" +
-                        " @Street," +
-                        " @HouseNumber," +
-                        " @ZipCode," +
-                        " @City," +
-                        " @Country)";
+                                                    " street," +
+                                                    " houseNumber," +
+                                                    " zipCode," +
+                                                    " city," +
+                                                    " country) " +
+                                                " OUTPUT INSERTED.addressID" +
+                                                " VALUES (" +
+                                                    " @Street," +
+                                                    " @HouseNumber," +
+                                                    " @ZipCode," +
+                                                    " @City," +
+                                                    " @Country)";
 
                     using (SqlCommand command = new SqlCommand(insertAddressQuery, connection, transaction))
                     {
@@ -115,8 +114,19 @@ namespace MyERP
                         customer.AddressID = (int)command.ExecuteScalar();
 
                         // Insert into Persons table
-                        string insertPersonQuery = "INSERT INTO Persons (firstname, lastname, phone, email, addressID) " +
-                                                   "OUTPUT INSERTED.personID VALUES (@FirstName, @LastName, @Phone, @Email, @AddressID)";
+                        string insertPersonQuery = "INSERT INTO Persons (" +
+                                                         " firstname," +
+                                                         " lastname," +
+                                                         " phone," +
+                                                         " email," +
+                                                         " addressID) " +
+                                                   " OUTPUT INSERTED.personID" +
+                                                   " VALUES (" +
+                                                         " @FirstName," +
+                                                         " @LastName," +
+                                                         " @Phone," +
+                                                         " @Email," +
+                                                         " @AddressID)";
 
                         using (SqlCommand personCommand = new SqlCommand(insertPersonQuery, connection, transaction))
                         {
@@ -130,8 +140,17 @@ namespace MyERP
                             customer.PersonID = (int)personCommand.ExecuteScalar();
 
                             // Insert into Customers table
-                            string insertCustomerQuery = "INSERT INTO Customers (personID, addressID, lastPurchaseDate) " +
-                                                         "OUTPUT INSERTED.customerID VALUES (@PersonID, @AddressID, @LastPurchaseDate)";
+                            string insertCustomerQuery = "INSERT INTO Customers (" +
+                                "personID," +
+                                " addressID," +
+                                " lastPurchaseDate)" +
+                                " " +
+                                                   
+                                "OUTPUT INSERTED.customerID" +
+                                " VALUES (" +
+                                "@PersonID," +
+                                " @AddressID," +
+                                " @LastPurchaseDate)";
 
                             using (SqlCommand customerCommand = new SqlCommand(insertCustomerQuery, connection, transaction))
                             {

@@ -12,15 +12,12 @@ namespace MyERP.ProductView
             product = p;
             ExitOnEscape();
         }
-        public override string Title { get; set; } = "Produkt Visning for";
+        public override string Title { get; set; } = "Produkt Visning";
 
         public Product product { get; private set; }
 
         protected override void Draw()
         {
-            Clear();
-
-
             Console.WriteLine($"Varenummer:        {product.ProductNumber}");
             Console.WriteLine($"Navn:              {product.Name}");
             Console.WriteLine($"Beskrivelse:       {product.Description}");

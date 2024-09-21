@@ -5,7 +5,7 @@ namespace MyERP
 {
     public partial class Database
     {
-        public Product GetProductById(int id)
+        public Product? GetProductById(int id)
         {
             foreach (var product in products)
             {
@@ -64,24 +64,24 @@ namespace MyERP
                 {
                     // Insert into Product table
                     string insertProductQuery = "INSERT INTO Products (" +
-                        " itemNumber," +
-                        " name," +
-                        " description," +
-                        " sellingPrice," +
-                        " purchasePrice," +
-                        " location," +
-                        " quantity," +
-                        " unit) " +
-                        "OUTPUT INSERTED.productID " +
-                        "VALUES (" +
-                        " @ItemNumber," +
-                        " @Name," +
-                        " @Description," +
-                        " @SellingPrice," +
-                        " @PurchasePrice," +
-                        " @Location," +
-                        " @Quantity," +
-                        " @Unit)";
+                                                    " itemNumber," +
+                                                    " name," +
+                                                    " description," +
+                                                    " sellingPrice," +
+                                                    " purchasePrice," +
+                                                    " location," +
+                                                    " quantity," +
+                                                    " unit) " +
+                                                "OUTPUT INSERTED.productID " +
+                                                "VALUES (" +
+                                                    " @ItemNumber," +
+                                                    " @Name," +
+                                                    " @Description," +
+                                                    " @SellingPrice," +
+                                                    " @PurchasePrice," +
+                                                    " @Location," +
+                                                    " @Quantity," +
+                                                    " @Unit)";
 
                     using (SqlCommand command = new SqlCommand(insertProductQuery, connection, transaction))
                     {
@@ -95,13 +95,12 @@ namespace MyERP
                         command.Parameters.AddWithValue("@Unit", product.Unit.ToString());
 
                         // Retrieve the inserted itemID
-                        int productID = (int)command.ExecuteScalar();  // Make sure itemID is the primary key
-                        product.ProductID = productID;
-                        Instance.Products.Add(product);
+                        product.ProductID = (int)command.ExecuteScalar();  // Make sure itemID is the primary key
+                        
 
                         // Use itemID as needed
                     }
-
+                    Instance.Products.Add(product);
                     transaction.Commit();
                 }
                 catch (Exception ex)

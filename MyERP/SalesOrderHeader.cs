@@ -67,6 +67,18 @@ namespace MyERP
             set { _person.LastName = value; }
         }
 
+        public string Phone
+        {
+            get { return _person.Phone; }
+            set { _person.Phone = value; }
+        }
+
+        public string Email
+        {
+            get { return _person.Email; }
+            set { _person.Email = value; }
+        }
+
         public string Fullname
         {
             get { return _person.FullName; }
