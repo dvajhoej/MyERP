@@ -34,10 +34,11 @@ namespace MyERP.ProductView
             editor.SelectBox("Enhed", "Unit");
             editor.AddOption("Enhed", "Styk", UnitType.Stk);
             editor.AddOption("Enhed", "Pakke", UnitType.Pakker);
-            editor.AddOption("Enhed", "time", UnitType.Meter);
-            editor.AddOption("Enhed", "Meter", UnitType.Time);
+            editor.AddOption("Enhed", "time", UnitType.Time);
+            editor.AddOption("Enhed", "Meter", UnitType.Meter);
 
             editor.Edit(_product);
+            Database.Instance.UpdateProduct(_product);
 
 
             this.Quit();
