@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Google.Protobuf.Reflection;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -22,33 +23,80 @@ namespace MyERP.SalesView
         {
             Clear();
 
-            Form<SalesOrderHeader> editor = new Form<SalesOrderHeader>();
+            Console.WriteLine("Skriv et kunde nummer:");
+            if (!int.TryParse(Console.ReadLine(), out int customerID))
+            {
+                Console.WriteLine("ugyldig nummer. Skriv et gyldigt tal.");
+                return;
+            }
 
-            var customerDictionary = GetCustomerDictionary();
-            var selectBoxOptions = customerDictionary.ToDictionary(
-                kvp => kvp.Key,
-                kvp => (object)kvp.Value 
-            );
+            var customer = Database.Instance.GetCustomerbyID(customerID);
 
-            editor.SelectBox("Vælg kunde", "CustomerNumber", selectBoxOptions);
+            if (customer == null)
+            {
+                Console.WriteLine("Kunde ikke fundet. Vil du skabe en ny kunde (y/n)");
+                var input = Console.ReadKey().KeyChar;
+                Console.WriteLine();
 
-            editor.Edit(_salesOrder);
+                if (input == 'y' || input == 'Y')
+                {
+                    Customer newCustomer = new Customer();
+                    Form<Customer> customerEditor = new Form<Customer>();
+
+                    customerEditor.TextBox("Fornavn", "FirstName");
+                    customerEditor.TextBox("Efternavn", "LastName");
+                    customerEditor.TextBox("Telefon", "Phone");
+                    customerEditor.TextBox("Email", "Email");
+                    customerEditor.TextBox("Vej", "Street");
+                    customerEditor.TextBox("Husnummer", "HouseNumber");
+                    customerEditor.TextBox("Postnummer", "ZipCode");
+                    customerEditor.TextBox("By", "City");
+                    customerEditor.TextBox("Land", "Country");
+
+                    bool success = customerEditor.Edit(newCustomer);
+
+                    if (success)
+                    {
+                        Database.Instance.InsertCustomer(newCustomer);
+
+                        _salesOrder = new SalesOrderHeader(orderNumber: GenerateOrderNumber(), customerNumber: newCustomer.CustomerID);
+                    }
+                    else
+                    {
+                        Console.WriteLine("Customer creation canceled.");
+                        return;
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("Sales order creation canceled.");
+                    return;
+                }
+            }
+            else
+            {
+                _salesOrder = new SalesOrderHeader(orderNumber: GenerateOrderNumber(), customerNumber: customer.CustomerID);
+                Console.WriteLine($"Order skabt for {customer.Fullname}.");
+            }
+
+            try
+            {
+                Database.Instance.InsertSalesOrderHeader(_salesOrder);
+                Console.WriteLine("Sale successfully created.");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error while creating sale: " + ex.Message);
+            }
 
             this.Quit();
         }
 
-        private Dictionary<string, Customer> GetCustomerDictionary()
+        private int GenerateOrderNumber()
         {
-            var customerDictionary = new Dictionary<string, Customer>();
-
-            var customers = Database.Instance.Customers.ToList();
-            foreach (var customer in customers)
-            {
-                var displayName = customer.Fullname;
-                customerDictionary[displayName] = customer;
-            }
-
-            return customerDictionary;
+            return new Random().Next(1000, 9999);
         }
-    }
+
+     }
+
 }

@@ -40,7 +40,7 @@ namespace MyERP.SalesView
             var selected = listPage.Select();
             if (selected != null)
             {
-                //Screen.Display(new OrderViewScreen(selected));
+                Screen.Display(new SalesViewScreen(selected));
             }
 
            
@@ -53,7 +53,7 @@ namespace MyERP.SalesView
         {
             var newOrder = new SalesOrderHeader();
             listPage.Add(newOrder);
-            //Screen.Display(new OrderCreateScreen(newOrder));
+            Screen.Display(new SalesCreateScreen(newOrder));
         }
 
         private void EditOrder(SalesOrderHeader selected)
