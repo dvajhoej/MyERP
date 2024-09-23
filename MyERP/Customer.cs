@@ -21,13 +21,10 @@
 
         }
         private Address _address = new Address();
-        private Person _person = new Person();
+    
 
-        public int PersonID
-        {
-            get { return _person.PersonID; }
-            set { _person.PersonID = value; }
-        }
+
+
         public int AddressID
         {
             get { return _address.AddressID; }

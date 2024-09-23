@@ -25,33 +25,29 @@ namespace MyERP.productView
             editor.DoubleBox("Salgsspris", "SellingPrice");
             editor.DoubleBox("Indkøbspris", "PurchasePrice");
             editor.TextBox("Lokation", "Location");
-            editor.DoubleBox("Antal på lager", "QuantityInStock");       
+            editor.DoubleBox("Antal på lager", "QuantityInStock");
             editor.SelectBox("Enhed", "Unit");
 
 
             editor.AddOption("Enhed", "Stk", UnitType.Stk);
             editor.AddOption("Enhed", "Pakker", UnitType.Pakker);
-            editor.AddOption("Enhed", "time", UnitType.Meter);
-            editor.AddOption("Enhed", "Meter", UnitType.Time);
-          
+            editor.AddOption("Enhed", "Time", UnitType.Time);
+            editor.AddOption("Enhed", "Meter", UnitType.Meter);
+
             editor.Edit(_product);
 
+            try
+            {
+                Database.Instance.InsertProduct(_product);
+                Console.WriteLine("Product successfully created.");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error while creating product: " + ex.Message);
+            }
             this.Quit();
         }
     }
 }
 
 
-//listPage.AddColumn("Kunde nummer", "Kundenummer");
-//listPage.AddColumn("Navn", "FuldtNavn");
-//listPage.AddColumn("Telefon", "Telefon");
-//listPage.AddColumn("Email", "Email");
-
-//listPage.AddColumn("Fornavn", "Fornavn");
-//listPage.AddColumn("Efternavn", "Efternavn");
-//listPage.AddColumn("Vej", "Streetname");
-//listPage.AddColumn("Husnummer", "ZipCode");
-//listPage.AddColumn("By", "City");
-//listPage.AddColumn("Land", "Country");
-//listPage.AddColumn("Email", "Email");
-//listPage.AddColumn("Telefon", "Telefon");

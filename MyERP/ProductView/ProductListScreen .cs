@@ -1,9 +1,5 @@
 ﻿using MyERP.productView;
 using TECHCOOL.UI;
-using System.Data.SqlClient;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 
 namespace MyERP.ProductView
 {
@@ -15,18 +11,6 @@ namespace MyERP.ProductView
         {
             listPage = new ListPage<Product>();
             listPage.Add(Database.Instance.Products);
-        }
-
-        public override string Title { get; set; } = "Produkter";
-
-        protected override void Draw()
-        {
-            Clear();
-
-            Console.WriteLine("Tryk F1 for at skabe et produkt");
-            Console.WriteLine("Tryk F2 for at tilpasse et produkt");
-            Console.WriteLine("Tryk F5 for at slette et produkt");
-
             listPage.AddKey(ConsoleKey.F1, CreateProduct);
             listPage.AddKey(ConsoleKey.F2, EditProduct);
             listPage.AddKey(ConsoleKey.F5, DeleteProduct);
@@ -39,6 +23,19 @@ namespace MyERP.ProductView
             listPage.AddColumn("Indkøbspris", "PurchasePrice");
             listPage.AddColumn("Salgspris", "SellingPrice");
             listPage.AddColumn("Avance (%)", "MarginPercentage");
+        }
+
+        public override string Title { get; set; } = "Produkter";
+
+        protected override void Draw()
+        {
+            Clear();
+
+            Console.WriteLine("Tryk F1 for at skabe et produkt");
+            Console.WriteLine("Tryk F2 for at tilpasse et produkt");
+            Console.WriteLine("Tryk F5 for at slette et produkt");
+
+
 
 
             var selected = listPage.Select();
@@ -46,7 +43,7 @@ namespace MyERP.ProductView
             {
                 Screen.Display(new ProductViewScreen(selected));
             }
-        
+
         }
         void Quit(Product _)
         {
@@ -55,7 +52,7 @@ namespace MyERP.ProductView
         private void CreateProduct(Product product)
         {
             var newProduct = new Product();
-            listPage.Add(newProduct);
+            listPage.Add(newProduct) ;
             Screen.Display(new ProductCreateScreen(newProduct));
         }
 
@@ -68,36 +65,10 @@ namespace MyERP.ProductView
         {
             if (selected != null)
             {
+                Database.Instance.DeleteProductById(selected.ProductID);
                 listPage.Remove(selected);
                 Console.WriteLine($"Produktet '{selected.Name}' er blevet slettet.");
             }
         }
-        //private void FetchProductFromDatabase()
-        //{
-        //    string connectionString = DatabaseString.ConnectionString;
-        //    using (SqlConnection connection = new SqlConnection(connectionString))
-        //    {
-        //        string query = "SELECT productID, name, description, sellingPrice, purchasePrice, location, quantity,  unit FROM Products";
-        //        SqlCommand command = new SqlCommand(query, connection);
-        //        connection.Open();
-        //        using (SqlDataReader reader = command.ExecuteReader())
-        //        {
-        //            while (reader.Read())
-        //            {
-        //                Product product = new Product
-        //                {
-        //                    ProductNumber = reader.GetInt32(0),
-        //                    Name = reader.GetString(1),
-        //                    Description = reader.GetString(2),
-        //                    SellingPrice = (double)reader.GetDecimal(3),
-        //                    PurchasePrice = (double)reader.GetDecimal(4),
-        //                    Location = reader.GetString(5),
-        //                    QuantityInStock = Convert.ToDouble(reader.GetDecimal(6)),
-        //                    Unit = (UnitType)Enum.Parse(typeof(UnitType), reader.GetString(7)) 
-        //                };
-        //                listPage.Add(product);
-        //            }
-        //        }
-        //    }
-        }
     }
+}

@@ -4,7 +4,7 @@ namespace MyERP.CompanyView
 {
     public class CompanyEditScreen : Screen
     {
-        public override string Title { get; set; } = "Rediger Virksomhed";
+        public override string Title { get; set; } = "Rediger virksomhed";
 
         private Company _company;
 
@@ -32,8 +32,9 @@ namespace MyERP.CompanyView
             editor.AddOption("Valuta", "EUR", Currency.EUR);
 
             editor.Edit(_company);
+            Database.Instance.UpdateCompany(_company);
 
-            Console.WriteLine($"Virksomhed: {_company.CompanyName} er blevet opdateret.");
+
             this.Quit();
         }
     }

@@ -5,6 +5,7 @@ namespace MyERP
 {
     public class Product
     {
+        public int ProductID { get ; set; }
         public int ProductNumber { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }

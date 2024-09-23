@@ -1,5 +1,4 @@
 ﻿using MyERP.DBHELPER;
-using System.Data;
 using System.Data.SqlClient;
 
 namespace MyERP
@@ -8,7 +7,7 @@ namespace MyERP
     {
 
 
-        public Customer GetCustomerbyID(int id)
+        public Customer? GetCustomerbyID(int id)
         {
 
             foreach (var customer in customers)
@@ -30,22 +29,22 @@ namespace MyERP
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 string query = "SELECT " +
-                         "Customers.customerID, " +
-                         "Persons.firstname, " +
-                         "Persons.lastname, " +
-                         "Addresses.street, " +
-                         "Addresses.houseNumber, " +
-                         "Addresses.zipCode, " +
-                         "Addresses.city, " +
-                         "Addresses.country, " +
-                         "Persons.phone, " +
-                         "Persons.email, " +
-                         "Customers.lastPurchaseDate, " +
-                         "Persons.personID, " +
-                         "Addresses.addressID " +
-                         "FROM Addresses " +
-                         "INNER JOIN Customers ON Addresses.addressID = Customers.addressID " +
-                         "INNER JOIN Persons ON Customers.personID = Persons.personID";
+                                      "Customers.customerID, " +
+                                      "Persons.firstname, " +
+                                      "Persons.lastname, " +
+                                      "Addresses.street, " +
+                                      "Addresses.houseNumber, " +
+                                      "Addresses.zipCode, " +
+                                      "Addresses.city, " +
+                                      "Addresses.country, " +
+                                      "Persons.phone, " +
+                                      "Persons.email, " +
+                                      "Customers.lastPurchaseDate, " +
+                                      "Persons.personID, " +
+                                      "Addresses.addressID " +
+                               "FROM Addresses " +
+                                      "INNER JOIN Customers ON Addresses.addressID = Customers.addressID " +
+                                      "INNER JOIN Persons ON Customers.personID = Persons.personID";
 
                 SqlCommand command = new SqlCommand(query, connection);
                 connection.Open();
@@ -79,7 +78,7 @@ namespace MyERP
             return customers;
         }
 
-        public static void InsertCustomer(Customer customer)
+        public void InsertCustomer(Customer customer)
         {
             using (SqlConnection connection = new SqlConnection(DatabaseString.ConnectionString))
             {
@@ -90,19 +89,18 @@ namespace MyERP
                 {
                     // Insert into Addresses table
                     string insertAddressQuery = "INSERT INTO Addresses (" +
-                        " street," +
-                        " houseNumber," +
-                        " zipCode," +
-                        " city," +
-                        " country) " +
-
-                        " OUTPUT INSERTED.addressID" +
-                        " VALUES (" +
-                        " @Street," +
-                        " @HouseNumber," +
-                        " @ZipCode," +
-                        " @City," +
-                        " @Country)";
+                                                    " street," +
+                                                    " houseNumber," +
+                                                    " zipCode," +
+                                                    " city," +
+                                                    " country) " +
+                                                " OUTPUT INSERTED.addressID" +
+                                                " VALUES (" +
+                                                    " @Street," +
+                                                    " @HouseNumber," +
+                                                    " @ZipCode," +
+                                                    " @City," +
+                                                    " @Country)";
 
                     using (SqlCommand command = new SqlCommand(insertAddressQuery, connection, transaction))
                     {
@@ -113,11 +111,22 @@ namespace MyERP
                         command.Parameters.AddWithValue("@Country", customer.Country);
 
                         // Retrieve the inserted addressID
-                        int addressID = (int)command.ExecuteScalar();
+                        customer.AddressID = (int)command.ExecuteScalar();
 
                         // Insert into Persons table
-                        string insertPersonQuery = "INSERT INTO Persons (firstname, lastname, phone, email, addressID) " +
-                                                   "OUTPUT INSERTED.personID VALUES (@FirstName, @LastName, @Phone, @Email, @AddressID)";
+                        string insertPersonQuery = "INSERT INTO Persons (" +
+                                                         " firstname," +
+                                                         " lastname," +
+                                                         " phone," +
+                                                         " email," +
+                                                         " addressID) " +
+                                                   " OUTPUT INSERTED.personID" +
+                                                   " VALUES (" +
+                                                         " @FirstName," +
+                                                         " @LastName," +
+                                                         " @Phone," +
+                                                         " @Email," +
+                                                         " @AddressID)";
 
                         using (SqlCommand personCommand = new SqlCommand(insertPersonQuery, connection, transaction))
                         {
@@ -125,27 +134,38 @@ namespace MyERP
                             personCommand.Parameters.AddWithValue("@LastName", customer.LastName);
                             personCommand.Parameters.AddWithValue("@Phone", customer.Phone);
                             personCommand.Parameters.AddWithValue("@Email", customer.Email);
-                            personCommand.Parameters.AddWithValue("@AddressID", addressID);
+                            personCommand.Parameters.AddWithValue("@AddressID", customer.AddressID);
 
                             // Retrieve the inserted personID
-                            int personID = (int)personCommand.ExecuteScalar();
+                            customer.PersonID = (int)personCommand.ExecuteScalar();
 
                             // Insert into Customers table
-                            string insertCustomerQuery = "INSERT INTO Customers (personID, addressID, lastPurchaseDate) " +
-                                                         "OUTPUT INSERTED.customerID VALUES (@PersonID, @AddressID, @LastPurchaseDate)";
+                            string insertCustomerQuery = "INSERT INTO Customers (" +
+                                "personID," +
+                                " addressID," +
+                                " lastPurchaseDate)" +
+                                " " +
+                                                   
+                                "OUTPUT INSERTED.customerID" +
+                                " VALUES (" +
+                                "@PersonID," +
+                                " @AddressID," +
+                                " @LastPurchaseDate)";
 
                             using (SqlCommand customerCommand = new SqlCommand(insertCustomerQuery, connection, transaction))
                             {
-                                customerCommand.Parameters.AddWithValue("@PersonID", personID);
-                                customerCommand.Parameters.AddWithValue("@AddressID", addressID);
+                                customerCommand.Parameters.AddWithValue("@PersonID", customer.PersonID);
+                                customerCommand.Parameters.AddWithValue("@AddressID", customer.AddressID);
                                 customerCommand.Parameters.AddWithValue("@LastPurchaseDate", "01-01-1900 00:00:00");
 
                                 // Retrieve the inserted customerID
                                 customer.CustomerID = (int)customerCommand.ExecuteScalar();
+
                             }
                         }
                     }
 
+                    instance.customers.Add(customer);
                     transaction.Commit();
                 }
                 catch (Exception ex)
@@ -195,8 +215,15 @@ namespace MyERP
                                 using (SqlCommand command = new SqlCommand(updateQuery, connection, transaction))
                                 {
                                     command.Parameters.AddWithValue("@CustomerID", updatedCustomer.CustomerID);
-                                    command.Parameters.AddWithValue("@LastPurchaseDate", updatedCustomer.LastPurchaseDate);
 
+                                    if (updatedCustomer.LastPurchaseDate != null)
+                                    {
+                                        command.Parameters.AddWithValue("@LastPurchaseDate", updatedCustomer.LastPurchaseDate);
+                                    }
+                                    else
+                                    {
+                                        command.Parameters.AddWithValue("@LastPurchaseDate", new DateTime(1900, 1, 1));
+                                    }
                                     // Update Persons table
                                     command.Parameters.AddWithValue("@PersonID", updatedCustomer.PersonID);
                                     command.Parameters.AddWithValue("@FirstName", updatedCustomer.FirstName);
@@ -244,12 +271,12 @@ namespace MyERP
                 Console.WriteLine($"Customer with ID {updatedCustomer.CustomerID} not found.");
             }
         }
-    
 
 
-    public void DeleteCustomerByID(int CostumerID)
+
+        public void DeleteCustomerByID(int CostumerID)
         {
- 
+
 
             using (SqlConnection connection = new SqlConnection(DatabaseString.ConnectionString))
             {
@@ -258,10 +285,10 @@ namespace MyERP
 
                 try
                 {
-                 
+
                     var customer = GetCustomerbyID(CostumerID);
                     if (customer != null)
-                    {                                               
+                    {
                         string deleteCustomerQuery = "DELETE FROM Customers WHERE customerID = @customerID";
                         using (SqlCommand command = new SqlCommand(deleteCustomerQuery, connection, transaction))
                         {
@@ -291,7 +318,7 @@ namespace MyERP
                 }
                 catch (Exception ex)
                 {
-                    
+
                     transaction.Rollback();
                     throw new Exception("Error while deleting customer: " + ex.Message);
                 }

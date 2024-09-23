@@ -35,7 +35,7 @@ namespace MyERP.CustomerView
 
             try
             {
-                Database.InsertCustomer(_customer); 
+                Database.Instance.InsertCustomer(_customer); 
                 Console.WriteLine("Customer successfully created.");
             }
             catch (Exception ex)

@@ -6,12 +6,11 @@ using System.Threading.Tasks;
 
 namespace MyERP
 {
-    public class Person
+    public class Person : Address
     {
         public int PersonID { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
-        public Address Address { get; set; }
         public string Email { get; set; }
         public string Phone { get; set; }
 
@@ -42,15 +41,11 @@ namespace MyERP
         public Person(string firstName, string lastName, Address address, string email, string phone)
         {
             FirstName = firstName;
-            LastName = lastName;
-            Address = address;
+            LastName = lastName;        
             Email = email;
             Phone = phone;
         }
 
-        public override string ToString()
-        {
-            return $"{FullName}, {Address}, Email: {Email}, Phone: {Phone}";
-        }
+
     }
 }

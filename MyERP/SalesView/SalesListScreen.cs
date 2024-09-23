@@ -1,4 +1,5 @@
-﻿using MyERP.ProductView;
+﻿using MyERP.productView;
+using MyERP.ProductView;
 using TECHCOOL.UI;
 
 namespace MyERP.SalesView
@@ -11,6 +12,17 @@ namespace MyERP.SalesView
         {
             listPage = new ListPage<SalesOrderHeader>();
             listPage.Add(Database.Instance.Sales);
+
+            listPage.AddKey(ConsoleKey.F1, CreateOrder);
+            listPage.AddKey(ConsoleKey.F2, EditOrder);
+            listPage.AddKey(ConsoleKey.F5, DeleteOrder);
+            listPage.AddKey(ConsoleKey.Escape, Quit);
+            listPage.AddColumn("Ordre nummer", "OrderNumber", 25);
+            listPage.AddColumn("Oprettelse", "CreationDate", 25);
+            listPage.AddColumn("Færdig", "CompletionDate", 25);
+            listPage.AddColumn("Kunde nummer", "CustomerNumber", 25);
+            listPage.AddColumn("Kunde Navn", "Fullname", 25);
+
         }
 
         public override string Title { get; set; } = "Ordre";
@@ -18,28 +30,17 @@ namespace MyERP.SalesView
         protected override void Draw()
         {
             Clear();
-
-            Console.WriteLine("Tryk F1 for at skabe en ordre");
-            Console.WriteLine("Tryk F2 for at tilpasse en ordre");
-            Console.WriteLine("Tryk F5 for at slette en ordre");
-
-            listPage.AddKey(ConsoleKey.F1, CreateOrder);
-            listPage.AddKey(ConsoleKey.F2, EditOrder);
-            listPage.AddKey(ConsoleKey.F5, DeleteOrder);
-            listPage.AddKey(ConsoleKey.Escape, Quit);
-
-            listPage.AddColumn("Ordre nummer", "OrderNumber", 25);
-            listPage.AddColumn("Oprettelse", "CreationDate", 25);
-            listPage.AddColumn("Færdig", "CompletionDate", 25);
-            listPage.AddColumn("Kunde nummer", "CustomerNumber", 25);
-            listPage.AddColumn("Kunde Navn", "Fullname", 25);
+            Console.WriteLine("Press F1 to create an order");
+            Console.WriteLine("Press F2 to edit an order");
+            Console.WriteLine("Press F5 to delete an order");
+            
             
             //listPage.AddColumn("Status", "Status", 25);
 
             var selected = listPage.Select();
             if (selected != null)
             {
-                Screen.Display(new SalesViewScreen(selected));
+                //Screen.Display(new OrderViewScreen(selected));
             }
 
            
@@ -52,7 +53,7 @@ namespace MyERP.SalesView
         {
             var newOrder = new SalesOrderHeader();
             listPage.Add(newOrder);
-            Screen.Display(new SalesCreateScreen(newOrder));
+            //Screen.Display(new OrderCreateScreen(newOrder));
         }
 
         private void EditOrder(SalesOrderHeader selected)

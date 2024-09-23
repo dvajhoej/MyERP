@@ -1,5 +1,4 @@
-﻿using Mysqlx.Crud;
-using TECHCOOL.UI;
+﻿using TECHCOOL.UI;
 
 namespace MyERP.CompanyView
 {
@@ -22,8 +21,8 @@ namespace MyERP.CompanyView
 
             editor.TextBox("Virksomheds Navn", "CompanyName");
             editor.TextBox("Vej", "Street");
-            editor.IntBox("Hus nummer", "HouseNumber");
-            editor.IntBox("Post nummer", "ZipCode");
+            editor.TextBox("Hus nummer", "HouseNumber");
+            editor.TextBox("Post nummer", "ZipCode");
             editor.TextBox("By", "City");
             editor.TextBox("Land", "Country");
             editor.SelectBox("Valuta", "Currency");
@@ -33,6 +32,16 @@ namespace MyERP.CompanyView
             editor.AddOption("Valuta", "EUR", Currency.EUR);
 
             editor.Edit(_company);
+
+            try
+            {
+                Database.Instance.InsertCompany(_company);
+                Console.WriteLine("Company successfully created.");
+            }
+            catch (Exception ex)  
+            { 
+                Console.WriteLine("Error while creating company: " + ex.Message);
+            }
             this.Quit();
 
         }

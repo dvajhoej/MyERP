@@ -6,7 +6,7 @@ namespace MyERP
 
     public partial class Database
     {
-        private static Database instance;
+        private static Database? instance;
 
         public static Database Instance
         {
@@ -39,6 +39,12 @@ namespace MyERP
             GetAllCompanies();
             GetAllProducts();
             GetAllSalesOrderHeaders();
+        }
+
+
+        public List<Company> Companies
+        {
+            get { return companies; }
         }
 
         public List<Customer> Customers

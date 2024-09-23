@@ -1,5 +1,9 @@
 ﻿using MyERP.DBHELPER;
 using System.Data.SqlClient;
+using System.Text.RegularExpressions;
+using TECHCOOL.UI;
+using TECHCOOL;
+using Org.BouncyCastle.Utilities;
 
 namespace MyERP
 {
@@ -27,24 +31,27 @@ namespace MyERP
 
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
-                string query = "SELECT SalesOrderHeader.orderID, " +
-                                "   SalesOrderHeader.creationDate, " +
-                                "   SalesOrderHeader.completionDate, " +
-                                "   SalesOrderHeader.customerID, " +
-                                "   Persons.firstname, " +
-                                "   Persons.lastname, " +
-                                "   COALESCE(SUM(SalesOrderLines.quantity * Products.sellingPrice), 0) AS totalSalePrice " +
-                                "   FROM SalesOrderHeader " +
-                                "   INNER JOIN Customers ON SalesOrderHeader.customerID = Customers.customerID " +
-                                "   INNER JOIN Persons ON Customers.personID = Persons.personID " +
-                                "   INNER JOIN SalesOrderLines ON SalesOrderHeader.orderID = SalesOrderLines.salesOrderHeadID " +
-                                "   INNER JOIN Products ON SalesOrderLines.productID = Products.productID " +
-                                "   GROUP BY SalesOrderHeader.orderID, " +
-                                "   SalesOrderHeader.creationDate, " +
-                                "   SalesOrderHeader.completionDate, " +
-                                "   SalesOrderHeader.customerID, " +
-                                "   Persons.firstname, " +
-                                "   Persons.lastname;";
+                string query = "SELECT                                                                                             " +
+                               "    SalesOrderHeader.orderID,                                                                      " +
+                               "    SalesOrderHeader.creationDate,                                                                 " +
+                               "    SalesOrderHeader.completionDate,                                                               " +
+                               "    SalesOrderHeader.customerID,                                                                   " +
+                               "    Persons.firstname,                                                                             " +
+                               "    Persons.lastname,                                                                              " +
+                               "    COALESCE(SUM(SalesOrderLines.quantity * Products.sellingPrice), 0) AS totalSalePrice           " +
+                               "FROM                                                                                               " +
+                               "    SalesOrderHeader                                                                               " +
+                               "    LEFT JOIN Customers ON SalesOrderHeader.customerID = Customers.customerID                      " +
+                               "    LEFT JOIN Persons ON Customers.personID = Persons.personID                                     " +
+                               "    INNER JOIN SalesOrderLines ON SalesOrderHeader.orderID = SalesOrderLines.salesOrderHeadID      " +
+                               "    INNER JOIN Products ON SalesOrderLines.productID = Products.productID                          " +
+                               "GROUP BY                                                                                           " +
+                               "    SalesOrderHeader.orderID,                                                                      " +
+                               "    SalesOrderHeader.creationDate,                                                                 " +
+                               "    SalesOrderHeader.completionDate,                                                               " +
+                               "    SalesOrderHeader.customerID,                                                                   " +
+                               "    Persons.firstname,                                                                             " +
+                               "    Persons.lastname                                                                               ";
 
 
                 SqlCommand command = new SqlCommand(query, connection);
@@ -59,9 +66,9 @@ namespace MyERP
                             OrderNumber = reader.GetInt32(0),
                             CreationDate = reader.GetDateTime(1),
                             CompletionDate = reader.IsDBNull(2) ? (DateTime?)null : reader.GetDateTime(2),
-                            CustomerNumber = reader.GetInt32(3),
-                            Firstname = reader.GetString(4),
-                            Lastname = reader.GetString(5),
+                            CustomerNumber = reader.IsDBNull(3) ? 0 : reader.GetInt32(3),
+                            Firstname = reader.IsDBNull(4) ? (String?)null : reader.GetString(4),
+                            Lastname = reader.IsDBNull(5) ? (String?)null : reader.GetString(5),
                             TotalPrice = reader.GetDecimal(6),
                         };
 
@@ -72,15 +79,7 @@ namespace MyERP
 
             return sales;
         }
-
-        public void InsertSalesOrderHeader(SalesOrderHeader sale)
-        {
-            if (sale.OrderNumber == 0)
-            {
-                sales.Add(sale);
-            }
-        }
-
+       
         public void UpdateSalesOrderHeader(SalesOrderHeader updateSale)
         {
             var existingSale = GetSalesOrderHeaderById(updateSale.OrderNumber);
