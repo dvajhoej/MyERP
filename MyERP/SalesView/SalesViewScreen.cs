@@ -14,6 +14,7 @@ namespace MyERP.SalesView
         public SalesViewScreen(SalesOrderHeader soh)
         {
             salesOrderHeader = soh;
+            ExitOnEscape();
         }
 
         public override string Title { get; set; } = "Ordre Visning";
@@ -21,28 +22,13 @@ namespace MyERP.SalesView
 
         protected override void Draw()
         {
-            Clear();
 
-            ListPage<SalesOrderHeader> listPage = new();
+            Console.WriteLine($"Ordre nummer:   {salesOrderHeader.OrderNumber}");
+            Console.WriteLine($"Oprettelse:     {salesOrderHeader.CreationDate}");
+            Console.WriteLine($"Færdig:         {salesOrderHeader.CompletionDate}");
+            Console.WriteLine($"Kunde nummer:   {salesOrderHeader.CustomerNumber}");
+            Console.WriteLine($"Kunde navn:     {salesOrderHeader.Fullname}");
 
-            listPage.Add(salesOrderHeader);
-
-            listPage.AddColumn("Ordre nummer", "OrderNumber", 25);
-            listPage.AddColumn("Oprettelse", "CreationDate", 25);
-            listPage.AddColumn("Færdig", "CompletionDate", 25);
-            listPage.AddColumn("Kunde nummer", "CustomerNumber", 25);
-            listPage.AddColumn("Kunde Navn", "Fullname", 25);
-
-            listPage.Select();
-
-            var selected = listPage.Select();
-            if (selected != null)
-            {
-            }
-            else
-            {
-                Quit();
-            }
         }
     }
 }

@@ -12,50 +12,43 @@ namespace MyERP.SalesView
         public override string Title { get; set; } = "Opret Ordre";
 
         private SalesOrderHeader _salesOrder;
-        private Person _person;
 
         public SalesCreateScreen(SalesOrderHeader salesOrder)
         {
             _salesOrder = salesOrder;
-            _salesOrder.CreationDate = DateTime.Now;
-
-            _person = new Person();
-            _person.Address = new Address();
         }
 
         protected override void Draw()
         {
             Clear();
 
-            Form<SalesOrderHeader> orderEditor = new Form<SalesOrderHeader>();
-            Form<Person> personEditor = new Form<Person>();
-            Form<Address> addressEditor = new Form<Address>();
+            Form<SalesOrderHeader> editor = new Form<SalesOrderHeader>();
 
-            orderEditor.IntBox("Salgsordrenummer", "OrderNumber");
-            orderEditor.DoubleBox("Dato (oprettet)", "CreationDate"); 
-            orderEditor.IntBox("Kundenummer", "CustomerNumber");   
-            orderEditor.SelectBox("Ordrestatus", "Status");
+            var customerDictionary = GetCustomerDictionary();
+            var selectBoxOptions = customerDictionary.ToDictionary(
+                kvp => kvp.Key,
+                kvp => (object)kvp.Value 
+            );
 
-            personEditor.TextBox("Fornavn", "FirstName");
-            personEditor.TextBox("Efternavn", "LastName");
-            personEditor.TextBox("Email", "Email");
-            personEditor.TextBox("Telefonnummer", "Phone");
+            editor.SelectBox("Vælg kunde", "CustomerNumber", selectBoxOptions);
 
-            addressEditor.TextBox("Vej", "Street");
-            addressEditor.TextBox("Husnummer", "HouseNumber");
-            addressEditor.TextBox("Postnummer", "ZipCode");
-            addressEditor.TextBox("By", "City");
-            addressEditor.TextBox("Land", "Country");
-
-            orderEditor.Edit(_salesOrder);
-            personEditor.Edit(_person);
-            addressEditor.Edit(_person.Address);
-
-            orderEditor.Edit(_salesOrder);
-            personEditor.Edit(_person);
-            addressEditor.Edit(_person.Address);
+            editor.Edit(_salesOrder);
 
             this.Quit();
+        }
+
+        private Dictionary<string, Customer> GetCustomerDictionary()
+        {
+            var customerDictionary = new Dictionary<string, Customer>();
+
+            var customers = Database.Instance.Customers.ToList();
+            foreach (var customer in customers)
+            {
+                var displayName = customer.Fullname;
+                customerDictionary[displayName] = customer;
+            }
+
+            return customerDictionary;
         }
     }
 }

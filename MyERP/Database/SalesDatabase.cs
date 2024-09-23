@@ -58,7 +58,7 @@ namespace MyERP
                         {
                             OrderNumber = reader.GetInt32(0),
                             CreationDate = reader.GetDateTime(1),
-                            CompletionDate = reader.IsDBNull(2) ? (DateTime?)null : reader.GetDateTime(10),
+                            CompletionDate = reader.IsDBNull(2) ? (DateTime?)null : reader.GetDateTime(2),
                             CustomerNumber = reader.GetInt32(3),
                             Firstname = reader.GetString(4),
                             Lastname = reader.GetString(5),

@@ -52,7 +52,7 @@ namespace MyERP.SalesView
         {
             var newOrder = new SalesOrderHeader();
             listPage.Add(newOrder);
-            //Screen.Display(new OrderCreateScreen(newOrder));
+            Screen.Display(new SalesCreateScreen(newOrder));
         }
 
         private void EditOrder(SalesOrderHeader selected)
