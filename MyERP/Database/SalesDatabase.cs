@@ -122,7 +122,7 @@ namespace MyERP
 
             return sales;
         }
-
+       
         public void UpdateSalesOrderHeader(SalesOrderHeader updateSale)
         {
             var existingSale = GetSalesOrderHeaderById(updateSale.OrderNumber);
