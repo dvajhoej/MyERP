@@ -2,10 +2,14 @@
 {
     public class SalesOrderLine
     {
-        public int ProductNumber { get; set; }
+        public int ProductID { get; set; }
         public string Name { get; set; }
         public double Quantity { get; set; }
         public double Price { get; set; }
+        public int OrderID { get; set; }
+        public string Description { get; set; }
+        public UnitType Unit { get; set; }
+        
 
         public double Amount
         {
@@ -15,9 +19,9 @@
             }
         }
 
-        public SalesOrderLine(int productNumber, string name, double quantity, double price)
+        public SalesOrderLine(int productID, string name, double quantity, double price)
         {
-            ProductNumber = productNumber;
+            ProductID = productID;
             Name = name;
             Quantity = quantity;
             Price = price;

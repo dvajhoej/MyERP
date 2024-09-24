@@ -81,7 +81,7 @@ namespace MyERP.SalesView
 
             try
             {
-                Database.Instance.InsertSalesOrderHeader(_salesOrder);
+                //Database.Instance.InsertSalesOrderHeader(_salesOrder);
                 Console.WriteLine("Sale successfully created.");
             }
             catch (Exception ex)

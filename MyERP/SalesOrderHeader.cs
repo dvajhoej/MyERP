@@ -10,7 +10,7 @@ namespace MyERP
         public DateTime CreationDate { get; set; }
         public DateTime? CompletionDate { get; set; }
         public int CustomerNumber { get; set; }
-        public OrderStatus Status { get; set; } = OrderStatus.None;
+        public OrderStatus Status { get; set; } = OrderStatus.Created;
         private List<SalesOrderLine> OrderLines { get; set; } = new List<SalesOrderLine>();
         public decimal TotalPrice { get; set; }
         public double OrderAmount
@@ -27,7 +27,7 @@ namespace MyERP
         }
         public enum OrderStatus
         {
-            None,
+            
             Created,
             Confirmed,
             Packed,
@@ -87,8 +87,8 @@ namespace MyERP
 
         public int ProductNumber
         {
-            get { return _salesOrderLine.ProductNumber; }
-            set { _salesOrderLine.ProductNumber = value; }
+            get { return _salesOrderLine.ProductID; }
+            set { _salesOrderLine.ProductID = value; }
         }
         public string Name
         {
