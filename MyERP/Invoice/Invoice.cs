@@ -5,8 +5,11 @@ namespace MyERP
 {
     public class Invoice
     {
-        public static void GenerateInvoice()
+        public static void GenerateInvoice(SalesOrderHeader data)
         {
+
+            var customer = Database.Instance.GetCustomerbyID(data.CustomerNumber);
+
             StringBuilder htmlContent = new StringBuilder();
 
 
@@ -40,13 +43,13 @@ namespace MyERP
             htmlContent.AppendLine("<div class=\"card-body\">");
             htmlContent.AppendLine("<div class=\"invoice-title\">");
             // BETALT STATUS ? 
-            htmlContent.AppendLine("<h4 class=\"float-end font-size-15\">Faktura #DS0204 <span class=\"badge bg-success font-size-12 ms-2\">Unpaid</span></h4>");
+            htmlContent.AppendLine($"<h4 class=\"float-end font-size-15\">Faktura #DS0204 <span class=\"badge bg-success font-size-12 ms-2\">{data.Status}</span></h4>");
             htmlContent.AppendLine("<div class=\"mb-4\">");
             htmlContent.AppendLine("<h2 class=\"mb-1 text-muted\">ENL SECURITY</h2>");
             htmlContent.AppendLine("</div>");
             htmlContent.AppendLine("<div class=\"text-muted\">");
             // AFSENDER OPLYSNINGER
-            htmlContent.AppendLine("<p class=\"mb-1\">Struervej 55, 9220 Aalborg, Danmark </p>");        
+            htmlContent.AppendLine("<p class=\"mb-1\">Struervej 55, 9220 Aalborg, Danmark </p>");
             htmlContent.AppendLine("<p class=\"mb-1\">ENL@SECURITY.DK, +45 85 515 515</p>");
             htmlContent.AppendLine("</div>");
             htmlContent.AppendLine("</div>");
@@ -57,10 +60,10 @@ namespace MyERP
             // DEBITOR OPLYSNINGER
 
             htmlContent.AppendLine("<h5 class=\"font-size-16 mb-3\">Debitor:</h5>");
-            htmlContent.AppendLine("<h5 class=\"font-size-15 mb-2\">Kunde navn</h5>"); // Kunde navn
-            htmlContent.AppendLine(">4068 Post Avenue Newfolden, MN 56738</p>"); // Kunde addresse
-            htmlContent.AppendLine(">kunde mail</p>"); // Kunde email
-            htmlContent.AppendLine(">kunde telefon"); // Kunde telefon
+            htmlContent.AppendLine($"<h5 class=\"font-size-15 mb-2\">{customer.Fullname}</h5>"); // Kunde navn
+            htmlContent.AppendLine($"<h5 class=\"font-size-15 mb-2\">{customer.FullAddress}</h5>"); // Kunde addresse
+            htmlContent.AppendLine($"<h5 class=\"font-size-15 mb-2\">{customer.Email}</h5>"); // Kunde email
+            htmlContent.AppendLine($"<h5 class=\"font-size-15 mb-2\">{customer.Phone}</h5>"); // Kunde telefon
 
             htmlContent.AppendLine("</div>");
             htmlContent.AppendLine("</div>");
@@ -68,15 +71,15 @@ namespace MyERP
             htmlContent.AppendLine("<div class=\"text-muted text-sm-end\">");
             htmlContent.AppendLine("<div>");
             htmlContent.AppendLine("<h5 class=\"font-size-15 mb-1\">Faktura nr:</h5>"); // faktura nr
-            htmlContent.AppendLine("<p>#DZ0112</p>");
+            htmlContent.AppendLine($"<p>#{data.OrderNumber}</p>");
             htmlContent.AppendLine("</div>");
             htmlContent.AppendLine("<div class=\"mt-4\">");
             htmlContent.AppendLine("<h5 class=\"font-size-15 mb-1\">Købs dato:</h5>"); // købs dato
-            htmlContent.AppendLine("<p>12 Oct, 2020</p>");
+            htmlContent.AppendLine($"<p>12 Oct, 2020</p>");
             htmlContent.AppendLine("</div>");
             htmlContent.AppendLine("<div class=\"mt-4\">");
             htmlContent.AppendLine("<h5 class=\"font-size-15 mb-1\">Ordre nr:</h5>"); // ordre nr
-            htmlContent.AppendLine("<p>#1123456</p>");
+            htmlContent.AppendLine($"<p>#1123456</p>");
             htmlContent.AppendLine("</div>");
             htmlContent.AppendLine("</div>");
             htmlContent.AppendLine("</div>");
@@ -91,47 +94,82 @@ namespace MyERP
             htmlContent.AppendLine("<th>Vare</th>");
             htmlContent.AppendLine("<th>Pris</th>");
             htmlContent.AppendLine("<th>Antal</th>");
+            htmlContent.AppendLine("<th>Enhed</th>");
             htmlContent.AppendLine("<th class=\"text-end\" style=\"width: 120px;\">Total</th>");
             htmlContent.AppendLine("</tr>");
             htmlContent.AppendLine("</thead>");
             htmlContent.AppendLine("<tbody>");
 
-
-            for (int i = 1; i < 12; i++)
+            int i = 1;
+            foreach (var line in Database.instance.Lines)
             {
+                if (line.OrderID == data.OrderNumber)
+                    {
+                    htmlContent.AppendLine("<tr>");
+                    htmlContent.AppendLine($"<th scope=\"row\">0{i:D1}</th>"); // No. Nummer
+                    htmlContent.AppendLine("<td>");
+                    htmlContent.AppendLine("<div>");
+                    htmlContent.AppendLine($"<h5 class=\"text-truncate font-size-14 mb-1\">{line.Name}</h5>");   // Vare navn
+                    htmlContent.AppendLine($"<p class=\"text-muted mb-0\">{line.Description}</p>"); // vare beskrivelse
+                    htmlContent.AppendLine("</div>");
+                    htmlContent.AppendLine("</td>");
+                    htmlContent.AppendLine($"<td>DKK {line.Price}</td>"); // vare pris
+                    htmlContent.AppendLine($"<td>{line.Quantity}</td>"); // vare antal
+                    htmlContent.AppendLine($"<td>{line.Unit}</td>"); // vare enhed
 
-                htmlContent.AppendLine("<tr>");
-                htmlContent.AppendLine($"<th scope=\"row\">0{i}</th>"); // No. Nummer
-                htmlContent.AppendLine("<td>");
-                htmlContent.AppendLine("<div>");
-                htmlContent.AppendLine("<h5 class=\"text-truncate font-size-14 mb-1\">Black Strap A012</h5>");   // Vare navn
-                htmlContent.AppendLine("<p class=\"text-muted mb-0\">Watch, Black</p>"); // vare beskrivelse
-                htmlContent.AppendLine("</div>");
-                htmlContent.AppendLine("</td>");
-                htmlContent.AppendLine("<td>$245.50</td>"); // vare pris
-                htmlContent.AppendLine($"<td>{i}</td>"); // vare antal
-                htmlContent.AppendLine("<td class=\"text-end\">$245.50</td>"); // vare total
-                htmlContent.AppendLine("</tr>");
+                    htmlContent.AppendLine($"<td class=\"text-end\">DKK {line.Price * line.Quantity}</td>"); // vare total
+                    htmlContent.AppendLine("</tr>");
+                    i++;
+                }
             }
 
+            //for (int i = 1; i < 2; i++)
+            //{
+
+            //    htmlContent.AppendLine("<tr>");
+            //    htmlContent.AppendLine($"<th scope=\"row\">0{i}</th>"); // No. Nummer
+            //    htmlContent.AppendLine("<td>");
+            //    htmlContent.AppendLine("<div>");
+            //    htmlContent.AppendLine("<h5 class=\"text-truncate font-size-14 mb-1\">Black Strap A012</h5>");   // Vare navn
+            //    htmlContent.AppendLine("<p class=\"text-muted mb-0\">Watch, Black</p>"); // vare beskrivelse
+            //    htmlContent.AppendLine("</div>");
+            //    htmlContent.AppendLine("</td>");
+            //    htmlContent.AppendLine("<td>$245.50</td>"); // vare pris
+            //    htmlContent.AppendLine($"<td>{i}</td>"); // vare antal
+            //    htmlContent.AppendLine("<td class=\"text-end\">$245.50</td>"); // vare total
+            //    htmlContent.AppendLine("</tr>");
+            //}
+
+            double ii = 0;
+            foreach (var line in Database.instance.Lines)
+            {
+                if (line.OrderID == data.OrderNumber)
+                {
+                    ii += line.Price * line.Quantity;
+                }
+
+            }
+            
+            double iii = ii * 1.25;
+            
             htmlContent.AppendLine("<th scope=\"row\" colspan=\"4\" class=\"text-end\">Sub Total</th>"); // total uden moms
-            htmlContent.AppendLine("<td class=\"text-end\">$732.50</td>");
+            htmlContent.AppendLine($"<td class=\"text-end\">{ii}</td>");
             htmlContent.AppendLine("</tr>");
             htmlContent.AppendLine("<tr>");
             htmlContent.AppendLine("<th scope=\"row\" colspan=\"4\" class=\"border-0 text-end\">Rabat :</th>"); // rabat
-            htmlContent.AppendLine("<td class=\"border-0 text-end\">- $25.50</td>");
+            htmlContent.AppendLine("<td class=\"border-0 text-end\">- DKK 0.00</td>");
             htmlContent.AppendLine("</tr>");
             htmlContent.AppendLine("<tr>");
             htmlContent.AppendLine("<th scope=\"row\" colspan=\"4\" class=\"border-0 text-end\">Shipping Charge :</th>"); // fragt pris
-            htmlContent.AppendLine("<td class=\"border-0 text-end\">$20.00</td>");
+            htmlContent.AppendLine("<td class=\"border-0 text-end\">DKK 49.00</td>");
             htmlContent.AppendLine("</tr>");
             htmlContent.AppendLine("<tr>");
             htmlContent.AppendLine("<th scope=\"row\" colspan=\"4\" class=\"border-0 text-end\">Tax</th>"); // moms udgør
-            htmlContent.AppendLine("<td class=\"border-0 text-end\">$12.00</td>");
+            htmlContent.AppendLine($"<td class=\"border-0 text-end\">{iii-ii}</td>");
             htmlContent.AppendLine("</tr>");
             htmlContent.AppendLine("<tr>");
             htmlContent.AppendLine("<th scope=\"row\" colspan=\"4\" class=\"border-0 text-end\">Total</th>"); // ordre total
-            htmlContent.AppendLine("<td class=\"border-0 text-end\"><h4 class=\"m-0 fw-semibold\">$739.00</h4></td>");
+            htmlContent.AppendLine($"<td class=\"border-0 text-end\"><h4 class=\"m-0 fw-semibold\">{iii}</h4></td>");
             htmlContent.AppendLine("</tr>");
             htmlContent.AppendLine("</tbody>");
             htmlContent.AppendLine("</table>");

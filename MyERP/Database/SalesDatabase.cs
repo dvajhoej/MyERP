@@ -1,9 +1,5 @@
 ﻿using MyERP.DBHELPER;
 using System.Data.SqlClient;
-using System.Text.RegularExpressions;
-using TECHCOOL.UI;
-using TECHCOOL;
-using Org.BouncyCastle.Utilities;
 
 namespace MyERP
 {
@@ -23,6 +19,53 @@ namespace MyERP
 
             //return sales.FirstOrDefault(sale => sale.OrderNumber == orderNumber);
         }
+
+        public List<SalesOrderLine> GetAllSalesOrderLines()
+        {
+            string connectionstring = DatabaseString.ConnectionString;
+            lines.Clear();
+
+            using (SqlConnection connection = new SqlConnection(connectionstring))
+            {
+                string query = "SELECT" +
+                               "     Products.name," +
+                               "     Products.description," +
+                               "     Products.sellingPrice," +
+                               "     SalesOrderLines.productID," +
+                               "     SalesOrderLines.quantity," +
+                               "     SalesOrderHeader.orderID, " +
+                               "     Products.unit " +   
+                               "FROM  " +
+                               "     Products " +
+                               "INNER JOIN  SalesOrderLines ON Products.productID = SalesOrderLines.productID " +
+                               "INNER JOIN  SalesOrderHeader ON SalesOrderLines.salesOrderHeadID = SalesOrderHeader.orderID";
+
+                SqlCommand command = new SqlCommand(query, connection);
+                connection.Open();
+
+                using (SqlDataReader reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        SalesOrderLine line = new SalesOrderLine
+                        {
+                            Name = reader.GetString(0),
+                            Description = reader.GetString(1),
+                            Price = (double)reader.GetDecimal(2),
+                            ProductID = reader.GetInt32(3),
+                            Quantity = (double)reader.GetDecimal(4),
+                            OrderID = reader.GetInt32(5),
+                            Unit = (UnitType)Enum.Parse(typeof(UnitType), reader.GetString(6)),
+
+                        };
+                        lines.Add(line);
+                    }
+                }
+            }
+
+            return lines;
+        }
+
 
         public List<SalesOrderHeader> GetAllSalesOrderHeaders()
         {
@@ -79,7 +122,7 @@ namespace MyERP
 
             return sales;
         }
-       
+
         public void UpdateSalesOrderHeader(SalesOrderHeader updateSale)
         {
             var existingSale = GetSalesOrderHeaderById(updateSale.OrderNumber);
