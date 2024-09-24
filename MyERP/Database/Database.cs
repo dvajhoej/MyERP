@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using Google.Protobuf.Collections;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace MyERP
@@ -6,7 +7,7 @@ namespace MyERP
 
     public partial class Database
     {
-        private static Database? instance;
+        public static Database? instance;
 
         public static Database Instance
         {
@@ -27,6 +28,7 @@ namespace MyERP
         private List<Company> companies;
         private List<Product> products;
         private List<SalesOrderHeader> sales;
+        private List<SalesOrderLine> lines;
         private List<Customer> customers;
 
         public Database()
@@ -35,12 +37,18 @@ namespace MyERP
             products = new List<Product>();
             sales = new List<SalesOrderHeader>();
             customers = new List<Customer>();
+            lines = new List<SalesOrderLine>();
             GetAllCustomers();
             GetAllCompanies();
             GetAllProducts();
             GetAllSalesOrderHeaders();
+            GetAllSalesOrderLines();
         }
 
+        public List<SalesOrderLine> Lines
+        {
+            get { return lines; }
+        }            
 
         public List<Company> Companies
         {
