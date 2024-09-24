@@ -16,6 +16,7 @@ namespace MyERP.SalesView
             listPage.AddKey(ConsoleKey.F1, CreateOrder);
             listPage.AddKey(ConsoleKey.F2, EditOrder);
             listPage.AddKey(ConsoleKey.F5, DeleteOrder);
+            listPage.AddKey(ConsoleKey.F9, PrintInvoice);
             listPage.AddKey(ConsoleKey.Escape, Quit);
             listPage.AddColumn("Ordre nummer", "OrderNumber", 25);
             listPage.AddColumn("Oprettelse", "CreationDate", 25);
@@ -24,6 +25,8 @@ namespace MyERP.SalesView
             listPage.AddColumn("Kunde Navn", "Fullname", 25);
 
         }
+
+     
 
         public override string Title { get; set; } = "Ordre";
 
@@ -55,7 +58,10 @@ namespace MyERP.SalesView
             listPage.Add(newOrder);
             //Screen.Display(new OrderCreateScreen(newOrder));
         }
-
+        public void PrintInvoice(SalesOrderHeader selected)
+        {
+            Invoice.GenerateInvoice(selected);
+        }
         private void EditOrder(SalesOrderHeader selected)
         {
             //Screen.Display(new OrdertEditScreen(selected));
