@@ -17,7 +17,8 @@ namespace MyERP
             string CompanyName = "ENL SECURITY A/S";
             string InvoiceID = "Invoice ID";
             Enum OrderStatus  = data.Status;
-            string CompanyAddress = "Struervej 55, 9220 Aalborg Øst";
+            string CompanyAddress = "Struervej 55";
+            string CompanyAddress2 = "9220 Aalborg Øst";
             string CompanyEmail = "ENL@Security.dk";
             string CompanyPhone = "+45 19901990";
             string CustomerName = customer.FirstName + " " + customer.LastName;
@@ -96,7 +97,8 @@ namespace MyERP
                 .Replace("{{PriceShipping}}", PriceShipping)
                 .Replace("{{PriceTax}}", PriceTax.ToString())
                 .Replace("{{PriceTotal}}", PriceTotal.ToString())
-                .Replace("{{SalesOrderLines}}", SalesOrderLines);
+                .Replace("{{SalesOrderLines}}", SalesOrderLines)
+                .Replace("{{CompanyAddress2}}", CompanyAddress2);
 
 
 

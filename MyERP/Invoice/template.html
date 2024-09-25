@@ -9,32 +9,35 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet">
     <style type="text/css">
-        body {
+       
+       body {
             margin-top: 20px;
             background-color: #eee;
         }
 
-        .card {
-            box-shadow: 0 20px 27px 0 rgb(0 0 0 / 5%);
-        }
-
-        .card {
-            position: relative;
+        .compname {
+            position: absolute;
+            top: 100px;
+            right: 20px;
             display: flex;
             flex-direction: column;
-            min-width: 0;
-            word-wrap: break-word;
-            background-color: #fff;
-            background-clip: border-box;
-            border: 0 solid rgba(0, 0, 0, .125);
-            border-radius: 1rem;
+            color: #6c757d
         }
+
+
+
+        .logo {
+            height: 150px;
+                    
+        }
+
+
     </style>
 </head>
 
 <body>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/css/all.min.css"
-          integrity="sha256-2XFplPlrFClt0bIdPgpz8H7ojnk10H69xRqd9+uTShA=" crossorigin="anonymous" />
+        integrity="sha256-2XFplPlrFClt0bIdPgpz8H7ojnk10H69xRqd9+uTShA=" crossorigin="anonymous" />
     <div class="container">
         <div class="row">
             <div class="col-lg-12">
@@ -46,12 +49,13 @@
                                 <span class="badge bg-success font-size-12 ms-2">{{Status}}</span>
                             </h4>
                             <div class="mb-4">
-                                <h2 class="mb-1 text-muted">{{CompanyName}}</h2>
                             </div>
-                            <div class="text-muted">
-                                <p class="mb-1">{{CompanyAddress}}</p>
-                                <p class="mb-1">{{CompanyEmail}}</p>
-                                <p class="mb-1">{{CompanyPhone}}</p>
+                            <img src="logo.png" class="logo" alt="...">
+                            <div class="compname">
+                                <div>{{CompanyAddress}}</div>
+                                <div>{{CompanyAddress2}}</div>
+                                <div> {{CompanyEmail}}</div>
+                                <div>{{CompanyPhone}}</div>
                             </div>
                         </div>
                         <hr class="my-4">
@@ -103,7 +107,7 @@
                                     <tbody>
 
 
-                                            {{SalesOrderLines}}
+                                        {{SalesOrderLines}}
                                         <tr>
                                             <th scope="row" colspan="4" class="text-end">Sub total :</th>
                                             <td class="text-end">DKK {{PriceSubTotal}}</td>
