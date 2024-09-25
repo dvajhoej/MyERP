@@ -27,22 +27,38 @@ namespace MyERP
 
         private List<Company> companies;
         private List<Product> products;
+        private List<Person> persons;
         private List<SalesOrderHeader> sales;
         private List<SalesOrderLine> lines;
         private List<Customer> customers;
+        private List<Invoice> invoices;
 
         public Database()
         {
+            persons = new List<Person>();
             companies = new List<Company>();
             products = new List<Product>();
             sales = new List<SalesOrderHeader>();
             customers = new List<Customer>();
             lines = new List<SalesOrderLine>();
+            invoices = new List<Invoice>();
+            GetAllInvoices();
             GetAllCustomers();
             GetAllCompanies();
             GetAllProducts();
             GetAllSalesOrderHeaders();
             GetAllSalesOrderLines();
+        }
+
+
+        public List<Person> Persons
+        {
+            get { return persons; }
+        }
+
+        public List<Invoice> Invoices
+        {
+            get { return invoices; }
         }
 
         public List<SalesOrderLine> Lines

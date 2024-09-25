@@ -61,7 +61,9 @@ namespace MyERP.SalesView
         }
         public void PrintInvoice(SalesOrderHeader selected)
         {
-            Invoice.GenerateInvoice(selected);
+            var newInvoice = new Invoice();
+            Database.instance.InsertInvoice(selected, newInvoice);
+            Invoice.GenerateInvoice(selected, newInvoice);
         }
         private void EditOrder(SalesOrderHeader selected)
         {

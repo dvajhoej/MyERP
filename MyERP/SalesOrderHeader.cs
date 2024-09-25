@@ -55,25 +55,25 @@ namespace MyERP
         private Person _person = new Person();
   
 
-        public string Firstname
+        public string? Firstname
         {
             get { return _person.FirstName; }
             set { _person.FirstName = value; }
         }
 
-        public string Lastname
+        public string? Lastname
         {
             get { return _person.LastName; }
             set { _person.LastName = value; }
         }
 
-        public string Phone
+        public string? Phone
         {
             get { return _person.Phone; }
             set { _person.Phone = value; }
         }
 
-        public string Email
+        public string? Email
         {
             get { return _person.Email; }
             set { _person.Email = value; }
