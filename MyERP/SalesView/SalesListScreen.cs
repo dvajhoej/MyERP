@@ -65,7 +65,7 @@ namespace MyERP.SalesView
         }
         private void EditOrder(SalesOrderHeader selected)
         {
-            //Screen.Display(new OrdertEditScreen(selected));
+            Screen.Display(new SalesEditScreen(selected));
         }
 
         private void DeleteOrder(SalesOrderHeader selected)
