@@ -9,7 +9,6 @@
 *.user
 *.userosscache
 *.sln.docstates
-*.csproj
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
 
@@ -361,9 +360,5 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
-/MyERP/CustomerView/1.cs
-/MyERP/DbHelper.cs
-/MyERP/Database/DbHelper.cs
-MyERP/MyERP.csproj
-MyERP/MyERP.csproj
-/MyERP/MyERP.csproj
+
+
