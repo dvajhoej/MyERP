@@ -1,6 +1,12 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <ItemGroup>
+    <Compile Remove="Invoice\Invoices\**" />
+    <EmbeddedResource Remove="Invoice\Invoices\**" />
+    <None Remove="Invoice\Invoices\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Remove="Invoice\logo.png" />
   </ItemGroup>
 
