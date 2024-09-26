@@ -5,7 +5,7 @@ namespace MyERP.SalesView
 {
     public class SalesEditScreen : Screen
     {
-        public override string Title { get; set; } = "Rediger Salg";
+        public override string Title { get; set; } = "Rediger Order";
 
         private SalesOrderHeader _salesOrder;
 
@@ -20,11 +20,16 @@ namespace MyERP.SalesView
 
             Form<SalesOrderHeader> editor = new Form<SalesOrderHeader>();
 
+            Dictionary<string, object> statusOptions = new Dictionary<string, object>
+            {
+                { "Confirmed", (object)SalesOrderHeader.OrderStatus.Confirmed },
+                { "Packed", (object)SalesOrderHeader.OrderStatus.Packed },
+                { "Completed", (object)SalesOrderHeader.OrderStatus.Completed }
+            };
+
             editor.IntBox("Ordre Nummer", "OrderNumber");
-            editor.IntBox("Kunde Nummer", "CustomerNumber");
-            editor.TextBox("Fornavn", "Firstname");
-            editor.TextBox("Efternavn", "Lastname");
-            editor.DoubleBox("Total Pris", "TotalPrice");
+            editor.SelectBox("Order Status", "Status", statusOptions);
+            editor.TextBox("Completion Date (yyyy-MM-dd)", "CompletionDate");
 
             editor.Edit(_salesOrder);
             Database.Instance.UpdateSalesOrderHeader(_salesOrder);

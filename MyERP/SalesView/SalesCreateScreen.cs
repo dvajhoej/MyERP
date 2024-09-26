@@ -1,9 +1,6 @@
 ﻿using Google.Protobuf.Reflection;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using TECHCOOL.UI;
 
 namespace MyERP.SalesView
@@ -26,7 +23,7 @@ namespace MyERP.SalesView
             Console.WriteLine("Skriv et kunde nummer:");
             if (!int.TryParse(Console.ReadLine(), out int customerID))
             {
-                Console.WriteLine("ugyldig nummer. Skriv et gyldigt tal.");
+                Console.WriteLine("Ugyldig nummer. Skriv et gyldigt tal.");
                 return;
             }
 
@@ -34,7 +31,7 @@ namespace MyERP.SalesView
 
             if (customer == null)
             {
-                Console.WriteLine("Kunde ikke fundet. Vil du skabe en ny kunde (y/n)");
+                Console.WriteLine("Kunde kunne ikke findes. Vil du skabe en ny kunde? (y/n)");
                 var input = Console.ReadKey().KeyChar;
                 Console.WriteLine();
 
@@ -58,35 +55,36 @@ namespace MyERP.SalesView
                     if (success)
                     {
                         Database.Instance.InsertCustomer(newCustomer);
-
                         _salesOrder = new SalesOrderHeader(orderNumber: GenerateOrderNumber(), customerNumber: newCustomer.CustomerID);
                     }
                     else
                     {
-                        Console.WriteLine("Customer creation canceled.");
+                        Console.WriteLine("Kundeoprettelse annulleret.");
                         return;
                     }
                 }
                 else
                 {
-                    Console.WriteLine("Sales order creation canceled.");
+                    Console.WriteLine("Ordreoprettelse annulleret.");
                     return;
                 }
             }
             else
             {
                 _salesOrder = new SalesOrderHeader(orderNumber: GenerateOrderNumber(), customerNumber: customer.CustomerID);
-                Console.WriteLine($"Order skabt for {customer.FullName}.");
+                Console.WriteLine($"Ordre skabt for {customer.Fullname}.");
             }
+
+            AddOrderLines();
 
             try
             {
-                //Database.Instance.InsertSalesOrderHeader(_salesOrder);
-                Console.WriteLine("Sale successfully created.");
+                // Database.Instance.InsertSalesOrderHeader(_salesOrder);
+                Console.WriteLine("Order blev oprettet.");
             }
             catch (Exception ex)
             {
-                Console.WriteLine("Error while creating sale: " + ex.Message);
+                Console.WriteLine("Fejl under oprettelse af order: " + ex.Message);
             }
 
             this.Quit();
@@ -97,6 +95,57 @@ namespace MyERP.SalesView
             return new Random().Next(1000, 9999);
         }
 
-     }
+        private void AddOrderLines()
+        {
+            List<Product> products = Database.Instance.GetAllProducts();
 
+            if (products.Count == 0)
+            {
+                Console.WriteLine("Ingen produkter tilgængelige for valg.");
+                return;
+            }
+
+            while (true)
+            {
+                Console.WriteLine("Tilgængelige produkter:");
+                foreach (var product in products)
+                {
+                    Console.WriteLine($"ID: {product.ProductID}, {product.Name} - Pris: {product.SellingPrice} DKK");
+                }
+
+                Console.Write("Skriv produkt ID for at tilføje til ordren (eller 'q' for at afslutte): ");
+                var input = Console.ReadLine();
+
+                if (input.ToLower() == "q") break;
+
+                if (!int.TryParse(input, out int productId) || !products.Exists(p => p.ProductID == productId))
+                {
+                    Console.WriteLine("Ugyldigt produkt ID. Prøv igen.");
+                    continue;
+                }
+
+                Product selectedProduct = products.Find(p => p.ProductID == productId);
+
+                Console.Write($"Skriv mængde for {selectedProduct.Name}: ");
+                if (!double.TryParse(Console.ReadLine(), out double quantity) || quantity <= 0)
+                {
+                    Console.WriteLine("Ugyldig mængde. Annullerer tilføjelse af produkt.");
+                    continue;
+                }
+
+                SalesOrderLine orderLine = new SalesOrderLine
+                {
+                    ProductID = selectedProduct.ProductID,
+                    Name = selectedProduct.Name,
+                    Price = selectedProduct.SellingPrice,
+                    Quantity = quantity
+                };
+
+                _salesOrder.AddOrderLine(orderLine);
+                Console.WriteLine($"Tilføjede {quantity} x {selectedProduct.Name} til ordren.");
+            }
+
+            Console.WriteLine($"Samlet beløb: {_salesOrder.OrderAmount} DKK");
+        }
+    }
 }
