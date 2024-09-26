@@ -52,37 +52,37 @@ namespace MyERP
         }
 
         private SalesOrderLine _salesOrderLine = new SalesOrderLine();
-        private Person _person = new Person();
+        private Customer _customer = new Customer();
   
 
         public string? Firstname
         {
-            get { return _person.FirstName; }
-            set { _person.FirstName = value; }
+            get { return _customer.FirstName; }
+            set { _customer.FirstName = value; }
         }
 
         public string? Lastname
         {
-            get { return _person.LastName; }
-            set { _person.LastName = value; }
+            get { return _customer.LastName; }
+            set { _customer.LastName = value; }
         }
 
         public string? Phone
         {
-            get { return _person.Phone; }
-            set { _person.Phone = value; }
+            get { return _customer.Phone; }
+            set { _customer.Phone = value; }
         }
 
         public string? Email
         {
-            get { return _person.Email; }
-            set { _person.Email = value; }
+            get { return _customer.Email; }
+            set { _customer.Email = value; }
         }
 
         public string Fullname
         {
-            get { return _person.FullName; }
-            set { _person.FullName = value; }
+            get { return _customer.FullName; }
+            set { _customer.FullName = value; }
         }
 
         public int ProductNumber
