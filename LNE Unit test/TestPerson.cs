@@ -69,7 +69,7 @@ namespace LNE_Unit_test
         }
 
         [Fact]
-        public void CheckList()
+        public void List_AddAndRemovePersons_ShouldUpdateCorrectly()
         {
             var person1 = new Person();
             var person2 = new Person();
@@ -77,12 +77,12 @@ namespace LNE_Unit_test
             
             List<Person> persons = new List<Person>();
 
-            Assert.Equal(0, persons.Count);
+            Assert.Empty(persons);
 
             persons.Add(person1);
 
             Assert.Contains(person1, persons);
-            Assert.Equal(1, persons.Count);
+            Assert.Single(persons);
 
             persons.Add(person2);
             persons.Add(person3);

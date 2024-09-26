@@ -43,6 +43,7 @@ namespace MyERP.ProductView
             {
                 Screen.Display(new ProductViewScreen(selected));
             }
+            else { }
 
         }
         void Quit(Product _)

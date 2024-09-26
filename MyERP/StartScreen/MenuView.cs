@@ -1,13 +1,8 @@
-﻿using MyERP.CustomerView;
-using MyERP.CompanyView;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using TECHCOOL.UI;
-using MyERP.SalesView;
+﻿using MyERP.CompanyView;
+using MyERP.CustomerView;
 using MyERP.ProductView;
+using MyERP.SalesView;
+using TECHCOOL.UI;
 
 namespace MyERP.StartScreen
 {
@@ -26,11 +21,6 @@ namespace MyERP.StartScreen
             Add(customerListScreen);
             Add(productListScreen);
         }
-        protected override void Draw()
-        {
-            base.Draw();
 
-
-        }
     }
 }
