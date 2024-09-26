@@ -5,13 +5,27 @@ namespace MyERP
 {
     public partial class Database
     {
-        public SalesOrderHeader GetSalesOrderHeaderById(int orderNumber)
+        public SalesOrderHeader GetSalesOrderHeaderById(int orderID)
         {
-            foreach (var sale in salesOrderHeader)
+            foreach (var sale in salesOrderHeaders)
             {
-                if (sale.OrderNumber == orderNumber)
+                if (sale.OrderNumber == orderID)
                 {
                     return sale;
+                }
+
+            }
+            return null;
+
+            //return sales.FirstOrDefault(sale => sale.OrderNumber == orderNumber);
+        }
+        public SalesOrderLine GetSalesOrderLineById(int salesOrderLineID)
+        {
+            foreach (var line in salesOrderLines)
+            {
+                if (line.SalesOrderLineID == salesOrderLineID)
+                {
+                    return line;
                 }
 
             }
@@ -70,7 +84,7 @@ namespace MyERP
         public List<SalesOrderHeader> GetAllSalesOrderHeaders()
         {
             string connectionString = DatabaseString.ConnectionString;
-            salesOrderHeader.Clear();
+            salesOrderHeaders.Clear();
 
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
@@ -115,12 +129,12 @@ namespace MyERP
                             TotalPrice = reader.GetDecimal(6),
                         };
 
-                        salesOrderHeader.Add(sale);
+                        salesOrderHeaders.Add(sale);
                     }
                 }
             }
 
-            return salesOrderHeader;
+            return salesOrderHeaders;
         }
 
         public void InsertSalesOrderHeader(SalesOrderHeader salesOrderHeader)
@@ -154,15 +168,15 @@ namespace MyERP
 
                             salesOrderHeader.OrderNumber = (int)command.ExecuteScalar();
                         }
-                        Instance.salesOrderHeader.Add(salesOrderHeader);
-                    }      
+                        Instance.salesOrderHeaders.Add(salesOrderHeader);
+                    }
                     catch (Exception ex)
                     {
                         transaction.Rollback();
                         throw new Exception("Error while inserting salesOrderHead: " + ex.Message);
                     }
-                }          
-            }              
+                }
+            }
         }
 
         public void InsertSalesOrderline(SalesOrderLine salesOrderLine)
@@ -204,23 +218,206 @@ namespace MyERP
             }
         }
 
-        public void UpdateSalesOrderHeader(SalesOrderHeader updateSale)
+        public void UpdateSalesOrderHeader(SalesOrderHeader salesOrderHeader)
+        {
+            if (salesOrderHeader.OrderNumber == 0)
             {
-                var existingSale = GetSalesOrderHeaderById(updateSale.OrderNumber);
-                if (existingSale != null)
+                throw new ArgumentException("SalesOrderID is invalid.");
+            }
+            var existingSalesOrderHeader = GetSalesOrderHeaderById(salesOrderHeader.OrderNumber);
+            if (existingSalesOrderHeader != null)
+            {
+                try
                 {
-                    int index = salesOrderHeader.IndexOf(existingSale);
-                    salesOrderHeader[index] = updateSale;
+                    using (SqlConnection connection = new SqlConnection(DatabaseString.ConnectionString))
+                    {
+                        connection.Open();
+                        using (SqlTransaction transaction = connection.BeginTransaction())
+                        {
+                            try
+                            {
+                                string updateQuery = "UPDATE SalesOrderLines SET " +
+                                                         "creationDate = @CreationDate, " +
+                                                         "compleionDate = @CompletionDate" +
+                                                         "customerID = @CustomerID " +
+                                                         "status = @Status" +
+                                                     "WHERE orderID = @OrderID;";
+
+
+                                using (SqlCommand command = new SqlCommand(updateQuery, connection, transaction))
+                                {
+                                    // Update SalesorderHead table
+                                    command.Parameters.AddWithValue("@CreationDate", salesOrderHeader.CreationDate);
+                                    command.Parameters.AddWithValue("@CompletionDate", salesOrderHeader.CompletionDate);
+                                    command.Parameters.AddWithValue("@CustomerID", salesOrderHeader.CustomerNumber);
+                                    command.Parameters.AddWithValue("@Status", salesOrderHeader.Status);
+
+
+
+                                    int rowsAffected = command.ExecuteNonQuery();
+
+                                    if (rowsAffected > 0)
+                                    {
+                                        transaction.Commit();
+                                        Console.WriteLine("SalesOrderHeader update successful.");
+                                    }
+                                    else
+                                    {
+                                        Console.WriteLine("No rows were updated.");
+                                        transaction.Rollback();
+                                    }
+                                }
+                            }
+                            catch (Exception ex)
+                            {
+                                transaction.Rollback();
+                                Console.WriteLine($"Error while updating salesOrderHeader: {ex.Message}");
+                            }
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Error while connecting to the database: {ex.Message}");
                 }
             }
-
-            public void DeleteSalesOrderHeader(int orderNumber)
+            else
             {
-                var sale = GetSalesOrderHeaderById(orderNumber);
-                if (sale != null)
+                Console.WriteLine($"Company with ID {salesOrderHeader.OrderNumber} not found.");
+            }
+        }
+
+        public void UpdateSalesOrderLines(SalesOrderLine salesOrderLines)
+        {
+            if (salesOrderLines.SalesOrderLineID == 0)
+            {
+                throw new ArgumentException("SalesOrderID is invalid.");
+            }
+            var existingSalesOrderLines = GetSalesOrderLineById(salesOrderLines.SalesOrderLineID);
+            if (existingSalesOrderLines != null)
+            {
+                try
                 {
-                    salesOrderHeader.Remove(sale);
+                    using (SqlConnection connection = new SqlConnection(DatabaseString.ConnectionString))
+                    {
+                        connection.Open();
+                        using (SqlTransaction transaction = connection.BeginTransaction())
+                        {
+                            try
+                            {
+                                string updateQuery = "UPDATE SalesOrderLines SET " +
+                                                            " salesOrderHeadID = @salesOrderHeadID " +
+                                                            " productID = @ProductID " +
+                                                            " quantity = @Quantity " +
+                                                     "WHERE salesOrderLineID = @SalesOrderLineID;";
+
+
+                                using (SqlCommand command = new SqlCommand(updateQuery, connection, transaction))
+                                {
+                                    // Update SalesorderHead table
+                                    command.Parameters.AddWithValue("@SalesOrderHeadID", salesOrderLines.Name);
+                                    command.Parameters.AddWithValue("@ProductID", salesOrderLines.Description);
+                                    command.Parameters.AddWithValue("@Quantity", salesOrderLines.Price);
+
+
+                                    int rowsAffected = command.ExecuteNonQuery();
+
+                                    if (rowsAffected > 0)
+                                    {
+                                        transaction.Commit();
+                                        Console.WriteLine("SalesOrderLine update successful.");
+                                    }
+                                    else
+                                    {
+                                        Console.WriteLine("No rows were updated.");
+                                        transaction.Rollback();
+                                    }
+                                }
+                            }
+                            catch (Exception ex)
+                            {
+                                transaction.Rollback();
+                                Console.WriteLine($"Error while updating SalesOrderLine: {ex.Message}");
+                            }
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Error while connecting to the database: {ex.Message}");
+                }
+            }
+            else
+            {
+                Console.WriteLine($"SalesOrderLine with ID {salesOrderLines.SalesOrderLineID} not found.");
+            }
+        }
+
+        public void DeleteSalesOrderHeadByID(int salesOrderHeadID)
+        {
+            using (SqlConnection connection = new SqlConnection(DatabaseString.ConnectionString))
+            {
+                connection.Open();
+                SqlTransaction transaction = connection.BeginTransaction();
+
+                try
+                {
+
+                    var salesOrderHead = GetSalesOrderHeaderById(salesOrderHeadID);
+                    if (salesOrderHead != null)
+                    {
+                        string deleteSalesOrderHeaderQuery = "DELETE FROM SalesOrderHeader WHERE salesOrderHeadID = @SalesOrderHeadID";
+                        using (SqlCommand command = new SqlCommand(deleteSalesOrderHeaderQuery, connection, transaction))
+                        {
+                            command.Parameters.AddWithValue("@SalesOrderHeadID", salesOrderHead.OrderNumber);
+                            command.ExecuteNonQuery();
+                        }
+
+                        transaction.Commit();
+
+                    }
+                }
+                catch (Exception ex)
+                {
+
+                    transaction.Rollback();
+                    throw new Exception("Error while deleting salesOrderHead: " + ex.Message);
+                }
+            }
+        }
+
+
+        public void DeleteSalesOrderLinebyID(int salesOrderLineID)
+        {
+            using (SqlConnection connection = new SqlConnection(DatabaseString.ConnectionString))
+            {
+                connection.Open();
+                SqlTransaction transaction = connection.BeginTransaction();
+
+                try
+                {
+
+                    var salesOrderLine = GetSalesOrderLineById(salesOrderLineID);
+                    if (salesOrderLine != null)
+                    {
+                        string deleteSalesOrderLineQuery = "DELETE FROM SalesOrderLines WHERE salesOrderLineID = @SalesOrderLineID";
+                        using (SqlCommand command = new SqlCommand(deleteSalesOrderLineQuery, connection, transaction))
+                        {
+                            command.Parameters.AddWithValue("@SalesOrderLineID", salesOrderLine.SalesOrderLineID);
+                            command.ExecuteNonQuery();
+                        }
+
+                        transaction.Commit();
+
+                    }
+                }
+                catch (Exception ex)
+                {
+
+                    transaction.Rollback();
+                    throw new Exception("Error while deleting salesOrderHead: " + ex.Message);
                 }
             }
         }
     }
+}

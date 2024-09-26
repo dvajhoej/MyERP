@@ -27,7 +27,7 @@ namespace MyERP
         private List<Company> companies;
         private List<Product> products;
         private List<Person> persons;
-        private List<SalesOrderHeader> salesOrderHeader;
+        private List<SalesOrderHeader> salesOrderHeaders;
         private List<SalesOrderLine> salesOrderLines;
         private List<Customer> customers;
         private List<Invoice> invoices;
@@ -37,7 +37,7 @@ namespace MyERP
             persons = new List<Person>();
             companies = new List<Company>();
             products = new List<Product>();
-            salesOrderHeader = new List<SalesOrderHeader>();
+            salesOrderHeaders = new List<SalesOrderHeader>();
             customers = new List<Customer>();
             salesOrderLines = new List<SalesOrderLine>();
             invoices = new List<Invoice>();
@@ -75,9 +75,9 @@ namespace MyERP
             get { return customers; }
         }
 
-        public List<SalesOrderHeader> SalesOrderHeader
+        public List<SalesOrderHeader> SalesOrderHeaders
         {
-            get { return salesOrderHeader; }
+            get { return salesOrderHeaders; }
         }
 
 

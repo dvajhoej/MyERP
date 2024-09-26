@@ -11,7 +11,7 @@ namespace MyERP.SalesView
         public SalesListScreen()
         {
             listPage = new ListPage<SalesOrderHeader>();
-            listPage.Add(Database.Instance.SalesOrderHeader);
+            listPage.Add(Database.Instance.SalesOrderHeaders);
 
             listPage.AddKey(ConsoleKey.F1, CreateOrder);
             listPage.AddKey(ConsoleKey.F2, EditOrder);

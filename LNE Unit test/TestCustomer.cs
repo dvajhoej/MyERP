@@ -62,7 +62,7 @@ namespace LNE_Unit_test
             var result = customer.ToString();
 
             // Assert
-            Assert.Equal("Jane Doe, Email: jane.doe@example.com, Phone: 9876543210, Customer Number: 1, Last Purchase: 20.05.2023", result);
+            Assert.Equal("Jane Doe, Email: jane.doe@example.com, Phone: 9876543210, Customer Number: 1, Last Purchase: 20-05-2023", result);
         }
 
         [Fact]
