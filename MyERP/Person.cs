@@ -58,5 +58,10 @@
             Email = email;
             Phone = phone;
         }
+
+        public override string ToString()
+        {
+            return $"{FirstName} {LastName}, Email: {Email}, Phone: {Phone}";
+        }
     }
 }

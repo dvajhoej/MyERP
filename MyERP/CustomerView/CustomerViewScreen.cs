@@ -28,7 +28,7 @@ namespace MyERP.CustomerView
                 lastPurchaseDateDisplay = customer.LastPurchaseDate?.ToShortDateString();
             }
 
-            Console.WriteLine($"Navn:        {customer.Fullname}");
+            Console.WriteLine($"Navn:        {customer.FullName}");
             Console.WriteLine($"Address:     {customer.Street} {customer.HouseNumber}");
             Console.WriteLine($"Postnummer:  {customer.ZipCode}");
             Console.WriteLine($"By:          {customer.City}");

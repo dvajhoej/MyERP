@@ -9,35 +9,13 @@
         public Customer(string firstName, string lastName, string email, string phone, DateTime lastPurchaseDate)
             : base(firstName, lastName, email, phone)
         {
-
-
             LastPurchaseDate = lastPurchaseDate;
-
         }
 
         public Customer()
         {
 
-
         }
-
-
-
-
-     
-        public string FullAddress
-        {
-            get { return Street + " " + HouseNumber + ", " + ZipCode + ", " + City + ", " + Country; }
-        }
-        public string Fullname
-        {
-            get { return FirstName + " " + LastName; }
-        }
-
- 
-   
-  
-
 
         public override string ToString()
         {

@@ -76,7 +76,7 @@ namespace MyERP.SalesView
             else
             {
                 _salesOrder = new SalesOrderHeader(orderNumber: GenerateOrderNumber(), customerNumber: customer.CustomerID);
-                Console.WriteLine($"Order skabt for {customer.Fullname}.");
+                Console.WriteLine($"Order skabt for {customer.FullName}.");
             }
 
             try
