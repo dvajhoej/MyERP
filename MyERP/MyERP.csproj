@@ -1,12 +1,11 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <ItemGroup>
-    <None Remove="Invoice\ENL SECURITY A_S.pdf" />
     <None Remove="Invoice\logo.png" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="../../TECHCOOL/TECHCOOL.csproj" />
+    <ProjectReference Include="/TECHCOOL/TECHCOOL.csproj" />
   </ItemGroup>
 
   <ItemGroup>
