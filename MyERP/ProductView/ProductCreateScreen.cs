@@ -28,7 +28,6 @@ namespace MyERP.productView
             editor.DoubleBox("Antal på lager", "QuantityInStock");
             editor.SelectBox("Enhed", "Unit");
 
-
             editor.AddOption("Enhed", "Stk", UnitType.Stk);
             editor.AddOption("Enhed", "Pakker", UnitType.Pakker);
             editor.AddOption("Enhed", "Time", UnitType.Time);
@@ -36,15 +35,17 @@ namespace MyERP.productView
 
             editor.Edit(_product);
 
-            try
-            {
-                Database.Instance.InsertProduct(_product);
-                Console.WriteLine("Product successfully created.");
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine("Error while creating product: " + ex.Message);
-            }
+
+
+            //try
+            //{
+            //}
+            //catch (Exception ex)
+            //{
+            //    Console.WriteLine("Error while creating product: " + ex.Message);
+            //    Console.ReadLine();
+            //}
+
             this.Quit();
         }
     }

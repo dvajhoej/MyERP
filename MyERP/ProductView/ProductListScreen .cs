@@ -53,9 +53,24 @@ namespace MyERP.ProductView
         private void CreateProduct(Product product)
         {
             var newProduct = new Product();
-            listPage.Add(newProduct) ;
             Screen.Display(new ProductCreateScreen(newProduct));
+
+            try
+            {
+                Database.Instance.InsertProduct(newProduct);
+                listPage.Add(newProduct);
+                Console.WriteLine("Product successfully created.");
+                Console.ReadLine();
+            }
+            catch (Exception ex)
+            {
+                // Handle the exception (e.g., log it or show an error message)
+                Console.WriteLine($"An error occurred: {ex.Message}");
+                Console.ReadLine();
+
+            }
         }
+
 
         private void EditProduct(Product selected)
         {

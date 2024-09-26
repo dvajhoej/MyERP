@@ -34,7 +34,7 @@ namespace MyERP
                                "     SalesOrderLines.productID," +
                                "     SalesOrderLines.quantity," +
                                "     SalesOrderHeader.orderID, " +
-                               "     Products.unit " +   
+                               "     Products.unit " +
                                "FROM  " +
                                "     Products " +
                                "INNER JOIN  SalesOrderLines ON Products.productID = SalesOrderLines.productID " +
@@ -122,24 +122,35 @@ namespace MyERP
 
             return sales;
         }
-       
-        public void UpdateSalesOrderHeader(SalesOrderHeader updateSale)
+
+        public void InserTSalesOrderHead(SalesOrderHeader salesOrderHeader)
         {
-            var existingSale = GetSalesOrderHeaderById(updateSale.OrderNumber);
-            if (existingSale != null)
+            using (SqlConnection connection = new SqlConnection(DatabaseString.ConnectionString))
             {
-                int index = sales.IndexOf(existingSale);
-                sales[index] = updateSale;
+                {
+                    connection.Open();
+                    SqlTransaction transaction = connection.BeginTransaction();
+                }
             }
         }
 
-        public void DeleteSalesOrderHeader(int orderNumber)
-        {
-            var sale = GetSalesOrderHeaderById(orderNumber);
-            if (sale != null)
+            public void UpdateSalesOrderHeader(SalesOrderHeader updateSale)
             {
-                sales.Remove(sale);
+                var existingSale = GetSalesOrderHeaderById(updateSale.OrderNumber);
+                if (existingSale != null)
+                {
+                    int index = sales.IndexOf(existingSale);
+                    sales[index] = updateSale;
+                }
+            }
+
+            public void DeleteSalesOrderHeader(int orderNumber)
+            {
+                var sale = GetSalesOrderHeaderById(orderNumber);
+                if (sale != null)
+                {
+                    sales.Remove(sale);
+                }
             }
         }
     }
-}

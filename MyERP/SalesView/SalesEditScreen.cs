@@ -29,7 +29,7 @@ namespace MyERP.SalesView
             editor.Edit(_salesOrder);
             Database.Instance.UpdateSalesOrderHeader(_salesOrder);
 
-            this.Quit();
+            //this.Quit();
         }
     }
 }
