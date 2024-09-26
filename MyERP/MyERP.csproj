@@ -5,7 +5,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="TECHCOOL/TECHCOOL.csproj" />
+    <ProjectReference Include="../../TECHCOOL/TECHCOOL.csproj" />
   </ItemGroup>
 
   <ItemGroup>
