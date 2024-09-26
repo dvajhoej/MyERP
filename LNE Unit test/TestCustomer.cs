@@ -1,7 +1,7 @@
 ﻿using Xunit;
 using MyERP;
 using System;
-
+using System.Globalization;
 namespace LNE_Unit_test
 {
     public class TestCustomer
@@ -45,6 +45,8 @@ namespace LNE_Unit_test
         [Fact]
         public void ToString_ShouldReturnFormattedString_WhenLastPurchaseDateIsNotNull()
         {
+            var culture = new CultureInfo("da-DK");
+            CultureInfo.CurrentCulture = culture;
             // Arrange
             var customer = new Customer
             {
