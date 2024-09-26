@@ -6,6 +6,7 @@ DROP TABLE IF EXISTS Products
 DROP TABLE IF EXISTS Customers
 DROP TABLE IF EXISTS Persons
 DROP TABLE IF EXISTS Addresses
+DROP TABLE IF EXISTS Invoices
 
 ---- #B1, ( B1 Kommer efter B3, grundet referencer og opsætning at 
 ---- #B2 
@@ -100,6 +101,15 @@ CREATE TABLE SalesOrderLines (
     productID INT FOREIGN KEY REFERENCES Products(productID) ON DELETE SET NULL,
     quantity DECIMAL(10,2)
 );
+
+--#X1 
+
+CREATE TABLE Invoices (
+    invoiceID INT PRIMARY KEY IDENTITY(1000,1),
+    salesOrderHeadID INT FOREIGN KEY REFERENCES SalesOrderHeader(OrderID) ON DELETE SET NULL,
+    invoiceDate DATETIME DEFAULT GETDATE()
+);
+
 
 -- DUMMY DATA,
 
