@@ -6,7 +6,8 @@
         public string Name { get; set; }
         public double Quantity { get; set; }
         public double Price { get; set; }
-        public int OrderID { get; set; }
+        public int SalesOrderLineID { get; set; }
+        public int SalesOrderHeadID { get; set; }
         public string Description { get; set; }
         public UnitType Unit { get; set; }
         

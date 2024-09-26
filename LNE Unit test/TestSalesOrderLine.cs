@@ -16,7 +16,7 @@ namespace LNE_Unit_test
             Assert.Null(orderLine.Name);
             Assert.Equal(0, orderLine.Quantity);
             Assert.Equal(0, orderLine.Price);
-            Assert.Equal(0, orderLine.OrderID);
+            Assert.Equal(0, orderLine.SalesOrderHeadID);
             Assert.Null(orderLine.Description);
         }
 
@@ -66,7 +66,7 @@ namespace LNE_Unit_test
                 Name = "Product Name",
                 Quantity = 10,
                 Price = 15.50,
-                OrderID = 202,
+                SalesOrderHeadID = 202,
                 Description = "Sample product description",
                 Unit = UnitType.Stk
             };
@@ -76,7 +76,7 @@ namespace LNE_Unit_test
             Assert.Equal("Product Name", orderLine.Name);
             Assert.Equal(10, orderLine.Quantity);
             Assert.Equal(15.50, orderLine.Price);
-            Assert.Equal(202, orderLine.OrderID);
+            Assert.Equal(202, orderLine.SalesOrderHeadID);
             Assert.Equal("Sample product description", orderLine.Description);
             Assert.Equal(UnitType.Stk, orderLine.Unit);
         }

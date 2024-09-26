@@ -165,7 +165,7 @@ namespace MyERP
                         }
                     }
 
-                    instance.customers.Add(customer);
+                    Instance.customers.Add(customer);
                     transaction.Commit();
                 }
                 catch (Exception ex)

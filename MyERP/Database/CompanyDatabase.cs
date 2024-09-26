@@ -129,7 +129,7 @@ namespace MyERP
 
 
 
-                    instance.companies.Add(company);
+                    Instance.companies.Add(company);
                     transaction.Commit();
                 }
                 catch (Exception ex)

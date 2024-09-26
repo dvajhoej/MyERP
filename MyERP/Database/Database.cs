@@ -18,7 +18,6 @@ namespace MyERP
 
                     
                     instance = new Database();
-                    //instance.customers = instance.GetAllCustomers();
 
                 }
                 return instance;
@@ -28,8 +27,8 @@ namespace MyERP
         private List<Company> companies;
         private List<Product> products;
         private List<Person> persons;
-        private List<SalesOrderHeader> sales;
-        private List<SalesOrderLine> lines;
+        private List<SalesOrderHeader> salesOrderHeader;
+        private List<SalesOrderLine> salesOrderLines;
         private List<Customer> customers;
         private List<Invoice> invoices;
 
@@ -38,9 +37,9 @@ namespace MyERP
             persons = new List<Person>();
             companies = new List<Company>();
             products = new List<Product>();
-            sales = new List<SalesOrderHeader>();
+            salesOrderHeader = new List<SalesOrderHeader>();
             customers = new List<Customer>();
-            lines = new List<SalesOrderLine>();
+            salesOrderLines = new List<SalesOrderLine>();
             invoices = new List<Invoice>();
             GetAllInvoices();
             GetAllCustomers();
@@ -61,9 +60,9 @@ namespace MyERP
             get { return invoices; }
         }
 
-        public List<SalesOrderLine> Lines
+        public List<SalesOrderLine> SalesOrderLines
         {
-            get { return lines; }
+            get { return salesOrderLines; }
         }            
 
         public List<Company> Companies
@@ -76,10 +75,11 @@ namespace MyERP
             get { return customers; }
         }
 
-        public List<SalesOrderHeader> Sales
+        public List<SalesOrderHeader> SalesOrderHeader
         {
-            get { return sales; }
+            get { return salesOrderHeader; }
         }
+
 
         public List<Product> Products
         {

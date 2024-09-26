@@ -77,7 +77,7 @@ namespace MyERP
                     }
                                       
                     invoice.SalesOrderHeadID = salesOrderHeader.OrderNumber;
-                    instance.invoices.Add(invoice);
+                    Instance.invoices.Add(invoice);
                     transaction.Commit();
                 }
 

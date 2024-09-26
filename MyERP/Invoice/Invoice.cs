@@ -46,9 +46,9 @@ namespace MyERP
             //string InfoSalesLineNr = data.GetOrderLines;
 
             double PriceSubTotal = 0;
-            foreach (var line in Database.instance.Lines)
+            foreach (var line in Database.Instance.SalesOrderLines)
             {
-                if (line.OrderID == data.OrderNumber)
+                if (line.SalesOrderHeadID == data.OrderNumber)
                 {
                     PriceSubTotal += line.Price * line.Quantity;
                 }
@@ -63,9 +63,9 @@ namespace MyERP
             int LineNo = 1;
             var stringBuilder = new StringBuilder();
 
-            foreach (var line in Database.instance.Lines)
+            foreach (var line in Database.Instance.SalesOrderLines)
             {
-                if (line.OrderID == data.OrderNumber)
+                if (line.SalesOrderHeadID == data.OrderNumber)
                 {
                     string SalesOrderLine =
                     ("<tr>" +

@@ -7,7 +7,7 @@ namespace MyERP
     {
         public SalesOrderHeader GetSalesOrderHeaderById(int orderNumber)
         {
-            foreach (var sale in sales)
+            foreach (var sale in salesOrderHeader)
             {
                 if (sale.OrderNumber == orderNumber)
                 {
@@ -23,7 +23,7 @@ namespace MyERP
         public List<SalesOrderLine> GetAllSalesOrderLines()
         {
             string connectionstring = DatabaseString.ConnectionString;
-            lines.Clear();
+            salesOrderLines.Clear();
 
             using (SqlConnection connection = new SqlConnection(connectionstring))
             {
@@ -38,7 +38,7 @@ namespace MyERP
                                "FROM  " +
                                "     Products " +
                                "INNER JOIN  SalesOrderLines ON Products.productID = SalesOrderLines.productID " +
-                               "INNER JOIN  SalesOrderHeader ON SalesOrderLines.salesOrderHeadID = SalesOrderHeader.orderID";
+                               "INNER JOIN  SalesOrderHeader ON SalesOrderLines.salesOrderHeadID = SalesOrderHeader.SalesOrderHeadID";
 
                 SqlCommand command = new SqlCommand(query, connection);
                 connection.Open();
@@ -47,30 +47,30 @@ namespace MyERP
                 {
                     while (reader.Read())
                     {
-                        SalesOrderLine line = new SalesOrderLine
+                        SalesOrderLine salesOrderLine = new SalesOrderLine
                         {
                             Name = reader.GetString(0),
                             Description = reader.GetString(1),
                             Price = (double)reader.GetDecimal(2),
                             ProductID = reader.GetInt32(3),
                             Quantity = (double)reader.GetDecimal(4),
-                            OrderID = reader.GetInt32(5),
+                            SalesOrderHeadID = reader.GetInt32(5),
                             Unit = (UnitType)Enum.Parse(typeof(UnitType), reader.GetString(6)),
 
                         };
-                        lines.Add(line);
+                        salesOrderLines.Add(salesOrderLine);
                     }
                 }
             }
 
-            return lines;
+            return salesOrderLines;
         }
 
 
         public List<SalesOrderHeader> GetAllSalesOrderHeaders()
         {
             string connectionString = DatabaseString.ConnectionString;
-            sales.Clear();
+            salesOrderHeader.Clear();
 
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
@@ -115,12 +115,12 @@ namespace MyERP
                             TotalPrice = reader.GetDecimal(6),
                         };
 
-                        sales.Add(sale);
+                        salesOrderHeader.Add(sale);
                     }
                 }
             }
 
-            return sales;
+            return salesOrderHeader;
         }
 
         public void InsertSalesOrderHeader(SalesOrderHeader salesOrderHeader)
@@ -130,17 +130,87 @@ namespace MyERP
                 {
                     connection.Open();
                     SqlTransaction transaction = connection.BeginTransaction();
+
+                    try
+                    {
+                        string insertSalesOrderHeaderQuery = "INSERT INTO SalesOrderHeader (" +
+                                                                 " creationDate," +
+                                                                 " completionDate," +
+                                                                 " customerID," +
+                                                                 " status)" +
+                                                             " OUTPUT INSERTED.orderID " +
+                                                             " VALUES (" +
+                                                                 " @CreationDate," +
+                                                                 " @CompletionDate," +
+                                                                 " @CustomerID," +
+                                                                 " @Status)";
+
+                        using (SqlCommand command = new SqlCommand(insertSalesOrderHeaderQuery, connection, transaction))
+                        {
+                            command.Parameters.AddWithValue("@CreationDate", salesOrderHeader.CreationDate);
+                            command.Parameters.AddWithValue("@CompletionDate", salesOrderHeader.CompletionDate);
+                            command.Parameters.AddWithValue("@CustomerID", salesOrderHeader.CustomerNumber);
+                            command.Parameters.AddWithValue("@Status", salesOrderHeader.Status);
+
+                            salesOrderHeader.OrderNumber = (int)command.ExecuteScalar();
+                        }
+                        Instance.salesOrderHeader.Add(salesOrderHeader);
+                    }      
+                    catch (Exception ex)
+                    {
+                        transaction.Rollback();
+                        throw new Exception("Error while inserting salesOrderHead: " + ex.Message);
+                    }
+                }          
+            }              
+        }
+
+        public void InsertSalesOrderline(SalesOrderLine salesOrderLine)
+        {
+            using (SqlConnection connection = new SqlConnection(DatabaseString.ConnectionString))
+            {
+                {
+                    connection.Open();
+                    SqlTransaction transaction = connection.BeginTransaction();
+
+                    try
+                    {
+                        string insertSalesOrderLineQuery = "INSERT INTO SalesOrderLines (" +
+                                                                 " salesOrderHeadID," +
+                                                                 " productID," +
+                                                                 " quantity)" +
+                                                             " OUTPUT INSERTED.salesOrderID " +
+                                                             " VALUES (" +
+                                                                 " @SalesOrderHeadID," +
+                                                                 " @ProductID," +
+                                                                 " @Quantity)";
+
+                        using (SqlCommand command = new SqlCommand(insertSalesOrderLineQuery, connection, transaction))
+                        {
+                            command.Parameters.AddWithValue("@SalesOrderHeadID", salesOrderLine.SalesOrderHeadID);
+                            command.Parameters.AddWithValue("@ProductID", salesOrderLine.ProductID);
+                            command.Parameters.AddWithValue("@Quantity", salesOrderLine.Quantity);
+
+                            salesOrderLine.SalesOrderHeadID = (int)command.ExecuteScalar();
+                        }
+                        Instance.salesOrderLines.Add(salesOrderLine);
+                    }
+                    catch (Exception ex)
+                    {
+                        transaction.Rollback();
+                        throw new Exception("Error while inserting salesOrderLine: " + ex.Message);
+                    }
                 }
             }
         }
 
-            public void UpdateSalesOrderHeader(SalesOrderHeader updateSale)
+        public void UpdateSalesOrderHeader(SalesOrderHeader updateSale)
             {
                 var existingSale = GetSalesOrderHeaderById(updateSale.OrderNumber);
                 if (existingSale != null)
                 {
-                    int index = sales.IndexOf(existingSale);
-                    sales[index] = updateSale;
+                    int index = salesOrderHeader.IndexOf(existingSale);
+                    salesOrderHeader[index] = updateSale;
                 }
             }
 
@@ -149,7 +219,7 @@ namespace MyERP
                 var sale = GetSalesOrderHeaderById(orderNumber);
                 if (sale != null)
                 {
-                    sales.Remove(sale);
+                    salesOrderHeader.Remove(sale);
                 }
             }
         }
