@@ -123,7 +123,7 @@ namespace MyERP
             return sales;
         }
 
-        public void InserTSalesOrderHead(SalesOrderHeader salesOrderHeader)
+        public void InsertSalesOrderHeader(SalesOrderHeader salesOrderHeader)
         {
             using (SqlConnection connection = new SqlConnection(DatabaseString.ConnectionString))
             {

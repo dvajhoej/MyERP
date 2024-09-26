@@ -54,8 +54,8 @@ namespace MyERP.SalesView
 
                     if (success)
                     {
+                        newCustomer.CustomerID = customerID;
                         Database.Instance.InsertCustomer(newCustomer);
-                        _salesOrder = new SalesOrderHeader(orderNumber: GenerateOrderNumber(), customerNumber: newCustomer.CustomerID);
                     }
                     else
                     {
@@ -71,15 +71,17 @@ namespace MyERP.SalesView
             }
             else
             {
-                _salesOrder = new SalesOrderHeader(orderNumber: GenerateOrderNumber(), customerNumber: customer.CustomerID);
-                Console.WriteLine($"Ordre skabt for {customer.Fullname}.");
+                _salesOrder.CreationDate = DateTime.Now;
+                _salesOrder.CustomerNumber = customerID;
+                _salesOrder.OrderNumber = GenerateOrderNumber();
+                Console.WriteLine($"Ordre skabt for {customer.FullName}.");
             }
 
             AddOrderLines();
 
             try
             {
-                // Database.Instance.InsertSalesOrderHeader(_salesOrder);
+                Database.Instance.InsertSalesOrderHeader(_salesOrder);
                 Console.WriteLine("Order blev oprettet.");
             }
             catch (Exception ex)

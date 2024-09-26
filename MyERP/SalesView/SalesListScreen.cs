@@ -55,9 +55,20 @@ namespace MyERP.SalesView
         }
         private void CreateOrder(SalesOrderHeader order)
         {
-            var newOrder = new SalesOrderHeader();
-            listPage.Add(newOrder);
+            var newOrder = new SalesOrderHeader();          
             Screen.Display(new SalesCreateScreen(newOrder));
+
+            try
+            {
+                listPage.Add(newOrder);
+                Console.WriteLine("Order successfully created.");
+                Console.ReadLine();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"An error occurred: {ex.Message}");
+                Console.ReadLine();
+            }
         }
         public void PrintInvoice(SalesOrderHeader selected)
         {
