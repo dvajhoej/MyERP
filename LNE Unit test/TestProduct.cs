@@ -1,6 +1,7 @@
 ﻿using System;
 using Xunit;
 using MyERP;
+using System.Globalization;
 
 namespace LNE_Unit_test
 {
@@ -109,6 +110,8 @@ namespace LNE_Unit_test
         [Fact]
         public void GetMarginPercentageFormatted_ValidPrices_ReturnsFormattedPercentage()
         {
+            var culture = new CultureInfo("da-DK");
+            CultureInfo.CurrentCulture = culture;
             // Arrange
             var product = new Product
             {
