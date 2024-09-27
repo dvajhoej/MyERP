@@ -46,6 +46,17 @@ namespace MyERP
             OrderLines.Add(orderLine);
         }
 
+        public void EditOrderLine(int index, SalesOrderLine updatedOrderLine)
+        {
+            if (index < 0 || index >= OrderLines.Count)
+            {
+                throw new ArgumentOutOfRangeException("Invalid order line index.");
+            }
+
+            OrderLines[index] = updatedOrderLine;
+        }
+
+
         public IReadOnlyList<SalesOrderLine> GetOrderLines()
         {
             return OrderLines.AsReadOnly();

@@ -55,6 +55,13 @@ namespace MyERP.SalesView
                     if (success)
                     {
                         newCustomer.CustomerID = customerID;
+
+                        _salesOrder.Fullname = newCustomer.FirstName + " " + newCustomer.LastName;
+                        _salesOrder.CreationDate = DateTime.Now;
+                        _salesOrder.CustomerNumber = customerID;
+                        _salesOrder.OrderNumber = GenerateOrderNumber();
+
+                        Console.WriteLine($"Ordre skabt for {newCustomer.FullName}.");
                         Database.Instance.InsertCustomer(newCustomer);
                     }
                     else
@@ -71,9 +78,11 @@ namespace MyERP.SalesView
             }
             else
             {
+                _salesOrder.Fullname = customer.FirstName + " " + customer.LastName;
                 _salesOrder.CreationDate = DateTime.Now;
                 _salesOrder.CustomerNumber = customerID;
                 _salesOrder.OrderNumber = GenerateOrderNumber();
+
                 Console.WriteLine($"Ordre skabt for {customer.FullName}.");
             }
 
@@ -99,7 +108,8 @@ namespace MyERP.SalesView
 
         private void AddOrderLines()
         {
-            List<Product> products = Database.Instance.GetAllProducts();
+            List<Product> products = Database.Instance.Products;
+
 
             if (products.Count == 0)
             {
@@ -144,7 +154,9 @@ namespace MyERP.SalesView
                 };
 
                 _salesOrder.AddOrderLine(orderLine);
+                Clear();
                 Console.WriteLine($"Tilføjede {quantity} x {selectedProduct.Name} til ordren.");
+                
             }
 
             Console.WriteLine($"Samlet beløb: {_salesOrder.OrderAmount} DKK");
