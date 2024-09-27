@@ -42,6 +42,7 @@ namespace MyERP
             string CustomerPhone = customer.Phone;
             int CustomerID = customer.CustomerID;
             DateTime InvoiceDate = invoice.InvoiceDate.Date;
+            DateTime DueDate = invoice.InvoiceDate.Date.AddDays(30);
             int OrderID = data.OrderNumber;
             //string InfoSalesLineNr = data.GetOrderLines;
 
@@ -113,6 +114,7 @@ namespace MyERP
                 .Replace("{{PriceTax}}", PriceTax.ToString())
                 .Replace("{{PriceTotal}}", PriceTotal.ToString())
                 .Replace("{{SalesOrderLines}}", SalesOrderLines)
+                .Replace("{{DueDate}}", DueDate.ToShortDateString())
                 .Replace("{{CompanyAddress2}}", CompanyAddress2);
 
 

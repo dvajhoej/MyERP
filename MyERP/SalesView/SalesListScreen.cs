@@ -61,6 +61,7 @@ namespace MyERP.SalesView
             try
             {
                 listPage.Add(newOrder);
+                Database.Instance.UpdateSalesOrderHeader(newOrder);
                 Console.WriteLine("Order successfully created.");
                 Console.ReadLine();
             }
@@ -79,14 +80,36 @@ namespace MyERP.SalesView
         private void EditOrder(SalesOrderHeader selected)
         {
             Screen.Display(new SalesEditScreen(selected));
+
+            try
+            {
+                Database.Instance.UpdateSalesOrderHeader(selected);
+                Console.WriteLine("Order successfully updated");
+                Console.ReadLine();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"An error occured: {ex.Message}");
+                Console.ReadLine();
+            }
         }
 
         private void DeleteOrder(SalesOrderHeader selected)
         {
             if (selected != null)
             {
-                listPage.Remove(selected);
-                Console.WriteLine($"Ordre nr '{selected.OrderNumber}' er blevet slettet.");
+                try
+                {
+                    Database.Instance.DeleteSalesOrderHeadByID(selected.OrderNumber);
+                    listPage.Remove(selected);
+                    Console.WriteLine($"Ordre nr '{selected.OrderNumber}' er blevet slettet.");
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"An error occured: {ex.Message}");
+                    Console.ReadLine();
+                }
+                
             }
         }
     }

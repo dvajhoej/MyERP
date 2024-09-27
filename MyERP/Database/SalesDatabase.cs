@@ -52,7 +52,7 @@ namespace MyERP
                                "FROM  " +
                                "     Products " +
                                "INNER JOIN  SalesOrderLines ON Products.productID = SalesOrderLines.productID " +
-                               "INNER JOIN  SalesOrderHeader ON SalesOrderLines.salesOrderHeadID = SalesOrderHeader.SalesOrderHeadID";
+                               "INNER JOIN  SalesOrderHeader ON SalesOrderLines.salesOrderHeadID = SalesOrderHeader.orderID";
 
                 SqlCommand command = new SqlCommand(query, connection);
                 connection.Open();
@@ -366,7 +366,7 @@ namespace MyERP
                     var salesOrderHead = GetSalesOrderHeaderById(salesOrderHeadID);
                     if (salesOrderHead != null)
                     {
-                        string deleteSalesOrderHeaderQuery = "DELETE FROM SalesOrderHeader WHERE salesOrderHeadID = @SalesOrderHeadID";
+                        string deleteSalesOrderHeaderQuery = "DELETE FROM SalesOrderHeader WHERE orderID = @SalesOrderHeadID";
                         using (SqlCommand command = new SqlCommand(deleteSalesOrderHeaderQuery, connection, transaction))
                         {
                             command.Parameters.AddWithValue("@SalesOrderHeadID", salesOrderHead.OrderNumber);

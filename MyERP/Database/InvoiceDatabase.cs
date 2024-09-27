@@ -1,5 +1,6 @@
 ﻿using MyERP.DBHELPER;
 using System.Data.SqlClient;
+using System.Reflection.PortableExecutable;
 
 namespace MyERP
 {
@@ -39,11 +40,12 @@ namespace MyERP
                         Invoice invoice = new Invoice
                         {
                             InvoiceID = reader.GetInt32(0),
-                            SalesOrderHeadID = reader.GetInt32(1),
+                            SalesOrderHeadID = reader.IsDBNull(1) ? 0 : reader.GetInt32(1),
                         };
                         invoices.Add(invoice);
                     }
                 }
+                //= reader.IsDBNull(10) ? (DateTime?)null : reader.GetDateTime(10),
             }
             return invoices;
         }
