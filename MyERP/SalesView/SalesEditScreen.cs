@@ -49,52 +49,54 @@ namespace MyERP.SalesView
 
         private void EditOrderLines()
         {
-            var orderLines = _salesOrder.GetOrderLines();
-            if (orderLines.Count == 0)
+            foreach (var orderLine in _salesOrder.GetOrderLines())
             {
-                Console.WriteLine("Ingen ordrelinjer tilgængelige for redigering.");
-                return;
-            }
+                Console.WriteLine($"Editing Order Line for: {orderLine.Name} - Current Quantity: {orderLine.Quantity}");
 
-            while (true)
-            {
-                Console.WriteLine("Aktuelle ordrelinjer:");
-                for (int i = 0; i < orderLines.Count; i++)
+                List<Product> products = Database.Instance.GetAllProducts();
+                var productOptions = new Dictionary<string, object>();
+
+                foreach (var product in products)
                 {
-                    Console.WriteLine($"{i + 1}: {orderLines[i].Name} - Mængde: {orderLines[i].Quantity}, Pris: {orderLines[i].Price}");
+                    string displayName = $"{product.Name} (ID: {product.ProductID})";
+                    if (!productOptions.ContainsKey(displayName))
+                    {
+                        productOptions.Add(displayName, product.ProductID);
+                    }
                 }
 
-                Console.WriteLine("Indtast nummeret på ordrelinjen du vil redigere, eller 0 for at afslutte:");
-                if (!int.TryParse(Console.ReadLine(), out int lineIndex) || lineIndex < 0 || lineIndex > orderLines.Count)
-                {
-                    Console.WriteLine("Ugyldigt input. Prøv igen.");
-                    continue;
-                }
+                Form<SalesOrderLine> orderLineForm = new Form<SalesOrderLine>();
 
-                if (lineIndex == 0) break;
+                orderLineForm.SelectBox("Vælg nyt produkt", "ProductID", productOptions);
 
-                var orderLineToEdit = orderLines[lineIndex - 1];
+                orderLineForm.DoubleBox("Antal", "Quantity");
 
-                Form<SalesOrderLine> orderLineEditor = new Form<SalesOrderLine>();
-                orderLineEditor.TextBox("Navn", "Name");
-                orderLineEditor.DoubleBox("Mængde", "Quantity");
-                orderLineEditor.DoubleBox("Pris", "Price");
+                bool success = orderLineForm.Edit(orderLine);
 
-                orderLineToEdit.Name = orderLineToEdit.Name;
-                orderLineToEdit.Quantity = orderLineToEdit.Quantity;
-                orderLineToEdit.Price = orderLineToEdit.Price;
-
-                bool success = orderLineEditor.Edit(orderLineToEdit);
                 if (success)
                 {
-                    _salesOrder.EditOrderLine(lineIndex - 1, orderLineToEdit);
-                    Console.WriteLine("Ordrelinje opdateret.");
+                    int selectedProductID = orderLine.ProductID;
+
+                    var selectedProduct = Database.Instance.GetProductById(selectedProductID);
+                    if (selectedProduct != null)
+                    {
+                        orderLine.ProductID = selectedProductID;
+                        orderLine.Name = selectedProduct.Name;
+                        orderLine.Price = selectedProduct.SellingPrice;
+                        Console.WriteLine($"Order line updated to: {orderLine.Quantity} x {orderLine.Name}");
+                    }
+                    else
+                    {
+                        Console.WriteLine("Invalid product selection.");
+                    }
                 }
                 else
                 {
-                    Console.WriteLine("Redigering af ordrelinje annulleret.");
+                    Console.WriteLine("Order line edit cancelled.");
                 }
             }
+
+            Console.WriteLine($"Samlet beløb: {_salesOrder.OrderAmount} DKK");
         }
 
     }
