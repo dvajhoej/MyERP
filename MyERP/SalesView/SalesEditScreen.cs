@@ -53,7 +53,7 @@ namespace MyERP.SalesView
             {
                 Console.WriteLine($"Editing Order Line for: {orderLine.Name} - Current Quantity: {orderLine.Quantity}");
 
-                List<Product> products = Database.Instance.GetAllProducts();
+                List<Product> products = Database.Instance.Products;
                 var productOptions = new Dictionary<string, object>();
 
                 foreach (var product in products)
