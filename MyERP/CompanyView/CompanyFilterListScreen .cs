@@ -2,16 +2,15 @@
 
 namespace MyERP.CompanyView
 {
-    public class CompanyListScreen : Screen
+    public class CompanyFilterListScreen : Screen
     {
         private ListPage<Company> listPage;
 
-        public CompanyListScreen()
+        public CompanyFilterListScreen()
         {
-            listPage = new ListPage<Company>(Database.Instance.Companies);          
+            listPage = new ListPage<Company>(Database.Instance.Companies);
             listPage.AddKey(ConsoleKey.F1, CreateCompany);
             listPage.AddKey(ConsoleKey.F2, EditCompany);
-            listPage.AddKey(ConsoleKey.F3, SearchCompany);
             listPage.AddKey(ConsoleKey.F5, DeleteCompany);
             listPage.AddKey(ConsoleKey.Escape, Quit);
             listPage.AddColumn("Company Name", "CompanyName", 25);
@@ -19,10 +18,7 @@ namespace MyERP.CompanyView
             listPage.AddColumn("Currency", "Currency");
         }
 
-        private void SearchCompany(Company company)
-        {
-            Screen.Display(new CompanyFilterListScreen());
-        }
+
 
         public override string Title { get; set; } = "Virksomhed";
 
@@ -31,7 +27,6 @@ namespace MyERP.CompanyView
 
             Console.WriteLine("Press F1 to create a company");
             Console.WriteLine("Press F2 to edit a company");
-            Console.WriteLine("Press F3 to search for company");
             Console.WriteLine("Press F5 to delete a company");
             for (int i = 0; i < 3; i++)
             {
@@ -39,13 +34,12 @@ namespace MyERP.CompanyView
             }
 
 
-
             // Show the list and get the selected item
-            var selected = listPage.Select();
-            if (selected != null)
-            {
-                Screen.Display(new CompanyViewScreen(selected));
-            }
+            listPage.Draw();
+            SearchCompany();
+
+
+           
 
         }
         void Quit(Company _)
@@ -59,7 +53,54 @@ namespace MyERP.CompanyView
 
 
 
-        
+        private void SearchCompany()
+        {
+            string search;
+            do
+            {
+                CleanLine06andselect();
+
+                Console.Write("Enter Company name or ID: ");
+                search = Console.ReadLine().ToLower();
+            } while (string.IsNullOrEmpty(search));
+
+
+            var filtered = Database.Instance.Companies
+                .Where(c => c.CompanyName.ToLower().Contains(search) ||
+                            c.CompanyID.ToString().Contains(search))
+                .ToList();
+
+            if (filtered.Any())
+            {
+                Clear();
+                listPage.Clear();
+                listPage.Add(filtered);
+                Draw();
+
+                var selected = listPage.Select();
+                if (selected != null)
+                {
+                    Screen.Display(new CompanyViewScreen(selected));
+                }
+
+            }
+            else
+            {
+                CleanLine06andselect();
+                Console.WriteLine("No matching companies found.");
+                Console.WriteLine("Press a key to continue.");
+
+                Console.ReadKey();
+            }
+        }
+
+        public void CleanLine06andselect()
+        {
+            Console.SetCursorPosition(0, 6);
+            Console.Write(new string(' ', Console.WindowWidth));
+            Console.Write(new string(' ', Console.WindowWidth));
+            Console.SetCursorPosition(0, 6);
+        }
 
 
         private void CreateCompany(Company company)
@@ -87,7 +128,7 @@ namespace MyERP.CompanyView
                     listPage.Remove(selected);
                     //Database.Instance.Companies.Remove(selected);
                     //listPage.Clear();
-                    //listPage.Add(Database.Instance.Companies);
+                    listPage.Add(Database.Instance.Companies);
 
                 }
                 catch (Exception ex)
