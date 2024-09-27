@@ -28,6 +28,23 @@ namespace MyERP.SalesView
             Console.WriteLine($"Færdig:         {salesOrderHeader.CompletionDate}");
             Console.WriteLine($"Kunde nummer:   {salesOrderHeader.CustomerNumber}");
             Console.WriteLine($"Kunde navn:     {salesOrderHeader.Fullname}");
+            Console.WriteLine();
+            Console.WriteLine("========================================");
+            Console.WriteLine("Ordre Linjer:");
+            Console.WriteLine("----------------------------------------");
+
+            foreach (var orderLine in salesOrderHeader.GetOrderLines())
+            {
+                Console.WriteLine($"Produkt Navn:    {orderLine.Name}");
+                Console.WriteLine($"Antal:           {orderLine.Quantity}");
+                Console.WriteLine($"Pris pr. enhed:  {orderLine.Price:C}");
+                Console.WriteLine($"Linje pris:      {orderLine.Amount:C}");
+                Console.WriteLine("----------------------------------------");
+            }
+
+            Console.WriteLine("========================================");
+            Console.WriteLine($"Samlet pris:     {salesOrderHeader.OrderAmount:C}");
+            Console.WriteLine("========================================");
 
         }
     }
