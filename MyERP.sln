@@ -5,7 +5,7 @@ VisualStudioVersion = 17.11.35219.272
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MyERP", "MyERP\MyERP.csproj", "{A9C9542F-EE75-4462-AB1B-031C7F8DCCA5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LNE Unit test", "LNE Unit test\LNE Unit test.csproj", "{EABE0461-F211-4342-AFF2-BF3CA6DD2382}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LNE Unit test", "LNE Unit test\LNE Unit test.csproj", "{EABE0461-F211-4342-AFF2-BF3CA6DD2382}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
