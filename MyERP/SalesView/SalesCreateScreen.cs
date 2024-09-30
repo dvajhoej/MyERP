@@ -154,7 +154,10 @@ namespace MyERP.SalesView
                 };
 
                 _salesOrder.AddOrderLine(orderLine);
+                Database.Instance.InsertSalesOrderline(orderLine);
+
                 Clear();
+
                 Console.WriteLine($"Tilføjede {quantity} x {selectedProduct.Name} til ordren.");
                 
             }
