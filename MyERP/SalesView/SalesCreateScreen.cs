@@ -54,12 +54,10 @@ namespace MyERP.SalesView
 
                     if (success)
                     {
-                        newCustomer.CustomerID = customerID;
+                        //newCustomer.CustomerID = customerID;
 
-                        _salesOrder.Fullname = newCustomer.FirstName + " " + newCustomer.LastName;
                         _salesOrder.CreationDate = DateTime.Now;
-                        _salesOrder.CustomerNumber = customerID;
-                        _salesOrder.OrderNumber = GenerateOrderNumber();
+                  
 
                         Console.WriteLine($"Ordre skabt for {newCustomer.FullName}.");
                         Database.Instance.InsertCustomer(newCustomer);
@@ -78,9 +76,7 @@ namespace MyERP.SalesView
             }
             else
             {
-                _salesOrder.Fullname = customer.FirstName + " " + customer.LastName;
                 _salesOrder.CreationDate = DateTime.Now;
-                _salesOrder.CustomerNumber = customerID;
                 Console.WriteLine($"Ordre skabt for {customer.FullName}.");
             }
 
@@ -102,11 +98,7 @@ namespace MyERP.SalesView
             this.Quit();
         }
 
-        private int GenerateOrderNumber()
-        {
-            return new Random().Next(1000, 9999);
-        }
-
+     
         private void AddOrderLines(int orderId)
         {
             List<Product> products = Database.Instance.Products;

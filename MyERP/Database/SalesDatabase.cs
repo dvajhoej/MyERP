@@ -46,9 +46,10 @@ namespace MyERP
                                "     Products.description," +
                                "     Products.sellingPrice," +
                                "     SalesOrderLines.productID," +
-                               "     SalesOrderLines.quantity," +
+                               "     SalesOrderLines.quantity," +                               
                                "     SalesOrderHeader.orderID, " +
-                               "     Products.unit " +
+                               "     Products.unit, " +
+                               "     SalesOrderLines.salesOrderID " +
                                "FROM  " +
                                "     Products " +
                                "INNER JOIN  SalesOrderLines ON Products.productID = SalesOrderLines.productID " +
@@ -70,6 +71,7 @@ namespace MyERP
                             Quantity = (double)reader.GetDecimal(4),
                             SalesOrderHeadID = reader.GetInt32(5),
                             Unit = (UnitType)Enum.Parse(typeof(UnitType), reader.GetString(6)),
+                            SalesOrderLineID = reader.GetInt32(7),
 
                         };
                         salesOrderLines.Add(salesOrderLine);
@@ -310,18 +312,19 @@ namespace MyERP
                             try
                             {
                                 string updateQuery = "UPDATE SalesOrderLines SET " +
-                                                            " salesOrderHeadID = @salesOrderHeadID " +
-                                                            " productID = @ProductID " +
+                                                            " salesOrderHeadID = @salesOrderHeadID, " +
+                                                            " productID = @ProductID, " +
                                                             " quantity = @Quantity " +
-                                                     "WHERE salesOrderLineID = @SalesOrderLineID;";
+                                                     "WHERE salesOrderID = @SalesOrderLineID;";
 
 
                                 using (SqlCommand command = new SqlCommand(updateQuery, connection, transaction))
                                 {
                                     // Update SalesorderHead table
-                                    command.Parameters.AddWithValue("@SalesOrderHeadID", salesOrderLines.Name);
-                                    command.Parameters.AddWithValue("@ProductID", salesOrderLines.Description);
-                                    command.Parameters.AddWithValue("@Quantity", salesOrderLines.Price);
+                                    command.Parameters.AddWithValue("@SalesOrderHeadID", salesOrderLines.SalesOrderHeadID);
+                                    command.Parameters.AddWithValue("@ProductID", salesOrderLines.ProductID);
+                                    command.Parameters.AddWithValue("@Quantity", salesOrderLines.Quantity);
+                                    command.Parameters.AddWithValue("@SalesOrderLineID", salesOrderLines.SalesOrderLineID);
 
 
                                     int rowsAffected = command.ExecuteNonQuery();
