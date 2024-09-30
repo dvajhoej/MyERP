@@ -253,7 +253,7 @@ namespace MyERP
                                     command.Parameters.AddWithValue("@CreationDate", salesOrderHeader.CreationDate);
                                     command.Parameters.AddWithValue("@CompletionDate", salesOrderHeader.CompletionDate as object ?? DBNull.Value);
                                     command.Parameters.AddWithValue("@CustomerID", salesOrderHeader.CustomerNumber);
-                                    command.Parameters.AddWithValue("@Status", salesOrderHeader.Status);
+                                    command.Parameters.AddWithValue("@Status", salesOrderHeader.Status.ToString());
                                     command.Parameters.AddWithValue("@OrderID", salesOrderHeader.OrderNumber);
 
 
