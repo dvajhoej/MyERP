@@ -207,9 +207,10 @@ namespace MyERP
                             command.Parameters.AddWithValue("@ProductID", salesOrderLine.ProductID);
                             command.Parameters.AddWithValue("@Quantity", salesOrderLine.Quantity);
 
-                            salesOrderLine.SalesOrderHeadID = (int)command.ExecuteScalar();
+                            salesOrderLine.SalesOrderLineID = (int)command.ExecuteScalar();
                         }
                         Instance.salesOrderLines.Add(salesOrderLine);
+                        transaction.Commit();
                     }
                     catch (Exception ex)
                     {

@@ -7,6 +7,7 @@ namespace MyERP.SalesView
     public class SalesListScreen : Screen
     {
         private ListPage<SalesOrderHeader> listPage;
+        private ListPage<SalesOrderLine> listPageLine;
 
         public SalesListScreen()
         {
@@ -61,6 +62,12 @@ namespace MyERP.SalesView
             try
             {
                 listPage.Add(newOrder);
+
+                //foreach (var salesorderline in newOrder.OrderLines)
+                //{
+                //    list.Add(salesorderline);
+                //}
+
                 Console.WriteLine("Order successfully created.");
                 Console.ReadLine();
             }

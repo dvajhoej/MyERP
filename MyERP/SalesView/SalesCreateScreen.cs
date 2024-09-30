@@ -66,13 +66,13 @@ namespace MyERP.SalesView
                     }
                     else
                     {
-                        Console.WriteLine("Kundeoprettelse annulleret.");
+                        Console.WriteLine("Kunde oprettelse annulleret.");
                         return;
                     }
                 }
                 else
                 {
-                    Console.WriteLine("Ordreoprettelse annulleret.");
+                    Console.WriteLine("Ordre oprettelse annulleret.");
                     return;
                 }
             }
@@ -91,9 +91,8 @@ namespace MyERP.SalesView
                 Database.Instance.InsertSalesOrderHeader(_salesOrder);
 
                 int orderID = _salesOrder.OrderNumber;
+               
                 AddOrderLines(orderID);
-
-                Console.WriteLine("Order blev oprettet.");
             }
             catch (Exception ex)
             {
@@ -152,12 +151,14 @@ namespace MyERP.SalesView
                     ProductID = selectedProduct.ProductID,
                     Name = selectedProduct.Name,
                     Price = selectedProduct.SellingPrice,
-                    Quantity = quantity
+                    Quantity = quantity,
+                    SalesOrderHeadID = orderId,
                 };
 
                 _salesOrder.AddOrderLine(orderLine);
-                Database.Instance.InsertSalesOrderline(orderLine);
 
+                Database.Instance.InsertSalesOrderline(orderLine);
+                
                 Clear();
 
                 Console.WriteLine($"Tilføjede {quantity} x {selectedProduct.Name} til ordren.");
