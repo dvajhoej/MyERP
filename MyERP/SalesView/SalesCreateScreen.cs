@@ -59,7 +59,6 @@ namespace MyERP.SalesView
                         _salesOrder.Fullname = newCustomer.FirstName + " " + newCustomer.LastName;
                         _salesOrder.CreationDate = DateTime.Now;
                         _salesOrder.CustomerNumber = customerID;
-                        _salesOrder.OrderNumber = GenerateOrderNumber();
 
                         Console.WriteLine($"Ordre skabt for {newCustomer.FullName}.");
                         Database.Instance.InsertCustomer(newCustomer);
@@ -100,11 +99,6 @@ namespace MyERP.SalesView
             }
 
             this.Quit();
-        }
-
-        private int GenerateOrderNumber()
-        {
-            return new Random().Next(1000, 9999);
         }
 
         private void AddOrderLines(int orderId)

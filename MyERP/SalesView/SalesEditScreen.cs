@@ -21,7 +21,6 @@ namespace MyERP.SalesView
 
             Form<SalesOrderHeader> editor = new Form<SalesOrderHeader>();
 
-            editor.IntBox("Ordre Nummer", "OrderNumber");
             editor.SelectBox("Order Status", "Status", GetStatusOptions());
 
             editor.Edit(_salesOrder);
