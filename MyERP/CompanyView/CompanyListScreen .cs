@@ -8,7 +8,10 @@ namespace MyERP.CompanyView
 
         public CompanyListScreen()
         {
-            listPage = new ListPage<Company>(Database.Instance.Companies);          
+            //listPage = new ListPage<Company>(Database.Instance.Companies);
+
+            listPage = new ListPage<Company>();
+            listPage.Add(Database.Instance.Companies);
             listPage.AddKey(ConsoleKey.F1, CreateCompany);
             listPage.AddKey(ConsoleKey.F2, EditCompany);
             listPage.AddKey(ConsoleKey.F3, SearchCompany);

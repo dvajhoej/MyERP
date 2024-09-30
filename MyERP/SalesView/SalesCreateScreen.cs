@@ -84,11 +84,15 @@ namespace MyERP.SalesView
                 Console.WriteLine($"Ordre skabt for {customer.FullName}.");
             }
 
-            AddOrderLines();
+            
 
             try
             {
                 Database.Instance.InsertSalesOrderHeader(_salesOrder);
+
+                int orderID = _salesOrder.OrderNumber;
+                AddOrderLines(orderID);
+
                 Console.WriteLine("Order blev oprettet.");
             }
             catch (Exception ex)
@@ -104,7 +108,7 @@ namespace MyERP.SalesView
             return new Random().Next(1000, 9999);
         }
 
-        private void AddOrderLines()
+        private void AddOrderLines(int orderId)
         {
             List<Product> products = Database.Instance.Products;
 
