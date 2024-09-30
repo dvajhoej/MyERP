@@ -81,8 +81,6 @@ namespace MyERP.SalesView
                 _salesOrder.Fullname = customer.FirstName + " " + customer.LastName;
                 _salesOrder.CreationDate = DateTime.Now;
                 _salesOrder.CustomerNumber = customerID;
-                _salesOrder.OrderNumber = GenerateOrderNumber();
-
                 Console.WriteLine($"Ordre skabt for {customer.FullName}.");
             }
 

@@ -100,8 +100,8 @@ namespace MyERP
                                "    SalesOrderHeader                                                                               " +
                                "    LEFT JOIN Customers ON SalesOrderHeader.customerID = Customers.customerID                      " +
                                "    LEFT JOIN Persons ON Customers.personID = Persons.personID                                     " +
-                               "    INNER JOIN SalesOrderLines ON SalesOrderHeader.orderID = SalesOrderLines.salesOrderHeadID      " +
-                               "    INNER JOIN Products ON SalesOrderLines.productID = Products.productID                          " +
+                               "    LEFT JOIN SalesOrderLines ON SalesOrderHeader.orderID = SalesOrderLines.salesOrderHeadID      " +
+                               "    LEFT JOIN Products ON SalesOrderLines.productID = Products.productID                          " +
                                "GROUP BY                                                                                           " +
                                "    SalesOrderHeader.orderID,                                                                      " +
                                "    SalesOrderHeader.creationDate,                                                                 " +
@@ -169,7 +169,9 @@ namespace MyERP
                             salesOrderHeader.OrderNumber = (int)command.ExecuteScalar();
                         }
                         Instance.salesOrderHeaders.Add(salesOrderHeader);
+                        transaction.Commit();
                     }
+
                     catch (Exception ex)
                     {
                         transaction.Rollback();

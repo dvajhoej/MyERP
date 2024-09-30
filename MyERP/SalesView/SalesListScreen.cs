@@ -61,7 +61,6 @@ namespace MyERP.SalesView
             try
             {
                 listPage.Add(newOrder);
-                Database.Instance.UpdateSalesOrderHeader(newOrder);
                 Console.WriteLine("Order successfully created.");
                 Console.ReadLine();
             }
