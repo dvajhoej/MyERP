@@ -26,7 +26,7 @@ namespace MyERP.SalesView
 
             editor.Edit(_salesOrder);
 
-            if (_salesOrder.Status == SalesOrderHeader.OrderStatus.Completed)
+            if (_salesOrder.Status == SalesOrderHeader.OrderStatus.Færdig)
             {
                 _salesOrder.CompletionDate = DateTime.Now;
             }
@@ -41,9 +41,9 @@ namespace MyERP.SalesView
         {
             return new Dictionary<string, object>
             {
-                { "Confirmed", (object)SalesOrderHeader.OrderStatus.Confirmed },
-                { "Packed", (object)SalesOrderHeader.OrderStatus.Packed },
-                { "Completed", (object)SalesOrderHeader.OrderStatus.Completed }
+                { "Bekræftet", (object)SalesOrderHeader.OrderStatus.Bekræftet },
+                { "Pakket", (object)SalesOrderHeader.OrderStatus.Pakket },
+                { "Færdig", (object)SalesOrderHeader.OrderStatus.Færdig }
             };
         }
 

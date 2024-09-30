@@ -39,7 +39,7 @@ namespace MyERP.CompanyView
             SearchCompany();
 
 
-           
+
 
         }
         void Quit(Company _)

@@ -13,7 +13,7 @@ namespace LNE_Unit_test
             // Assert
             Assert.Equal(0, salesOrder.OrderNumber);
             Assert.Equal(0, salesOrder.CustomerNumber);
-            Assert.Equal(SalesOrderHeader.OrderStatus.Created, salesOrder.Status); // Default status is 'Created'
+            Assert.Equal(SalesOrderHeader.OrderStatus.Oprettet, salesOrder.Status); // Default status is 'Created'
             Assert.Equal(0, salesOrder.TotalPrice); // Default TotalPrice is 0
         }
 
@@ -30,7 +30,7 @@ namespace LNE_Unit_test
             // Assert
             Assert.Equal(orderNumber, salesOrder.OrderNumber);
             Assert.Equal(customerNumber, salesOrder.CustomerNumber);
-            Assert.Equal(SalesOrderHeader.OrderStatus.Created, salesOrder.Status);
+            Assert.Equal(SalesOrderHeader.OrderStatus.Oprettet, salesOrder.Status);
             Assert.Equal(DateTime.Now.Date, salesOrder.CreationDate.Date); // Ensure CreationDate is today
         }
 

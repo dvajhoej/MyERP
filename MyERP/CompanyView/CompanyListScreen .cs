@@ -19,10 +19,10 @@ namespace MyERP.CompanyView
             listPage.AddColumn("Currency", "Currency");
         }
 
-        private void SearchCompany(Company company)
-        {
-            Screen.Display(new CompanyFilterListScreen());
-        }
+        //private void SearchCompany(Company company)
+        //{
+        //    Screen.Display(new CompanyFilterListScreen());
+        //}
 
         public override string Title { get; set; } = "Virksomhed";
 
@@ -50,16 +50,67 @@ namespace MyERP.CompanyView
         }
         void Quit(Company _)
         {
-            listPage.Clear();
-            listPage.Add(Database.Instance.Companies);
+            //listPage.Clear();
+            //listPage.Add(Database.Instance.Companies);
 
             Quit();
         }
 
 
+        private void SearchCompany(Company company)
+        {
+            string search;
+            do
+            {
+                CleanLine06andselect();
+
+                Console.Write("Enter Company name or ID: ");
+                search = Console.ReadLine().ToLower();
+            } while (string.IsNullOrEmpty(search));
+
+            var filtered = Database.Instance.Companies
+                .Where(c => c.CompanyName.ToLower().Contains(search) ||
+                            c.CompanyID.ToString().Contains(search))
+                .ToList();
+
+            if (filtered.Any())
+            {
+                Clear();
+                listPage.Clear();
+                listPage.Add(filtered);
+                //Draw();
+
+                var selected = listPage.Select();
+                if (selected != null)
+                {
+                    Screen.Display(new CompanyViewScreen(selected));
+                }
+                else
+                {
+             
+
+                }
+
+            }
+            else
+            {
+                CleanLine06andselect();
+                Console.WriteLine("No matching companies found.");
+                Console.WriteLine("Press a key to continue.");
+
+                Console.ReadKey();
+            }
+        }
+
+        public void CleanLine06andselect()
+        {
+            Console.SetCursorPosition(0, 6);
+            Console.Write(new string(' ', Console.WindowWidth));
+            Console.Write(new string(' ', Console.WindowWidth));
+            Console.SetCursorPosition(0, 6);
+        }
 
 
-        
 
 
         private void CreateCompany(Company company)
@@ -67,9 +118,6 @@ namespace MyERP.CompanyView
             var newCompany = new Company();
             listPage.Add(newCompany);
             Screen.Display(new CompanyCreateScreen(newCompany));
-
-
-
         }
 
         private void EditCompany(Company selected)
@@ -88,7 +136,6 @@ namespace MyERP.CompanyView
                     //Database.Instance.Companies.Remove(selected);
                     //listPage.Clear();
                     //listPage.Add(Database.Instance.Companies);
-
                 }
                 catch (Exception ex)
                 {
