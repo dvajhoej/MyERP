@@ -89,7 +89,7 @@ CREATE TABLE SalesOrderHeader (
 	completionDate DATETIME,
 	customerID INT FOREIGN KEY  REFERENCES Customers(customerID) ON DELETE SET NULL,
 	status VARCHAR(15),
-	CONSTRAINT chk_status CHECK (status IN ('None', 'Created', 'Confirmed', 'Packed', 'Completed')),
+	CONSTRAINT chk_status CHECK (status IN ('Oprettet', 'Bekræftet', 'Pakket', 'Færdig')),
 	);
 
 
@@ -164,11 +164,11 @@ GO
 
 INSERT INTO SalesOrderHeader (creationDate, completionDate, customerID, status)
 VALUES 
-('2024-06-01', '2024-06-02', 1, 'Completed'),
-('2024-06-03', '2024-06-04', 2, 'Packed'),
-('2024-06-05', '2024-06-06', 3, 'Confirmed'),
-('2024-06-07', '2024-06-08', 4, 'Created'),
-('2024-06-09', NULL, 5, 'None');
+('2024-06-01', '2024-06-02', 1, 'Færdig'),
+('2024-06-03', '2024-06-04', 2, 'Pakket'),
+('2024-06-05', '2024-06-06', 3, 'Bekræftet'),
+('2024-06-07', '2024-06-08', 4, 'Oprettet'),
+('2024-06-09', NULL, 5, 'Oprettet');
 
 
 GO

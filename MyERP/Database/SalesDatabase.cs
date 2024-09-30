@@ -162,9 +162,9 @@ namespace MyERP
                         using (SqlCommand command = new SqlCommand(insertSalesOrderHeaderQuery, connection, transaction))
                         {
                             command.Parameters.AddWithValue("@CreationDate", salesOrderHeader.CreationDate);
-                            command.Parameters.AddWithValue("@CompletionDate", salesOrderHeader.CompletionDate);
+                            command.Parameters.AddWithValue("@CompletionDate", salesOrderHeader.CompletionDate as object ?? DBNull.Value); 
                             command.Parameters.AddWithValue("@CustomerID", salesOrderHeader.CustomerNumber);
-                            command.Parameters.AddWithValue("@Status", salesOrderHeader.Status);
+                            command.Parameters.AddWithValue("@Status", salesOrderHeader.Status.ToString());
 
                             salesOrderHeader.OrderNumber = (int)command.ExecuteScalar();
                         }
@@ -236,21 +236,22 @@ namespace MyERP
                         {
                             try
                             {
-                                string updateQuery = "UPDATE SalesOrderLines SET " +
+                                string updateQuery = "UPDATE SalesOrderHeader SET " +
                                                          "creationDate = @CreationDate, " +
-                                                         "compleionDate = @CompletionDate" +
-                                                         "customerID = @CustomerID " +
-                                                         "status = @Status" +
-                                                     "WHERE orderID = @OrderID;";
+                                                         "completionDate = @CompletionDate," +
+                                                         "customerID = @CustomerID, " +
+                                                         "status = @Status " +
+                                                     "WHERE orderID = @OrderID";
 
 
                                 using (SqlCommand command = new SqlCommand(updateQuery, connection, transaction))
                                 {
                                     // Update SalesorderHead table
                                     command.Parameters.AddWithValue("@CreationDate", salesOrderHeader.CreationDate);
-                                    command.Parameters.AddWithValue("@CompletionDate", salesOrderHeader.CompletionDate);
+                                    command.Parameters.AddWithValue("@CompletionDate", salesOrderHeader.CompletionDate as object ?? DBNull.Value);
                                     command.Parameters.AddWithValue("@CustomerID", salesOrderHeader.CustomerNumber);
                                     command.Parameters.AddWithValue("@Status", salesOrderHeader.Status);
+                                    command.Parameters.AddWithValue("@OrderID", salesOrderHeader.OrderNumber);
 
 
 
@@ -283,7 +284,7 @@ namespace MyERP
             }
             else
             {
-                Console.WriteLine($"Company with ID {salesOrderHeader.OrderNumber} not found.");
+                Console.WriteLine($"Customer with ID {salesOrderHeader.OrderNumber} not found.");
             }
         }
 
