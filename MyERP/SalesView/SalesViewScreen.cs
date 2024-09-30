@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
 using TECHCOOL.UI;
@@ -32,20 +33,24 @@ namespace MyERP.SalesView
             Console.WriteLine("========================================");
             Console.WriteLine("Ordre Linjer:");
             Console.WriteLine("----------------------------------------");
-
-            foreach (var orderLine in salesOrderHeader.GetOrderLines())
+            double total = 0;
+            foreach (var orderLine in Database.Instance.SalesOrderLines)
             {
-                Console.WriteLine($"Produkt Navn:    {orderLine.Name}");
-                Console.WriteLine($"Antal:           {orderLine.Quantity}");
-                Console.WriteLine($"Pris pr. enhed:  {orderLine.Price:C}");
-                Console.WriteLine($"Linje pris:      {orderLine.Amount:C}");
-                Console.WriteLine("----------------------------------------");
+                if (orderLine.SalesOrderHeadID == salesOrderHeader.OrderNumber)
+                {
+                    Console.WriteLine($"Produkt Navn:    {orderLine.Name}");
+                    Console.WriteLine($"Antal:           {orderLine.Quantity}");
+                    Console.WriteLine($"Pris pr. enhed:  {orderLine.Price:C}");
+                    Console.WriteLine($"Linje pris:      {orderLine.Amount:C}");
+                    Console.WriteLine("----------------------------------------");
+                    total += orderLine.Amount;
+
+                    Console.WriteLine("========================================");
+                    Console.WriteLine($"Samlet pris:     {total}");
+                    Console.WriteLine("========================================");
+
+                }
             }
-
-            Console.WriteLine("========================================");
-            Console.WriteLine($"Samlet pris:     {salesOrderHeader.OrderAmount:C}");
-            Console.WriteLine("========================================");
-
         }
     }
 }
