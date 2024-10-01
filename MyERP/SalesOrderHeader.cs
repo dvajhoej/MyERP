@@ -10,7 +10,7 @@ namespace MyERP
         public DateTime CreationDate { get; set; }
         public DateTime? CompletionDate { get; set; }
         public int CustomerNumber { get; set; }
-        public OrderStatus Status { get; set; } = OrderStatus.Oprettet;
+        public OrderStatus Status { get; set; }
         private List<SalesOrderLine> OrderLines { get; set; } = new List<SalesOrderLine>();
         public decimal TotalPrice { get; set; }
         public double OrderAmount
@@ -25,6 +25,8 @@ namespace MyERP
         public SalesOrderHeader()
         {
             CreationDate = DateTime.Now;
+            Status = OrderStatus.Oprettet;
+
 
         }
         public enum OrderStatus
@@ -40,13 +42,8 @@ namespace MyERP
 
             CustomerNumber = customerNumber;
             CreationDate = DateTime.Now;
-            Status = OrderStatus.Oprettet;
         }
 
-        public void AddOrderLine(SalesOrderLine orderLine)
-        {
-            OrderLines.Add(orderLine);
-        }
 
         public void EditOrderLine(int index, SalesOrderLine updatedOrderLine)
         {

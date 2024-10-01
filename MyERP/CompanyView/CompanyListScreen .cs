@@ -8,13 +8,9 @@ namespace MyERP.CompanyView
 
         public CompanyListScreen()
         {
-            //listPage = new ListPage<Company>(Database.Instance.Companies);
-
-            listPage = new ListPage<Company>();
-            listPage.Add(Database.Instance.Companies);
+            listPage = new ListPage<Company>(Database.Instance.Companies);
             listPage.AddKey(ConsoleKey.F1, CreateCompany);
             listPage.AddKey(ConsoleKey.F2, EditCompany);
-            listPage.AddKey(ConsoleKey.F3, SearchCompany);
             listPage.AddKey(ConsoleKey.F5, DeleteCompany);
             listPage.AddKey(ConsoleKey.Escape, Quit);
             listPage.AddColumn("Company Name", "CompanyName", 25);
@@ -22,25 +18,28 @@ namespace MyERP.CompanyView
             listPage.AddColumn("Currency", "Currency");
         }
 
-        //private void SearchCompany(Company company)
-        //{
-        //    Screen.Display(new CompanyFilterListScreen());
-        //}
+
 
         public override string Title { get; set; } = "Virksomhed";
 
         protected override void Draw()
         {
 
-            Console.WriteLine("Press F1 to create a company");
-            Console.WriteLine("Press F2 to edit a company");
-            Console.WriteLine("Press F3 to search for company");
-            Console.WriteLine("Press F5 to delete a company");
+
+            int spaces = 40;
+
+            WindowHelper.Top(spaces);
+            Console.WriteLine("│{0,-40}│", "Tryk F1  for at oprette en virksomhed");
+            Console.WriteLine("│{0,-40}│", "Tryk F1  for at redigere en virksomhed");
+            Console.WriteLine("│{0,-40}│", "Tryk F1  for at slette en virksomhed");
+            Console.WriteLine("│{0,-40}│", "Tryk Esc for at forlade siden");
+
+            WindowHelper.Bot(spaces);
+
             for (int i = 0; i < 3; i++)
             {
                 Console.WriteLine();
             }
-
 
 
             // Show the list and get the selected item
@@ -53,79 +52,54 @@ namespace MyERP.CompanyView
         }
         void Quit(Company _)
         {
-            //listPage.Clear();
-            //listPage.Add(Database.Instance.Companies);
-
+   
             Quit();
         }
-
-
-        private void SearchCompany(Company company)
-        {
-            string search;
-            do
-            {
-                CleanLine06andselect();
-
-                Console.Write("Enter Company name or ID: ");
-                search = Console.ReadLine().ToLower();
-            } while (string.IsNullOrEmpty(search));
-
-            var filtered = Database.Instance.Companies
-                .Where(c => c.CompanyName.ToLower().Contains(search) ||
-                            c.CompanyID.ToString().Contains(search))
-                .ToList();
-
-            if (filtered.Any())
-            {
-                Clear();
-                listPage.Clear();
-                listPage.Add(filtered);
-                //Draw();
-
-                var selected = listPage.Select();
-                if (selected != null)
-                {
-                    Screen.Display(new CompanyViewScreen(selected));
-                }
-                else
-                {
-             
-
-                }
-
-            }
-            else
-            {
-                CleanLine06andselect();
-                Console.WriteLine("No matching companies found.");
-                Console.WriteLine("Press a key to continue.");
-
-                Console.ReadKey();
-            }
-        }
-
-        public void CleanLine06andselect()
-        {
-            Console.SetCursorPosition(0, 6);
-            Console.Write(new string(' ', Console.WindowWidth));
-            Console.Write(new string(' ', Console.WindowWidth));
-            Console.SetCursorPosition(0, 6);
-        }
-
-
 
 
         private void CreateCompany(Company company)
         {
             var newCompany = new Company();
-            listPage.Add(newCompany);
             Screen.Display(new CompanyCreateScreen(newCompany));
+
+            try
+            {
+                Database.Instance.InsertCompany(newCompany);
+                int spaces = 40;
+                WindowHelper.Top(spaces);
+                Console.WriteLine("│{0,-40}│", $"{newCompany.CompanyName} oprettet");
+                WindowHelper.Bot(spaces);
+                Console.ReadKey();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Fejl under oprettelse af virksomhed: " + ex.Message);
+                Console.WriteLine("Tryk på en tast for at fortsætte");
+                Console.ReadKey();
+            }        
         }
 
         private void EditCompany(Company selected)
         {
             Screen.Display(new CompanyEditScreen(selected));
+
+            try
+            {
+                Database.Instance.UpdateCompany(selected);
+                int spaces = 40;
+                WindowHelper.Top(spaces);
+                Console.WriteLine("│{0,-40}│", $"{selected.CompanyName} opdateret");
+                WindowHelper.Bot(spaces);
+                Console.ReadKey();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Fejl under redigering af virksomhed: " + ex.Message);
+                Console.WriteLine("Tryk på en tast for at fortsætte");
+                Console.ReadKey();
+            }
+       
+
         }
 
         public void DeleteCompany(Company selected)
@@ -135,23 +109,19 @@ namespace MyERP.CompanyView
                 try
                 {
                     Database.Instance.DeleteCompanyById(selected.CompanyID);
-                    listPage.Remove(selected);
-                    //Database.Instance.Companies.Remove(selected);
-                    //listPage.Clear();
-                    //listPage.Add(Database.Instance.Companies);
+                    
+                    int spaces = 40;
+                    WindowHelper.Top(spaces);
+                    Console.WriteLine("│{0,-40}│", $"{selected.CompanyName} slettet");
+                    WindowHelper.Bot(spaces);
+                    Console.ReadKey();
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine($"An error has occured: {ex.Message} ");
-                }
-                finally
-                {
-                    Console.SetCursorPosition(0, 5);
-                    Console.WriteLine($"Company '{selected.CompanyName}' has been deleted.");
-                    Console.WriteLine("Press any key.");
-
+                    Console.WriteLine($"Fejl Under sletning af virksomhed: {ex.Message} ");
+                    Console.WriteLine("Tryk på en tast for at fortsætte");
                     Console.ReadKey();
-                }
+                }         
 
             }
             else

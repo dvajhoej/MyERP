@@ -31,7 +31,7 @@ namespace MyERP.CustomerView
             editor.TextBox("Land", "Country");
 
             editor.Edit(_customer);
-            Database.Instance.UpdateCustomer(_customer);
+            
             this.Quit();
         }
     }

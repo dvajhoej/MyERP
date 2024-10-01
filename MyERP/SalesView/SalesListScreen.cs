@@ -7,13 +7,10 @@ namespace MyERP.SalesView
     public class SalesListScreen : Screen
     {
         private ListPage<SalesOrderHeader> listPage;
-        private ListPage<SalesOrderLine> listPageLine;
 
         public SalesListScreen()
         {
-            listPage = new ListPage<SalesOrderHeader>();
-            listPage.Add(Database.Instance.SalesOrderHeaders);
-
+            listPage = new ListPage<SalesOrderHeader>(Database.Instance.SalesOrderHeaders);
             listPage.AddKey(ConsoleKey.F1, CreateOrder);
             listPage.AddKey(ConsoleKey.F2, EditOrder);
             listPage.AddKey(ConsoleKey.F5, DeleteOrder);
@@ -24,23 +21,35 @@ namespace MyERP.SalesView
             listPage.AddColumn("Færdig", "CompletionDate", 25);
             listPage.AddColumn("Kunde nummer", "CustomerNumber", 25);
             listPage.AddColumn("Kunde Navn", "Fullname", 25);
+            listPage.AddColumn("Status", "Status", 25);
+
 
         }
 
-     
+
 
         public override string Title { get; set; } = "Ordre";
 
         protected override void Draw()
         {
             Clear();
-            Console.WriteLine("Press F1 to create an order");
-            Console.WriteLine("Press F2 to edit an order");
-            Console.WriteLine("Press F5 to delete an order");
-            Console.WriteLine("Press F9 to to generate invoice");
+            int spaces = 35;
+            
+            WindowHelper.Top(spaces);
+            Console.WriteLine("│{0,-35}│", "Tryk F1 for at oprette en ordre");
+            Console.WriteLine("│{0,-35}│", "Tryk F2 for at redigere en ordre");
+            Console.WriteLine("│{0,-35}│", "Tryk F5 for at slette en ordre");
+            Console.WriteLine("│{0,-35}│", "Tryk F9 for at oprette  en faktura");
+            Console.WriteLine("│{0,-35}│", "Tryk Esc for at forlade siden");
+
+            WindowHelper.Bot(spaces);
+
+            for (int i = 0; i < 3; i++)
+            {
+                Console.WriteLine();
+            }
 
 
-            //listPage.AddColumn("Status", "Status", 25);
 
             var selected = listPage.Select();
             if (selected != null)
@@ -61,12 +70,7 @@ namespace MyERP.SalesView
 
             try
             {
-                listPage.Add(newOrder);
-
-                //foreach (var salesorderline in newOrder.OrderLines)
-                //{
-                //    list.Add(salesorderline);
-                //}
+                listPage.Add(newOrder);            
 
                 Console.WriteLine("Order successfully created.");
                 Console.ReadLine();
@@ -87,17 +91,7 @@ namespace MyERP.SalesView
         {
             Screen.Display(new SalesEditScreen(selected));
 
-            try
-            {
-                Database.Instance.UpdateSalesOrderHeader(selected);
-                Console.WriteLine("Order successfully updated");
-                Console.ReadLine();
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"An error occured: {ex.Message}");
-                Console.ReadLine();
-            }
+
         }
 
         private void DeleteOrder(SalesOrderHeader selected)

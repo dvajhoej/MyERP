@@ -1,5 +1,6 @@
 ﻿using MyERP.DBHELPER;
 using System.Data.SqlClient;
+using TECHCOOL.UI;
 
 namespace MyERP
 {
@@ -165,7 +166,7 @@ namespace MyERP
                         }
                     }
 
-                    Instance.customers.Add(customer);
+                    Database.Instance.customers.Add(customer);
                     transaction.Commit();
                 }
                 catch (Exception ex)
@@ -244,11 +245,11 @@ namespace MyERP
                                     if (rowsAffected > 0)
                                     {
                                         transaction.Commit();
-                                        Console.WriteLine("Customer update successful.");
+                                        throw new Exception("Customer update successful.");
                                     }
                                     else
                                     {
-                                        Console.WriteLine("No rows were updated.");
+                                        throw new Exception("No rows were updated.");
                                         transaction.Rollback();
                                     }
                                 }
@@ -256,19 +257,19 @@ namespace MyERP
                             catch (Exception ex)
                             {
                                 transaction.Rollback();
-                                Console.WriteLine($"Error while updating customer: {ex.Message}");
+                                throw new Exception($"Error while updating customer: {ex.Message}");
                             }
                         }
                     }
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine($"Error while connecting to the database: {ex.Message}");
+                    throw new Exception($"Error while connecting to the database: {ex.Message}");
                 }
             }
             else
             {
-                Console.WriteLine($"Customer with ID {updatedCustomer.CustomerID} not found.");
+                throw new Exception($"Customer with ID {updatedCustomer.CustomerID} not found.");
             }
         }
 
@@ -313,6 +314,8 @@ namespace MyERP
 
 
                         transaction.Commit();
+                        customers.Remove(customer);
+
 
                     }
                 }

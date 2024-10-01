@@ -10,11 +10,15 @@ namespace MyERP
     {
         public static void Spacer(char startpiece, char spacer, int spaces, char endpiece)
         {
-
             Console.WriteLine($"{startpiece}{new string(spacer, spaces)}{endpiece}");
-
-
-
+        }
+        public static void Top(int spaces)
+        {
+            Console.WriteLine('┌' + (new string('─', spaces)) + '┐');
+        }
+        public static void Bot(int spaces)
+        {
+            Console.WriteLine('└' + (new string('─', spaces)) + '┘');
         }
         public static string Truncate(string value, int maxLength)
         {

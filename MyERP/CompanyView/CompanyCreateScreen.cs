@@ -33,15 +33,7 @@ namespace MyERP.CompanyView
 
             editor.Edit(_company);
 
-            try
-            {
-                Database.Instance.InsertCompany(_company);
-                Console.WriteLine("Company successfully created.");
-            }
-            catch (Exception ex)  
-            { 
-                Console.WriteLine("Error while creating company: " + ex.Message);
-            }
+            
             this.Quit();
 
         }

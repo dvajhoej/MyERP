@@ -9,8 +9,7 @@ namespace MyERP.ProductView
 
         public ProductListScreen()
         {
-            listPage = new ListPage<Product>();
-            listPage.Add(Database.Instance.Products);
+            listPage = new ListPage<Product>(Database.Instance.Products);
             listPage.AddKey(ConsoleKey.F1, CreateProduct);
             listPage.AddKey(ConsoleKey.F2, EditProduct);
             listPage.AddKey(ConsoleKey.F5, DeleteProduct);
@@ -31,9 +30,19 @@ namespace MyERP.ProductView
         {
             Clear();
 
-            Console.WriteLine("Tryk F1 for at skabe et produkt");
-            Console.WriteLine("Tryk F2 for at tilpasse et produkt");
-            Console.WriteLine("Tryk F5 for at slette et produkt");
+            int spaces = 35;
+            WindowHelper.Top(spaces);
+            Console.WriteLine("│{0,-35}│", "Tryk F1 for at oprette  en produkt");
+            Console.WriteLine("│{0,-35}│", "Tryk F2 for at redigere en produkt");
+            Console.WriteLine("│{0,-35}│", "Tryk F5 for at slette   en produkt");
+            Console.WriteLine("│{0,-35}│", "Tryk Esc for at forlade siden");
+
+            WindowHelper.Bot(spaces);
+
+            for (int i = 0; i < 3; i++)
+            {
+                Console.WriteLine();
+            }
 
 
 

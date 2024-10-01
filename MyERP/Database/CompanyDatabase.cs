@@ -192,11 +192,10 @@ namespace MyERP
                                     if (rowsAffected > 0)
                                     {
                                         transaction.Commit();
-                                        Console.WriteLine("Company update successful.");
                                     }
                                     else
                                     {
-                                        Console.WriteLine("No rows were updated.");
+                                        throw new Exception("No rows were updated.");
                                         transaction.Rollback();
                                     }
                                 }
@@ -204,19 +203,19 @@ namespace MyERP
                             catch (Exception ex)
                             {
                                 transaction.Rollback();
-                                Console.WriteLine($"Error while updating company: {ex.Message}");
+                                throw new Exception($"Error while updating company: {ex.Message}");
                             }
                         }
                     }
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine($"Error while connecting to the database: {ex.Message}");
+                    throw new Exception($"Error while connecting to the database: {ex.Message}");
                 }
             }
             else
             {
-                Console.WriteLine($"Company with ID {updatedCompany.CompanyID} not found.");
+                throw new Exception($"Company with ID {updatedCompany.CompanyID} not found.");
             }
         }
 
@@ -249,6 +248,8 @@ namespace MyERP
                         }
 
                         transaction.Commit();
+                        companies.Remove(company);
+
 
                     }
                 }

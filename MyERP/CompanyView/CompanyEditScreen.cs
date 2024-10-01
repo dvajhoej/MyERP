@@ -32,7 +32,6 @@ namespace MyERP.CompanyView
             editor.AddOption("Valuta", "EUR", Currency.EUR);
 
             editor.Edit(_company);
-            Database.Instance.UpdateCompany(_company);
 
 
             this.Quit();

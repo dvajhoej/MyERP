@@ -24,6 +24,11 @@ namespace MyERP.SalesView
         {
 
             int space = 83;
+
+            WindowHelper.Spacer('┌', '─', space, '┐');
+            Console.WriteLine("│{0,-82} │", "Tryk Esc for at forlade siden");
+            WindowHelper.Spacer('└', '─', space, '┘');
+
             WindowHelper.Spacer('┌', '─', space, '┐');
             Console.WriteLine("│{0,-16} │ {1,-63} │", "Ordre nummer", salesOrderHeader.OrderNumber);
             Console.WriteLine("│{0,-16} │ {1,-63} │", "Oprettelse", salesOrderHeader.CreationDate);
@@ -51,7 +56,7 @@ namespace MyERP.SalesView
                     i++;
                 }
             }
-            Console.WriteLine("│{0,-15} │ {1,64:C} │", "Samlet total:",  total);
+            Console.WriteLine("│{0,-15} │ {1,64:C} │", "Samlet total",  total);
             WindowHelper.Spacer('└', '─', space, '┘');
         }
     }

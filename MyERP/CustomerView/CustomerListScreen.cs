@@ -11,8 +11,7 @@ namespace MyERP.CustomerView
 
         public CustomerListScreen()
         {
-            listPage = new ListPage<Customer>();
-            listPage.Add(Database.Instance.Customers);
+            listPage = new ListPage<Customer>(Database.Instance.Customers);
             listPage.AddKey(ConsoleKey.F1, CreateCustomer);
             listPage.AddKey(ConsoleKey.F2, EditCustomer);
             listPage.AddKey(ConsoleKey.F5, DeleteCustomer);
@@ -30,9 +29,22 @@ namespace MyERP.CustomerView
         {
             Clear();
 
-            Console.WriteLine("Tryk F1 for at oprette  en kunde");
-            Console.WriteLine("Tryk F2 for at redigere en kunde");
-            Console.WriteLine("Tryk F5 for at slette   en kunde");
+
+            int spaces = 35;
+
+            WindowHelper.Top(spaces);
+            Console.WriteLine("│{0,-35}│", "Tryk F1 for at oprette  en kunde");
+            Console.WriteLine("│{0,-35}│", "Tryk F2 for at redigere en kunde");
+            Console.WriteLine("│{0,-35}│", "Tryk F5 for at slette   en kunde");
+            Console.WriteLine("│{0,-35}│", "Tryk Esc for at forlade siden");
+
+            WindowHelper.Bot(spaces);
+
+            for (int i = 0; i < 3; i++)
+            {
+                Console.WriteLine();
+            }
+
             
 
             var selected = listPage.Select();
@@ -50,62 +62,49 @@ namespace MyERP.CustomerView
         }
 
 
-        //private void SearchCustomer(Customer customer)
-        //{
-        //    string search;
-        //    do
-        //    {
-        //        CleanLine06andselect();
-
-        //        Console.Write("Enter Customer name or ID: ");
-        //        search = Console.ReadLine().ToLower();
-        //    } while (string.IsNullOrEmpty(search));
-
-
-        //    var filtered = Database.Instance.Customers
-        //        .Where(c => c.FirstName.ToLower().Contains(search) ||
-        //                    c.FullName.ToLower().Contains(search) ||
-        //                    c.LastName.ToLower().Contains(search) ||
-        //                    c.CustomerID.ToString().Contains(search))
-        //        .ToList();
-
-        //    if (filtered.Any())
-        //    {
-        //        Clear();
-        //        listPage.Clear();
-        //        listPage.Add(filtered);
-        //        Draw();
-
-        //    }
-        //    else
-        //    {
-                
-        //        CleanLine06andselect();
-        //        Console.WriteLine("No matching customer found.");
-        //        Console.WriteLine("Press a key to continue.");
-
-        //        Console.ReadKey();
-        //    }
-        //}
-        //private void CleanLine06andselect()
-        //{
-        //    Console.SetCursorPosition(0, 6);
-        //    Console.Write(new string(' ', Console.WindowWidth));
-        //    Console.Write(new string(' ', Console.WindowWidth));
-        //    Console.SetCursorPosition(0, 6);
-        //}
-
-
         private void CreateCustomer(Customer customer)
         {
             var newCustomer = new Customer();
-            listPage.Add(newCustomer);
             Screen.Display(new CustomerCreateScreen(newCustomer));
+
+
+            try
+            {
+                Database.Instance.InsertCustomer(newCustomer);
+                int spaces = 40;
+                WindowHelper.Top(spaces);
+                Console.WriteLine("│{0,-40}│", $"{newCustomer.FullName} oprettet");
+                WindowHelper.Bot(spaces);
+                Console.ReadKey();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Fejl under oprettelse af kunde: " + ex.Message);
+                Console.WriteLine("Tryk på en tast for at fortsætte");
+                Console.ReadKey();
+            }
         }
 
         private void EditCustomer(Customer selected)
         {
             Screen.Display(new CustomerEditScreen(selected));
+
+
+            try
+            {
+                Database.Instance.UpdateCustomer(selected);
+                int spaces = 40;
+                WindowHelper.Top(spaces);
+                Console.WriteLine("│{0,-40}│", $"{selected.FullName} opdateret");
+                WindowHelper.Bot(spaces);
+                Console.ReadKey();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Fejl under redigering af kunde: " + ex.Message);
+                Console.WriteLine("Tryk på en tast for at fortsætte");
+                Console.ReadKey();
+            }
         }
 
 
@@ -116,23 +115,20 @@ namespace MyERP.CustomerView
                 try
                 {
                     Database.Instance.DeleteCustomerByID(selected.CustomerID);
-                    listPage.Remove(selected);
-                    Database.Instance.Customers.Remove(selected);
-
-
-
+                    int spaces = 40;
+                    Console.SetCursorPosition(0, 7);
+                    WindowHelper.Top(spaces);
+                    Console.WriteLine("│{0,-40}│", $"{selected.FullName} slettet");
+                    WindowHelper.Bot(spaces);
+                    Console.ReadKey();
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine($"Error: {ex.Message}");
-                }
-                finally
-                {
-                    Console.SetCursorPosition(0, 5);
-                    Console.WriteLine($"Company '{selected.FullName}' has been deleted.");
-                    Console.WriteLine("Press any key.");
+                    Console.WriteLine($"Fejl Under sletning af kunde: {ex.Message} ");
+                    Console.WriteLine("Tryk på en tast for at fortsætte");
                     Console.ReadKey();
                 }
+          
 
             }
             else

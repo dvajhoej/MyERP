@@ -18,20 +18,40 @@ namespace MyERP.SalesView
         protected override void Draw()
         {
             Clear();
-            EditOrderLines();
-            Form<SalesOrderHeader> editor = new Form<SalesOrderHeader>();
-            Console.WriteLine($"Ordre nummer:       {_salesOrder.OrderNumber}");
-            editor.SelectBox("Order Status", "Status", GetStatusOptions());
 
-            editor.Edit(_salesOrder);
+            int spaces = 45;
+            WindowHelper.Top(spaces);
+            Console.WriteLine("│{0,-45}│", "Tryk F1 for at ændre status på valgte ordre");
+            Console.WriteLine("│{0,-45}│", "Tryk F2 for at ændre varer på ordren");
+            WindowHelper.Bot(spaces);
 
-            if (_salesOrder.Status == SalesOrderHeader.OrderStatus.Færdig)
+            var key = Console.ReadKey();
+
+            if (key.Key == ConsoleKey.F1)
             {
-                _salesOrder.CompletionDate = DateTime.Now;
+                Form<SalesOrderHeader> editor = new Form<SalesOrderHeader>();
+                Console.WriteLine($"Ordre nummer:       {_salesOrder.OrderNumber}");
+                editor.SelectBox("Order Status", "Status", GetStatusOptions());
+
+                editor.Edit(_salesOrder);
+
+                if (_salesOrder.Status == SalesOrderHeader.OrderStatus.Færdig)
+                {
+                    _salesOrder.CompletionDate = DateTime.Now;
+                }
+
+
+                Database.Instance.UpdateSalesOrderHeader(_salesOrder);
+            }
+            else if (key.Key == ConsoleKey.F2)
+            {
+                EditOrderLines();
             }
 
+
+
             
-            Database.Instance.UpdateSalesOrderHeader(_salesOrder);
+            
 
             this.Quit();
         }
@@ -85,7 +105,6 @@ namespace MyERP.SalesView
                             orderLine.Name = selectedProduct.Name;
                             orderLine.Price = selectedProduct.SellingPrice;
                             Console.WriteLine($"Order line updated to: {orderLine.Quantity} x {orderLine.Name}");
-                            Database.Instance.UpdateSalesOrderLines(orderLine);
                         }
                         else
                         {

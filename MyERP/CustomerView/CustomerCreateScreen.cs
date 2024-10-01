@@ -33,16 +33,7 @@ namespace MyERP.CustomerView
 
             editor.Edit(_customer);
 
-            try
-            {
-                Database.Instance.InsertCustomer(_customer); 
-                Console.WriteLine("Customer successfully created.");
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine("Error while creating customer: " + ex.Message);
-            }
-
+            
             this.Quit();
         }
     }

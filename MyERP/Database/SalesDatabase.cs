@@ -1,5 +1,6 @@
 ﻿using MyERP.DBHELPER;
 using System.Data.SqlClient;
+using static MyERP.SalesOrderHeader;
 
 namespace MyERP
 {
@@ -81,8 +82,6 @@ namespace MyERP
 
             return salesOrderLines;
         }
-
-
         public List<SalesOrderHeader> GetAllSalesOrderHeaders()
         {
             string connectionString = DatabaseString.ConnectionString;
@@ -97,23 +96,26 @@ namespace MyERP
                                "    SalesOrderHeader.customerID,                                                                   " +
                                "    Persons.firstname,                                                                             " +
                                "    Persons.lastname,                                                                              " +
+                               "    SalesOrderHeader.status,                                                                       " +
                                "    COALESCE(SUM(SalesOrderLines.quantity * Products.sellingPrice), 0) AS totalSalePrice           " +
                                "FROM                                                                                               " +
                                "    SalesOrderHeader                                                                               " +
                                "    LEFT JOIN Customers ON SalesOrderHeader.customerID = Customers.customerID                      " +
                                "    LEFT JOIN Persons ON Customers.personID = Persons.personID                                     " +
-                               "    LEFT JOIN SalesOrderLines ON SalesOrderHeader.orderID = SalesOrderLines.salesOrderHeadID      " +
-                               "    LEFT JOIN Products ON SalesOrderLines.productID = Products.productID                          " +
+                               "    LEFT JOIN SalesOrderLines ON SalesOrderHeader.orderID = SalesOrderLines.salesOrderHeadID       " +
+                               "    LEFT JOIN Products ON SalesOrderLines.productID = Products.productID                           " +
                                "GROUP BY                                                                                           " +
                                "    SalesOrderHeader.orderID,                                                                      " +
                                "    SalesOrderHeader.creationDate,                                                                 " +
                                "    SalesOrderHeader.completionDate,                                                               " +
                                "    SalesOrderHeader.customerID,                                                                   " +
                                "    Persons.firstname,                                                                             " +
-                               "    Persons.lastname                                                                               ";
+                               "    Persons.lastname,                                                                              " +
+                               "    SalesOrderHeader.status                                                                        ";
 
 
-                SqlCommand command = new SqlCommand(query, connection);
+
+SqlCommand command = new SqlCommand(query, connection);
                 connection.Open();
 
                 using (SqlDataReader reader = command.ExecuteReader())
@@ -128,7 +130,8 @@ namespace MyERP
                             CustomerNumber = reader.IsDBNull(3) ? 0 : reader.GetInt32(3),
                             Firstname = reader.IsDBNull(4) ? (String?)null : reader.GetString(4),
                             Lastname = reader.IsDBNull(5) ? (String?)null : reader.GetString(5),
-                            TotalPrice = reader.GetDecimal(6),
+                            Status = (OrderStatus)Enum.Parse(typeof(OrderStatus), reader.GetString(6)),
+                            TotalPrice = reader.GetDecimal(7),
                         };
 
                         salesOrderHeaders.Add(sale);
@@ -182,7 +185,6 @@ namespace MyERP
                 }
             }
         }
-
         public void InsertSalesOrderline(SalesOrderLine salesOrderLine)
         {
             using (SqlConnection connection = new SqlConnection(DatabaseString.ConnectionString))
@@ -265,11 +267,12 @@ namespace MyERP
                                     if (rowsAffected > 0)
                                     {
                                         transaction.Commit();
-                                        Console.WriteLine("SalesOrderHeader update successful.");
+                                        
                                     }
                                     else
                                     {
                                         Console.WriteLine("No rows were updated.");
+                                        Console.ReadKey();
                                         transaction.Rollback();
                                     }
                                 }
@@ -278,6 +281,13 @@ namespace MyERP
                             {
                                 transaction.Rollback();
                                 Console.WriteLine($"Error while updating salesOrderHeader: {ex.Message}");
+                                Console.ReadKey();
+
+                            }
+                            finally
+                            {
+                                Console.WriteLine("SalesOrderHeader update successful.");
+                                Console.ReadKey();
                             }
                         }
                     }
@@ -292,7 +302,6 @@ namespace MyERP
                 Console.WriteLine($"Customer with ID {salesOrderHeader.OrderNumber} not found.");
             }
         }
-
         public void UpdateSalesOrderLines(SalesOrderLine salesOrderLines)
         {
             if (salesOrderLines.SalesOrderLineID == 0)

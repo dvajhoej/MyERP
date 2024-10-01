@@ -56,12 +56,13 @@ namespace MyERP.SalesView
                     if (success)
                     {
                         //newCustomer.CustomerID = customerID;
-
+                        newCustomer.LastPurchaseDate = DateTime.Now;
 
 
                         Console.WriteLine($"Ordre skabt for {newCustomer.FullName}.");
                         Database.Instance.InsertCustomer(newCustomer);
                         _salesOrder.CustomerNumber = Database.Instance.GetCustomerbyID(newCustomer.CustomerID).CustomerID;
+
 
                     }
                     else
@@ -150,7 +151,6 @@ namespace MyERP.SalesView
                     SalesOrderHeadID = orderId,
                 };
 
-                _salesOrder.AddOrderLine(orderLine);
 
                 Database.Instance.InsertSalesOrderline(orderLine);
                 
