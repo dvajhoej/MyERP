@@ -24,6 +24,7 @@ namespace MyERP
 
         public SalesOrderHeader()
         {
+            CreationDate = DateTime.Now;
 
         }
         public enum OrderStatus
@@ -34,9 +35,9 @@ namespace MyERP
             Pakket,
             Færdig
         }
-        public SalesOrderHeader(int orderNumber, int customerNumber)
+        public SalesOrderHeader(int customerNumber)
         {
-            OrderNumber = orderNumber;
+
             CustomerNumber = customerNumber;
             CreationDate = DateTime.Now;
             Status = OrderStatus.Oprettet;

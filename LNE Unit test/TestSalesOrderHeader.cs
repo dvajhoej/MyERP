@@ -21,14 +21,12 @@ namespace LNE_Unit_test
         public void Constructor_WithParameters_ShouldInitializeCorrectly()
         {
             // Arrange
-            var orderNumber = 1001;
             var customerNumber = 2002;
 
             // Act
-            var salesOrder = new SalesOrderHeader(orderNumber, customerNumber);
+            var salesOrder = new SalesOrderHeader(customerNumber);
 
             // Assert
-            Assert.Equal(orderNumber, salesOrder.OrderNumber);
             Assert.Equal(customerNumber, salesOrder.CustomerNumber);
             Assert.Equal(SalesOrderHeader.OrderStatus.Oprettet, salesOrder.Status);
             Assert.Equal(DateTime.Now.Date, salesOrder.CreationDate.Date); // Ensure CreationDate is today

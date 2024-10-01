@@ -27,12 +27,20 @@ namespace MyERP
  // List of border Chars to assist with techcooling the page
 //const char H_BORDER_CHARACTER = '─';
 //const char V_BORDER_CHARACTER = '│';
+
 //const char NW_CORNER          = '┌';
+
 //const char NE_CORNER          = '┐';
+
 //const char SW_CORNER          = '└';
+
 //const char SE_CORNER          = '┘';
+
 //const char WEST_T             = '├';
+
 //const char EAST_T             = '┤';
+
 //const char NORTH_T            = '┬';
+
 //const char SOUTH_T            = '┴';
 //const char CROSS              = '┼';

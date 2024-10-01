@@ -24,17 +24,17 @@ namespace MyERP.SalesView
         {
 
             int space = 83;
-            WindowHelper.Spacer('┌','─', space, '┐');
-            Console.WriteLine("│{0,-15} │ {1,-64} │", "Ordre nummer", salesOrderHeader.OrderNumber);
-            Console.WriteLine("│{0,-15} │ {1,-64} │", "Oprettelse", salesOrderHeader.CreationDate);
-            Console.WriteLine("│{0,-15} │ {1,-64} │", "Færdig", salesOrderHeader.CompletionDate);
-            Console.WriteLine("│{0,-15} │ {1,-64} │", "Kunde nummer", salesOrderHeader.CustomerNumber);
-            Console.WriteLine("│{0,-15} │ {1,-64} │", "Kunde navn", WindowHelper.Truncate(salesOrderHeader.Fullname, 64));
+            WindowHelper.Spacer('┌', '─', space, '┐');
+            Console.WriteLine("│{0,-16} │ {1,-63} │", "Ordre nummer", salesOrderHeader.OrderNumber);
+            Console.WriteLine("│{0,-16} │ {1,-63} │", "Oprettelse", salesOrderHeader.CreationDate);
+            Console.WriteLine("│{0,-16} │ {1,-63} │", "Færdig", salesOrderHeader.CompletionDate);
+            Console.WriteLine("│{0,-16} │ {1,-63} │", "Kunde nummer", salesOrderHeader.CustomerNumber);
+            Console.WriteLine("│{0,-16} │ {1,-63} │", "Kunde navn", WindowHelper.Truncate(salesOrderHeader.Fullname, 64));
             //WindowHelper.Spacer('├', '─', space, '┤');
             //Console.WriteLine("│{0,-15} │ {1,-64} │", "Ordre Linjer", "");
 
             WindowHelper.Spacer('├', '─', space, '┤');
-            Console.WriteLine("│{0,-10} | {1,-20} | {2,-15} | {3,-10} | {4,-15} │", "Ordre linje", "Produkt Navn", "Pris pr. enhed", "Antal", "Linje pris");
+            Console.WriteLine("│{0,-10} | {1,-20} | {2,-15} | {3,-10} | {4,-15}│", "Ordre linje", "Produkt Navn", "Pris pr. enhed", "Antal", "Linje pris");
             WindowHelper.Spacer('├', '─', space, '┤');
 
 
@@ -44,7 +44,7 @@ namespace MyERP.SalesView
             {
                 if (orderLine.SalesOrderHeadID == salesOrderHeader.OrderNumber)
                 {
-                   Console.WriteLine("│{0,-10} | {1,-20} | {2,-15:C} | {3,-10} | {4,-15:C} │", i, WindowHelper.Truncate(orderLine.Name, 20), orderLine.Price, orderLine.Quantity, orderLine.Amount);
+                   Console.WriteLine("│{0,-11} | {1,-20} | {2,-15:C} | {3,-10} | {4,-14:C} │", i, WindowHelper.Truncate(orderLine.Name, 20), orderLine.Price, orderLine.Quantity, orderLine.Amount);
                     WindowHelper.Spacer('├', '-', space, '│');
 
                     total += orderLine.Amount;

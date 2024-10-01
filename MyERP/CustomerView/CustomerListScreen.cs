@@ -15,7 +15,7 @@ namespace MyERP.CustomerView
             listPage.Add(Database.Instance.Customers);
             listPage.AddKey(ConsoleKey.F1, CreateCustomer);
             listPage.AddKey(ConsoleKey.F2, EditCustomer);
-            //listPage.AddKey(ConsoleKey.F5, DeleteCustomer);
+            listPage.AddKey(ConsoleKey.F5, DeleteCustomer);
             listPage.AddKey(ConsoleKey.Escape, Quit);
             listPage.AddColumn("Fornavn", "FirstName");
             listPage.AddColumn("Efternavn", "LastName");
@@ -50,50 +50,50 @@ namespace MyERP.CustomerView
         }
 
 
-        private void SearchCustomer(Customer customer)
-        {
-            string search;
-            do
-            {
-                CleanLine06andselect();
+        //private void SearchCustomer(Customer customer)
+        //{
+        //    string search;
+        //    do
+        //    {
+        //        CleanLine06andselect();
 
-                Console.Write("Enter Customer name or ID: ");
-                search = Console.ReadLine().ToLower();
-            } while (string.IsNullOrEmpty(search));
+        //        Console.Write("Enter Customer name or ID: ");
+        //        search = Console.ReadLine().ToLower();
+        //    } while (string.IsNullOrEmpty(search));
 
 
-            var filtered = Database.Instance.Customers
-                .Where(c => c.FirstName.ToLower().Contains(search) ||
-                            c.FullName.ToLower().Contains(search) ||
-                            c.LastName.ToLower().Contains(search) ||
-                            c.CustomerID.ToString().Contains(search))
-                .ToList();
+        //    var filtered = Database.Instance.Customers
+        //        .Where(c => c.FirstName.ToLower().Contains(search) ||
+        //                    c.FullName.ToLower().Contains(search) ||
+        //                    c.LastName.ToLower().Contains(search) ||
+        //                    c.CustomerID.ToString().Contains(search))
+        //        .ToList();
 
-            if (filtered.Any())
-            {
-                Clear();
-                listPage.Clear();
-                listPage.Add(filtered);
-                Draw();
+        //    if (filtered.Any())
+        //    {
+        //        Clear();
+        //        listPage.Clear();
+        //        listPage.Add(filtered);
+        //        Draw();
 
-            }
-            else
-            {
+        //    }
+        //    else
+        //    {
                 
-                CleanLine06andselect();
-                Console.WriteLine("No matching customer found.");
-                Console.WriteLine("Press a key to continue.");
+        //        CleanLine06andselect();
+        //        Console.WriteLine("No matching customer found.");
+        //        Console.WriteLine("Press a key to continue.");
 
-                Console.ReadKey();
-            }
-        }
-        private void CleanLine06andselect()
-        {
-            Console.SetCursorPosition(0, 6);
-            Console.Write(new string(' ', Console.WindowWidth));
-            Console.Write(new string(' ', Console.WindowWidth));
-            Console.SetCursorPosition(0, 6);
-        }
+        //        Console.ReadKey();
+        //    }
+        //}
+        //private void CleanLine06andselect()
+        //{
+        //    Console.SetCursorPosition(0, 6);
+        //    Console.Write(new string(' ', Console.WindowWidth));
+        //    Console.Write(new string(' ', Console.WindowWidth));
+        //    Console.SetCursorPosition(0, 6);
+        //}
 
 
         private void CreateCustomer(Customer customer)
@@ -109,36 +109,37 @@ namespace MyERP.CustomerView
         }
 
 
-        //public void DeleteCustomer(Customer selected)
-        //{
-        //    if (selected != null)
-        //    {
-        //        try
-        //        {
-        //            Database.Instance.DeleteCustomerByID(selected.CustomerID);
-        //            listPage.Remove(selected);
-        //            Database.Instance.Customers.Remove(selected);
-        //            listPage.
-                   
-        //        }
-        //        catch (Exception ex)
-        //        {
-        //            Console.WriteLine($"Error: {ex.Message}");
-        //        }
-        //        finally
-        //        {
-        //            Console.SetCursorPosition(0, 5);
-        //            Console.WriteLine($"Company '{selected.FullName}' has been deleted.");
-        //            Console.WriteLine("Press any key.");
-        //            Console.ReadKey();
-        //        }
-                
-        //    }
-        //    else
-        //    {
-        //        Console.WriteLine("Ingen kunde valgt.");
-        //    }
-        //}
+        public void DeleteCustomer(Customer selected)
+        {
+            if (selected != null)
+            {
+                try
+                {
+                    Database.Instance.DeleteCustomerByID(selected.CustomerID);
+                    listPage.Remove(selected);
+                    Database.Instance.Customers.Remove(selected);
+
+
+
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Error: {ex.Message}");
+                }
+                finally
+                {
+                    Console.SetCursorPosition(0, 5);
+                    Console.WriteLine($"Company '{selected.FullName}' has been deleted.");
+                    Console.WriteLine("Press any key.");
+                    Console.ReadKey();
+                }
+
+            }
+            else
+            {
+                Console.WriteLine("Ingen kunde valgt.");
+            }
+        }
     }
 }
 

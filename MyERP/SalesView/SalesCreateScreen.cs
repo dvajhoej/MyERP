@@ -50,18 +50,19 @@ namespace MyERP.SalesView
                     customerEditor.TextBox("By", "City");
                     customerEditor.TextBox("Land", "Country");
 
+                    
                     bool success = customerEditor.Edit(newCustomer);
 
                     if (success)
                     {
                         //newCustomer.CustomerID = customerID;
 
-                        _salesOrder.Fullname = newCustomer.FirstName + " " + newCustomer.LastName;
-                        _salesOrder.CreationDate = DateTime.Now;
-                  
+
 
                         Console.WriteLine($"Ordre skabt for {newCustomer.FullName}.");
                         Database.Instance.InsertCustomer(newCustomer);
+                        _salesOrder.CustomerNumber = Database.Instance.GetCustomerbyID(newCustomer.CustomerID).CustomerID;
+
                     }
                     else
                     {
@@ -86,6 +87,7 @@ namespace MyERP.SalesView
             try
             {
                 Database.Instance.InsertSalesOrderHeader(_salesOrder);
+
 
                 int orderID = _salesOrder.OrderNumber;
                
