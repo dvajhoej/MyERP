@@ -18,16 +18,27 @@ namespace MyERP.ProductView
 
         protected override void Draw()
         {
-            Console.WriteLine($"Varenummer:        {product.ProductNumber}");
-            Console.WriteLine($"Navn:              {product.Name}");
-            Console.WriteLine($"Beskrivelse:       {product.Description}");
-            Console.WriteLine($"Salgspris:         {product.SellingPrice}");
-            Console.WriteLine($"Indkøbspris:       {product.PurchasePrice}");
-            Console.WriteLine($"Lokation:          {product.Location}");
-            Console.WriteLine($"Antal på lager:    {product.QuantityInStock}");
-            Console.WriteLine($"Enhed:             {product.Unit}");
-            Console.WriteLine($"Avance (%):        {product.MarginPercentage}");
-            Console.WriteLine($"Avance (Kr):       {product.Profit}");
+
+            int space = 54;
+            WindowHelper.Spacer('┌', '─', space, '┐');
+            Console.WriteLine("│{0,-53} │", "Tryk Esc for at forlade siden");
+            WindowHelper.Spacer('└', '─', space, '┘');
+            WindowHelper.Spacer('┌', '─', space, '┐');
+            Console.WriteLine("│{0,-15} │ {1,-35} │", "Varenummer", product.ProductNumber);
+            WindowHelper.Spacer('│', '─', space, '│');
+            Console.WriteLine("│{0,-15} │ {1,-35} │", "Navn", WindowHelper.Truncate(product.Name, 35));
+            Console.WriteLine("│{0,-15} │ {1,-35} │", "Beskrivelse", WindowHelper.Truncate(product.Description, 35));
+            Console.WriteLine("│{0,-15} │ {1,-35} │", "Salgspris", product.SellingPrice);
+            Console.WriteLine("│{0,-15} │ {1,-35} │", "Indkøbspris", product.PurchasePrice);
+            Console.WriteLine("│{0,-15} │ {1,-35} │", "Lokation", product.Location);
+            Console.WriteLine("│{0,-15} │ {1,-35} │", "Antal på lager", product.QuantityInStock);
+            Console.WriteLine("│{0,-15} │ {1,-35} │", "Enhed", product.Unit);
+            Console.WriteLine("│{0,-15} │ {1,-35} │", "Avance (%)", product.MarginPercentage);
+            Console.WriteLine("│{0,-15} │ {1,-35} │", "Avance (Kr)", product.Profit);
+            WindowHelper.Spacer('└', '─', space, '┘');
+
+
+
 
         }
     }

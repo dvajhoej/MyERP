@@ -37,7 +37,7 @@ namespace MyERP.SalesView
             Console.WriteLine("Press F1 to create an order");
             Console.WriteLine("Press F2 to edit an order");
             Console.WriteLine("Press F5 to delete an order");
-            Console.WriteLine("Press F9 to to generata invoice");
+            Console.WriteLine("Press F9 to to generate invoice");
 
 
             //listPage.AddColumn("Status", "Status", 25);

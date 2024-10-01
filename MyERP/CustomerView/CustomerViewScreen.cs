@@ -28,12 +28,25 @@ namespace MyERP.CustomerView
                 lastPurchaseDateDisplay = customer.LastPurchaseDate?.ToShortDateString();
             }
 
-            Console.WriteLine($"Navn:        {customer.FullName}");
-            Console.WriteLine($"Address:     {customer.Street} {customer.HouseNumber}");
-            Console.WriteLine($"Postnummer:  {customer.ZipCode}");
-            Console.WriteLine($"By:          {customer.City}");
-            Console.WriteLine($"Land:        {customer.Country}");
-            Console.WriteLine($"Sidste køb:  {lastPurchaseDateDisplay}");
+            int space = 54;
+            WindowHelper.Spacer('┌', '─', space, '┐');
+            Console.WriteLine("│{0,-53} │", "Tryk Esc for at forlade siden");
+            WindowHelper.Spacer('└', '─', space, '┘');
+
+            WindowHelper.Spacer('┌', '─', space, '┐');
+            Console.WriteLine("│{0,-15} │ {1,-35} │", "Kunde ID", customer.CustomerID);
+            WindowHelper.Spacer('└', '─', space, '┘');
+
+            WindowHelper.Spacer('┌', '─', space, '┐');
+            Console.WriteLine("│{0,-15} │ {1,-35} │", "Navn", WindowHelper.Truncate(customer.FullName, 35));
+            Console.WriteLine("│{0,-15} │ {1,-35} │", "Address", WindowHelper.Truncate((customer.Street + customer.HouseNumber), 35));
+            Console.WriteLine("│{0,-15} │ {1,-35} │", "Postnummer", customer.ZipCode);
+            Console.WriteLine("│{0,-15} │ {1,-35} │", "By", WindowHelper.Truncate(customer.City, 35));
+            Console.WriteLine("│{0,-15} │ {1,-35} │", "Land", WindowHelper.Truncate(customer.Country, 35));
+            Console.WriteLine("│{0,-15} │ {1,-35} │", "Sidste køb", lastPurchaseDateDisplay);
+            WindowHelper.Spacer('└', '─', space, '┘');
+
+          
         }
 
     }

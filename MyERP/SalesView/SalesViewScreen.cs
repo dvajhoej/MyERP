@@ -17,40 +17,42 @@ namespace MyERP.SalesView
             salesOrderHeader = soh;
             ExitOnEscape();
         }
-
         public override string Title { get; set; } = "Ordre Visning";
         public SalesOrderHeader salesOrderHeader { get; set; }
 
         protected override void Draw()
         {
 
-            Console.WriteLine($"Ordre nummer:   {salesOrderHeader.OrderNumber}");
-            Console.WriteLine($"Oprettelse:     {salesOrderHeader.CreationDate}");
-            Console.WriteLine($"Færdig:         {salesOrderHeader.CompletionDate}");
-            Console.WriteLine($"Kunde nummer:   {salesOrderHeader.CustomerNumber}");
-            Console.WriteLine($"Kunde navn:     {salesOrderHeader.Fullname}");
-            Console.WriteLine();
-            Console.WriteLine("========================================");
-            Console.WriteLine("Ordre Linjer:");
-            Console.WriteLine("----------------------------------------");
+            int space = 83;
+            WindowHelper.Spacer('┌','─', space, '┐');
+            Console.WriteLine("│{0,-15} │ {1,-64} │", "Ordre nummer", salesOrderHeader.OrderNumber);
+            Console.WriteLine("│{0,-15} │ {1,-64} │", "Oprettelse", salesOrderHeader.CreationDate);
+            Console.WriteLine("│{0,-15} │ {1,-64} │", "Færdig", salesOrderHeader.CompletionDate);
+            Console.WriteLine("│{0,-15} │ {1,-64} │", "Kunde nummer", salesOrderHeader.CustomerNumber);
+            Console.WriteLine("│{0,-15} │ {1,-64} │", "Kunde navn", WindowHelper.Truncate(salesOrderHeader.Fullname, 64));
+            //WindowHelper.Spacer('├', '─', space, '┤');
+            //Console.WriteLine("│{0,-15} │ {1,-64} │", "Ordre Linjer", "");
+
+            WindowHelper.Spacer('├', '─', space, '┤');
+            Console.WriteLine("│{0,-10} | {1,-20} | {2,-15} | {3,-10} | {4,-15} │", "Ordre linje", "Produkt Navn", "Pris pr. enhed", "Antal", "Linje pris");
+            WindowHelper.Spacer('├', '─', space, '┤');
+
+
             double total = 0;
+            int i = 1;
             foreach (var orderLine in Database.Instance.SalesOrderLines)
             {
                 if (orderLine.SalesOrderHeadID == salesOrderHeader.OrderNumber)
                 {
-                    Console.WriteLine($"Produkt Navn:    {orderLine.Name}");
-                    Console.WriteLine($"Antal:           {orderLine.Quantity}");
-                    Console.WriteLine($"Pris pr. enhed:  {orderLine.Price:C}");
-                    Console.WriteLine($"Linje pris:      {orderLine.Amount:C}");
-                    Console.WriteLine("----------------------------------------");
+                   Console.WriteLine("│{0,-10} | {1,-20} | {2,-15:C} | {3,-10} | {4,-15:C} │", i, WindowHelper.Truncate(orderLine.Name, 20), orderLine.Price, orderLine.Quantity, orderLine.Amount);
+                    WindowHelper.Spacer('├', '-', space, '│');
+
                     total += orderLine.Amount;
-
-                    Console.WriteLine("========================================");
-                    Console.WriteLine($"Samlet pris:     {total}");
-                    Console.WriteLine("========================================");
-
+                    i++;
                 }
             }
+            Console.WriteLine("│{0,-15} │ {1,64:C} │", "Samlet total:",  total);
+            WindowHelper.Spacer('└', '─', space, '┘');
         }
     }
 }
