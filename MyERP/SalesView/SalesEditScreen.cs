@@ -20,9 +20,9 @@ namespace MyERP.SalesView
             Clear();
             EditOrderLines();
             Form<SalesOrderHeader> editor = new Form<SalesOrderHeader>();
-            Console.WriteLine($"Ordre nummer:       {_salesOrder.OrderNumber}");
+
+            editor.IntBox("Ordre Nummer", "OrderNumber");
             editor.SelectBox("Order Status", "Status", GetStatusOptions());
-         
 
             editor.Edit(_salesOrder);
 

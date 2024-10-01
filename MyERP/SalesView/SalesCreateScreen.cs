@@ -56,6 +56,7 @@ namespace MyERP.SalesView
                     {
                         //newCustomer.CustomerID = customerID;
 
+                        _salesOrder.Fullname = newCustomer.FirstName + " " + newCustomer.LastName;
                         _salesOrder.CreationDate = DateTime.Now;
                   
 
