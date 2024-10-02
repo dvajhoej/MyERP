@@ -25,6 +25,7 @@ namespace MyERP.SalesView
         {
             // Clear the screen
             Clear();
+
             int spaces = 35;
             WindowHelper.Top(spaces);
             Console.WriteLine("│{0,-35}│", "Skriv et kunde nummer:");
@@ -33,7 +34,9 @@ namespace MyERP.SalesView
             if (!int.TryParse(Console.ReadLine(), out int customerID))
             {
                 // Display an error message if the input is not a valid integer
-                Console.WriteLine("Ugyldig nummer. Skriv et gyldigt tal.");
+                WindowHelper.Top(spaces);
+                Console.WriteLine("│{0,-35}│", "Ugyldig nummer. Skriv et gyldigt tal.");
+                WindowHelper.Bot(spaces);
                 return;
             }
 
@@ -44,7 +47,12 @@ namespace MyERP.SalesView
             if (customer == null)
             {
                 // Prompt the user to create a new customer
-                Console.WriteLine("Kunde kunne ikke findes. Vil du skabe en ny kunde? (y/n)");
+                spaces = 60;
+                Console.Clear();
+                WindowHelper.Top(spaces);
+                Console.WriteLine("│{0,-60}│", "Kunde kunne ikke findes. Vil du skabe en ny kunde? (y/n): ");
+                WindowHelper.Bot(spaces);
+                Console.SetCursorPosition(59, 1);
                 var input = Console.ReadKey().KeyChar;
                 Console.WriteLine();
 
@@ -58,6 +66,7 @@ namespace MyERP.SalesView
                     Form<Customer> customerEditor = new Form<Customer>();
 
                     // Define the layout of the form
+                    Console.Clear();
                     int spacer = 35;
                     WindowHelper.Top(spacer);
                     Console.WriteLine("│{0,-35}│", "Tryk Esc for at gemme");
