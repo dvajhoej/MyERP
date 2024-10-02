@@ -1,4 +1,6 @@
-﻿namespace MyERP
+﻿using System.Runtime.InteropServices;
+
+namespace MyERP
 {
     // Define a class WindowHelper with static methods for drawing windows
     public class WindowHelper
@@ -61,7 +63,24 @@
             Console.WriteLine("│{0,-70}│", "Vent venligst");
             WindowHelper.Bot(spacer);
         }
+
+        [DllImport("kernel32.dll")]
+        private static extern IntPtr GetConsoleWindow();
+
+        [DllImport("user32.dll")]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        private static extern bool ShowWindow(IntPtr hWnd, int nCmdShow);
+
+        private const int SW_MAXIMIZE = 3;
+
+        private void MaximizeConsoleWindow()
+        {
+            IntPtr handle = GetConsoleWindow();
+            ShowWindow(handle, SW_MAXIMIZE);
+        }
+
     }
+
 }
 
 // List of border Chars to assist with techcooling the page
