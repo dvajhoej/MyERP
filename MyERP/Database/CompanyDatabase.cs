@@ -268,14 +268,16 @@ namespace MyERP
             // Create a new SqlConnection object
             using (SqlConnection connection = new SqlConnection(DatabaseString.ConnectionString))
             {
-                // Open the connection
-                connection.Open();
-
-                // Create a new SqlTransaction object
-                SqlTransaction transaction = connection.BeginTransaction();
-
                 try
                 {
+                    // Open the connection
+                    connection.Open();
+
+                    // Create a new SqlTransaction object
+                    SqlTransaction transaction = connection.BeginTransaction();
+
+                    try
+                    {
 
                         var company = GetCompanyById(companyID);
                         if (company != null)
@@ -307,7 +309,7 @@ namespace MyERP
                         throw new Exception("Fejl under sletning: " + ex.Message);
                     }
                 }
-                catch (Exception ex)
+                catch
                 {
                     throw new Exception("Der kunne ikke oprettes forbindelse til sql server");
 
@@ -316,4 +318,7 @@ namespace MyERP
         }
     }
 }
+
+
+
 
