@@ -35,9 +35,6 @@ namespace MyERP.SalesView
             Console.WriteLine("│{0,-16} │ {1,-63} │", "Færdig", salesOrderHeader.CompletionDate);
             Console.WriteLine("│{0,-16} │ {1,-63} │", "Kunde nummer", salesOrderHeader.CustomerNumber);
             Console.WriteLine("│{0,-16} │ {1,-63} │", "Kunde navn", WindowHelper.Truncate(salesOrderHeader.Fullname, 64));
-            //WindowHelper.Spacer('├', '─', space, '┤');
-            //Console.WriteLine("│{0,-15} │ {1,-64} │", "Ordre Linjer", "");
-
             WindowHelper.Spacer('├', '─', space, '┤');
             Console.WriteLine("│{0,-10} | {1,-20} | {2,-15} | {3,-10} | {4,-15}│", "Ordre linje", "Produkt Navn", "Pris pr. enhed", "Antal", "Linje pris");
             WindowHelper.Spacer('├', '─', space, '┤');

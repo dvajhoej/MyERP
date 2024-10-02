@@ -44,6 +44,11 @@ namespace MyERP
             CreationDate = DateTime.Now;
         }
 
+        public void AddOrderLine(SalesOrderLine line)
+        {
+            OrderLines.Add(line);
+            
+        }
 
         public void EditOrderLine(int index, SalesOrderLine updatedOrderLine)
         {

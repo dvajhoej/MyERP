@@ -1,6 +1,7 @@
 ﻿using Google.Protobuf.Collections;
 using System.Text;
 using System.Threading.Tasks;
+using TECHCOOL.UI;
 
 namespace MyERP
 {
@@ -34,6 +35,7 @@ namespace MyERP
 
         public Database()
         {
+
             persons = new List<Person>();
             companies = new List<Company>();
             products = new List<Product>();
@@ -41,14 +43,10 @@ namespace MyERP
             customers = new List<Customer>();
             salesOrderLines = new List<SalesOrderLine>();
             invoices = new List<Invoice>();
-            GetAllInvoices();
-            GetAllCustomers();
-            GetAllCompanies();
-            GetAllProducts();
-            GetAllSalesOrderHeaders();
-            GetAllSalesOrderLines();
         }
+            
 
+  
 
         public List<Person> Persons
         {

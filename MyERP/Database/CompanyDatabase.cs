@@ -135,7 +135,7 @@ namespace MyERP
                 catch (Exception ex)
                 {
                     transaction.Rollback();
-                    throw new Exception("Error while inserting customer: " + ex.Message);
+                    throw new Exception("Fejl under oprettelse af kunde: " + ex.Message);
                 }
             }
         }
@@ -145,7 +145,7 @@ namespace MyERP
         {
             if (updatedCompany.CompanyID == 0)
             {
-                throw new ArgumentException("Customer ID is invalid.");
+                throw new ArgumentException("Kunde ID ikke gyldigt.");
             }
 
             var existingCompany = GetCompanyById(updatedCompany.CompanyID);
@@ -195,7 +195,7 @@ namespace MyERP
                                     }
                                     else
                                     {
-                                        throw new Exception("No rows were updated.");
+                                        throw new Exception("Ingen linjer blev opdateret.");
                                         transaction.Rollback();
                                     }
                                 }
@@ -203,19 +203,19 @@ namespace MyERP
                             catch (Exception ex)
                             {
                                 transaction.Rollback();
-                                throw new Exception($"Error while updating company: {ex.Message}");
+                                throw new Exception($"Fejl under opdatering af virksohed: {ex.Message}");
                             }
                         }
                     }
                 }
                 catch (Exception ex)
                 {
-                    throw new Exception($"Error while connecting to the database: {ex.Message}");
+                    throw new Exception($"Der kunne ikke oprettes forbindelse til sql server");
                 }
             }
             else
             {
-                throw new Exception($"Company with ID {updatedCompany.CompanyID} not found.");
+                throw new Exception($"Virksomhed med ID {updatedCompany.CompanyID} blev ikke fundet.");
             }
         }
 
@@ -224,45 +224,49 @@ namespace MyERP
         {
             using (SqlConnection connection = new SqlConnection(DatabaseString.ConnectionString))
             {
-                connection.Open();
-                SqlTransaction transaction = connection.BeginTransaction();
-
                 try
                 {
+                    connection.Open();
+                    SqlTransaction transaction = connection.BeginTransaction();
 
-                    var company = GetCompanyById(companyID);
-                    if (company != null)
+                    try
                     {
-                        string deleteCompanyQuery = "DELETE FROM Companies WHERE companyID = @CompanyID";
-                        using (SqlCommand command = new SqlCommand(deleteCompanyQuery, connection, transaction))
+
+                        var company = GetCompanyById(companyID);
+                        if (company != null)
                         {
-                            command.Parameters.AddWithValue("@CompanyID", company.CompanyID);
-                            command.ExecuteNonQuery();
+                            string deleteCompanyQuery = "DELETE FROM Companies WHERE companyID = @CompanyID";
+                            using (SqlCommand command = new SqlCommand(deleteCompanyQuery, connection, transaction))
+                            {
+                                command.Parameters.AddWithValue("@CompanyID", company.CompanyID);
+                                command.ExecuteNonQuery();
+                            }
+
+                            string deleteAddressQuery = "DELETE FROM addresses WHERE addressID = @AddressID";
+                            using (SqlCommand command = new SqlCommand(@deleteAddressQuery, connection, transaction))
+                            {
+                                command.Parameters.AddWithValue("@AddressID", company.AddressID);
+                                command.ExecuteNonQuery();
+                            }
+
+                            transaction.Commit();
+                            companies.Remove(company);
+
+
                         }
+                    }
+                    catch (Exception ex)
+                    {
 
-                        string deleteAddressQuery = "DELETE FROM addresses WHERE addressID = @AddressID";
-                        using (SqlCommand command = new SqlCommand(@deleteAddressQuery, connection, transaction))
-                        {
-                            command.Parameters.AddWithValue("@AddressID", company.AddressID);
-                            command.ExecuteNonQuery();
-                        }
-
-                        transaction.Commit();
-                        companies.Remove(company);
-
-
+                        transaction.Rollback();
+                        throw new Exception("Fejl under sletning: " + ex.Message);
                     }
                 }
                 catch (Exception ex)
                 {
+                    throw new Exception("Der kunne ikke oprettes forbindelse til sql server");
 
-                    transaction.Rollback();
-                    throw new Exception("Error while deleting company: " + ex.Message);
                 }
-
-
-
-
             }
         }
     }

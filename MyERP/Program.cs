@@ -1,5 +1,4 @@
 ﻿using MyERP.StartScreen;
-using MyERP.CompanyView;
 using TECHCOOL.UI;
 namespace MyERP
 {
@@ -7,9 +6,8 @@ namespace MyERP
     {
         static void Main()
         {
+            DataStarter.DataStart();
             Screen.Display(new MyMenuScreen());
-
-
         }
 
 

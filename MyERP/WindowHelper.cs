@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace MyERP
+﻿namespace MyERP
 {
-   public class WindowHelper
+    public class WindowHelper
     {
         public static void Spacer(char startpiece, char spacer, int spaces, char endpiece)
         {
@@ -25,10 +19,38 @@ namespace MyERP
             if (string.IsNullOrEmpty(value)) return value;
             return value.Length <= maxLength ? value : value.Substring(0, maxLength - 3) + "...";
         }
+
+
+
+
+        public static void Loader()
+        {
+            Console.WriteLine(@" /$$       /$$   /$$ /$$$$$$$$        /$$$$$$  /$$$$$$$$  /$$$$$$  /$$   /$$ /$$$$$$$  /$$$$$$ /$$$$$$$$ /$$     /$$/    ");
+            Console.WriteLine(@"| $$      | $$$ | $$| $$_____/       /$$__  $$| $$_____/ /$$__  $$| $$  | $$| $$__  $$|_  $$_/|__  $$__/|  $$   /$$/     ");
+            Console.WriteLine(@"| $$      | $$$$| $$| $$            | $$  \__/| $$      | $$  \__/| $$  | $$| $$  \ $$  | $$     | $$    \  $$ /$$/      ");
+            Console.WriteLine(@"| $$      | $$ $$ $$| $$$$$         |  $$$$$$ | $$$$$   | $$      | $$  | $$| $$$$$$$/  | $$     | $$     \  $$$$/       ");
+            Console.WriteLine(@"| $$      | $$  $$$$| $$__/          \____  $$| $$__/   | $$      | $$  | $$| $$__  $$  | $$     | $$      \  $$/        ");
+            Console.WriteLine(@"| $$      | $$\  $$$| $$             /$$  \ $$| $$      | $$    $$| $$  | $$| $$  \ $$  | $$     | $$       | $$         ");
+            Console.WriteLine(@"| $$$$$$$$| $$ \  $$| $$$$$$$$      |  $$$$$$/| $$$$$$$$|  $$$$$$/|  $$$$$$/| $$  | $$ /$$$$$$   | $$       | $$         ");
+            Console.WriteLine(@"|________/|__/  \__/|________/       \______/ |________/ \______/  \______/ |__/  |__/|______/   |__/       |__/         ");
+            Top(116);
+            Console.WriteLine("│{0,-48}{1,-68}│", "", "Tryk på en tast for at hente data");
+            Bot(116);      
+        }
+        public static void getdata()
+        {
+
+            Console.Clear();
+            int spacer = 70;
+            WindowHelper.Top(spacer);
+            Console.WriteLine("│{0,-70}│", "Der oprettes forbindelse til databasen.");
+            Console.WriteLine("│{0,-70}│", "Vent venligst");
+            WindowHelper.Bot(spacer);
+        }
     }
 }
 
- // List of border Chars to assist with techcooling the page
+// List of border Chars to assist with techcooling the page
 //const char H_BORDER_CHARACTER = '─';
 //const char V_BORDER_CHARACTER = '│';
 

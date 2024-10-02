@@ -39,10 +39,9 @@ namespace MyERP.SalesView
             Console.WriteLine("│{0,-35}│", "Tryk F5 for at slette en ordre");
             Console.WriteLine("│{0,-35}│", "Tryk F9 for at oprette  en faktura");
             Console.WriteLine("│{0,-35}│", "Tryk Esc for at forlade siden");
-
             WindowHelper.Bot(spaces);
 
-            for (int i = 0; i < 3; i++)
+            for (int i = 0; i < 4; i++)
             {
                 Console.WriteLine();
             }
@@ -117,11 +116,28 @@ namespace MyERP.SalesView
                 {
                     Database.Instance.DeleteSalesOrderHeadByID(selected.OrderNumber);
                     listPage.Remove(selected);
-                    Console.WriteLine($"Ordre nr '{selected.OrderNumber}' er blevet slettet.");
+
+                    int spaces = 70;
+                    Console.SetCursorPosition(0, 8);
+                    WindowHelper.Top(spaces);
+                    Console.WriteLine("│{0,-70}│", $"Ordre nr {selected.OrderNumber} er blevet slettet.");
+                    Console.WriteLine("│{0,-70}│", "Tryk på en tast for at fortsætte");
+
+                    WindowHelper.Bot(spaces);
+                    Console.ReadLine();
+
+
+                    //Console.WriteLine($"Ordre nr '{selected.OrderNumber}' er blevet slettet.");
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine($"An error occured: {ex.Message}");
+
+                    int spaces = 70;
+                    Console.SetCursorPosition(0, 8);
+                    WindowHelper.Top(spaces);
+                    Console.WriteLine("│{0,-120}│", $"Fejl Under sletning af ordre:{WindowHelper.Truncate(ex.Message, 70)}");
+                    Console.WriteLine("│{0,-120}│", "Tryk på en tast for at fortsætte");
+                    WindowHelper.Bot(spaces);
                     Console.ReadLine();
                 }
 
