@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using TECHCOOL.UI;
+﻿using TECHCOOL.UI;
 
 namespace MyERP.SalesView
 {
@@ -19,18 +17,20 @@ namespace MyERP.SalesView
         {
             Clear();
 
-            int spaces = 45;
-            WindowHelper.Top(spaces);
-            Console.WriteLine("│{0,-45}│", "Tryk F1 for at ændre status på valgte ordre");
-            Console.WriteLine("│{0,-45}│", "Tryk F2 for at ændre varer på ordren");
-            WindowHelper.Bot(spaces);
-
-            var key = Console.ReadKey();
-
-            if (key.Key == ConsoleKey.F1)
+            if (_salesOrder.CustomerNumber != 0)
             {
-                if (_salesOrder.OrderNumber != 0)
+
+                int spaces = 45;
+                WindowHelper.Top(spaces);
+                Console.WriteLine("│{0,-45}│", "Tryk F1 for at ændre status på valgte ordre");
+                Console.WriteLine("│{0,-45}│", "Tryk F2 for at ændre varer på ordren");
+                WindowHelper.Bot(spaces);
+
+                var key = Console.ReadKey();
+
+                if (key.Key == ConsoleKey.F1)
                 {
+
                     Form<SalesOrderHeader> editor = new Form<SalesOrderHeader>();
                     Console.WriteLine($"Ordre nummer:       {_salesOrder.OrderNumber}");
                     editor.SelectBox("Order Status", "Status", GetStatusOptions());
@@ -43,22 +43,30 @@ namespace MyERP.SalesView
                     }
 
 
-                    Database.Instance.UpdateSalesOrderHeader(_salesOrder);
+
                 }
-                else
+                else if (key.Key == ConsoleKey.F2)
                 {
-                    throw new Exception("Du kan ikke ændre status på denne ordre");
+                    EditOrderLines();
                 }
             }
-            else if (key.Key == ConsoleKey.F2)
+            else
             {
-                EditOrderLines();
+                int spaces = 45;
+                WindowHelper.Top(spaces);
+                Console.WriteLine("│{0,-45}│", "Du kan ikke ændre status på denne ordre.");
+                Console.WriteLine("│{0,-45}│", "Tryk på en tast for at fortsætte");
+                WindowHelper.Bot(spaces);
+                Console.ReadKey();
             }
 
 
 
-            
-            
+           
+
+
+
+
 
             this.Quit();
         }

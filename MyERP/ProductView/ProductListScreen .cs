@@ -116,7 +116,7 @@ namespace MyERP.ProductView
             {
                 try
                 {
-                    Database.Instance.DeleteCustomerByID(selected.ProductID);
+                    Database.Instance.DeleteProductById(selected.ProductID);
 
                     int spaces = 40;
                     Console.SetCursorPosition(0, 7);

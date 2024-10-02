@@ -88,7 +88,7 @@ namespace MyERP.SalesView
             }
             catch (Exception ex)
             {
-                Console.SetCursorPosition(0,8);
+                Console.SetCursorPosition(0, 8);
                 WindowHelper.Top(70);
                 Console.WriteLine("│{0,-70}│", $"Der er sket en fejl under oprettelse af faktura : {ex.Message}");
                 WindowHelper.Bot(70);
@@ -104,6 +104,31 @@ namespace MyERP.SalesView
         private void EditOrder(SalesOrderHeader selected)
         {
             Screen.Display(new SalesEditScreen(selected));
+
+
+            try
+            {
+
+                Database.Instance.UpdateSalesOrderHeader(selected);
+
+                int spaces = 40;
+                WindowHelper.Top(spaces);
+                Console.WriteLine("│{0,-40}│", $"Ordre nr: {selected.OrderNumber} redigeret");
+                Console.WriteLine("│{0,-40}│", "Tryk på en tast for at fortsætte");
+                WindowHelper.Bot(spaces);
+                Console.ReadKey();
+
+
+            }
+            catch (Exception ex)
+            {
+                int spaces = 120;
+                WindowHelper.Top(spaces);
+                Console.WriteLine("│{0,-120}│", $"Fejl under redigering af ordre: " + WindowHelper.Truncate(ex.Message, 70));
+                Console.WriteLine("│{0,-120}│", "Tryk på en tast for at fortsætte");
+                WindowHelper.Bot(spaces);
+                Console.ReadKey();
+            }
 
 
         }
