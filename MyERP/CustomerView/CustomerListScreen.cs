@@ -53,12 +53,7 @@ namespace MyERP.CustomerView
             // Draw the bottom border of the window
             WindowHelper.Bot(spaces);
 
-<<<<<<< HEAD
-            // Add some empty lines for spacing
-            for (int i = 0; i < 3; i++)
-=======
             for (int i = 0; i < 4; i++)
->>>>>>> 012bc92e9689e5e97bc8cbcb570b1c3506e4706c
             {
                 Console.WriteLine();
             }
@@ -93,10 +88,7 @@ namespace MyERP.CustomerView
                 // Insert the new customer into the database
                 Database.Instance.InsertCustomer(newCustomer);
 
-<<<<<<< HEAD
                 // Display a success message to the user
-=======
->>>>>>> 012bc92e9689e5e97bc8cbcb570b1c3506e4706c
                 int spaces = 40;
                 WindowHelper.Top(spaces);
                 Console.WriteLine("│{0,-40}│", $"{newCustomer.FullName} oprettet");
@@ -106,17 +98,11 @@ namespace MyERP.CustomerView
             }
             catch (Exception ex)
             {
-<<<<<<< HEAD
-                // Display an error message to the user
-                Console.WriteLine("Fejl under oprettelse af kunde: " + ex.Message);
-                Console.WriteLine("Tryk på en tast for at fortsætte");
-=======
                 int spaces = 120;
                 WindowHelper.Top(spaces);
                 Console.WriteLine("│{0,-120}│", $"Fejl under oprettelse af kunde: " + WindowHelper.Truncate(ex.Message, 70));
                 Console.WriteLine("│{0,-120}│", "Tryk på en tast for at fortsætte");
                 WindowHelper.Bot(spaces);
->>>>>>> 012bc92e9689e5e97bc8cbcb570b1c3506e4706c
                 Console.ReadKey();
             }
         }
@@ -142,17 +128,11 @@ namespace MyERP.CustomerView
             }
             catch (Exception ex)
             {
-<<<<<<< HEAD
-                // Display an error message to the user
-                Console.WriteLine("Fejl under redigering af kunde: " + ex.Message);
-                Console.WriteLine("Tryk på en tast for at fortsætte");
-=======
                 int spaces = 120;
                 WindowHelper.Top(spaces);
                 Console.WriteLine("│{0,-120}│", $"Fejl under redigering af kunde: " + WindowHelper.Truncate(ex.Message, 70));
                 Console.WriteLine("│{0,-120}│", "Tryk på en tast for at fortsætte");
                 WindowHelper.Bot(spaces);
->>>>>>> 012bc92e9689e5e97bc8cbcb570b1c3506e4706c
                 Console.ReadKey();
             }
         }
@@ -167,10 +147,7 @@ namespace MyERP.CustomerView
                     // Delete the customer from the database
                     Database.Instance.DeleteCustomerByID(selected.CustomerID);
 
-<<<<<<< HEAD
                     // Display a success message to the user
-=======
->>>>>>> 012bc92e9689e5e97bc8cbcb570b1c3506e4706c
                     int spaces = 40;
                     Console.SetCursorPosition(0, 7);
                     WindowHelper.Top(spaces);
@@ -181,18 +158,6 @@ namespace MyERP.CustomerView
                 }
                 catch (Exception ex)
                 {
-<<<<<<< HEAD
-                    // Display an error message to the user
-                    Console.WriteLine($"Fejl Under sletning af kunde: {ex.Message} ");
-                    Console.WriteLine("Tryk på en tast for at fortsætte");
-                    Console.ReadKey();
-                }
-            }
-            else
-            {
-                // Display a message to the user if no customer is selected
-                Console.WriteLine("Ingen kunde valgt.");
-=======
                     int spaces = 120;
                     Console.SetCursorPosition(0, 7);
                     WindowHelper.Top(spaces);
@@ -201,8 +166,6 @@ namespace MyERP.CustomerView
                     WindowHelper.Bot(spaces);
                     Console.ReadKey();
                 }
-                     
-
             }
             else
             {
@@ -213,7 +176,6 @@ namespace MyERP.CustomerView
                 Console.WriteLine("│{0,-60}│", "Tryk på en tast for at fortsætte");
                 WindowHelper.Bot(spaces);
                 Console.ReadKey();
->>>>>>> 012bc92e9689e5e97bc8cbcb570b1c3506e4706c
             }
         }
     }

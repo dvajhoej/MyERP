@@ -29,14 +29,6 @@ namespace MyERP.CustomerView
             // Create a new Form object to edit the Customer object
             Form<Customer> editor = new Form<Customer>();
 
-<<<<<<< HEAD
-            // Add text boxes to the form for editing customer details
-            editor.TextBox("Fornavn", "FirstName");
-            editor.TextBox("Efternavn", "LastName");
-            editor.TextBox("Telefon", "Phone");
-            editor.TextBox("Email", "Email");
-            editor.TextBox("Vej", "Street");
-=======
             int spacer = 35;
             WindowHelper.Top(spacer);
             Console.WriteLine("│{0,-35}│", "Tryk Esc for at gemme");
@@ -47,7 +39,6 @@ namespace MyERP.CustomerView
             editor.TextBox("Telefon", "Phone");        
             editor.TextBox("Email", "Email");          
             editor.TextBox("Vej", "Street");           
->>>>>>> 012bc92e9689e5e97bc8cbcb570b1c3506e4706c
             editor.TextBox("Husnummer", "HouseNumber");
             editor.TextBox("Postnummer", "ZipCode");
             editor.TextBox("By", "City");

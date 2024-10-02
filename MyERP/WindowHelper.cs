@@ -1,9 +1,6 @@
 ﻿namespace MyERP
 {
-<<<<<<< HEAD
     // Define a class WindowHelper with static methods for drawing windows
-=======
->>>>>>> 012bc92e9689e5e97bc8cbcb570b1c3506e4706c
     public class WindowHelper
     {
         // Method to draw a spacer line with a specified start piece, spacer, and end piece
@@ -67,15 +64,9 @@
     }
 }
 
-<<<<<<< HEAD
-// List of border characters to assist with drawing windows
-//const char H_BORDER_CHARACTER = '─'; // Horizontal border character
-//const char V_BORDER_CHARACTER = '│'; // Vertical border character
-=======
 // List of border Chars to assist with techcooling the page
 //const char H_BORDER_CHARACTER = '─';
 //const char V_BORDER_CHARACTER = '│';
->>>>>>> 012bc92e9689e5e97bc8cbcb570b1c3506e4706c
 
 //const char NW_CORNER          = '┌'; // North-west corner character
 //const char NE_CORNER          = '┐'; // North-east corner character

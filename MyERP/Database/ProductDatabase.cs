@@ -119,21 +119,15 @@ namespace MyERP
                         command.Parameters.AddWithValue("@Quantity", product.QuantityInStock);
                         command.Parameters.AddWithValue("@Unit", product.Unit.ToString());
 
-                        // Execute the command and get the inserted product ID
-                        product.ProductID = (int)command.ExecuteScalar();
+                        // Retrieve the inserted itemID
+                        product.ProductID = (int)command.ExecuteScalar();  // Make sure itemID is the primary key
+                        
 
-                        // Add the product to the list
-                        Instance.Products.Add(product);
-
-                        // Commit the transaction
-                        transaction.Commit();
+                        // Use itemID as needed
                     }
-<<<<<<< HEAD
-=======
                     
                     transaction.Commit();
                     Instance.products.Add(product);
->>>>>>> 012bc92e9689e5e97bc8cbcb570b1c3506e4706c
                 }
                 catch (Exception ex)
                 {
