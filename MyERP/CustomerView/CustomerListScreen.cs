@@ -40,7 +40,7 @@ namespace MyERP.CustomerView
 
             WindowHelper.Bot(spaces);
 
-            for (int i = 0; i < 3; i++)
+            for (int i = 0; i < 4; i++)
             {
                 Console.WriteLine();
             }
@@ -71,16 +71,21 @@ namespace MyERP.CustomerView
             try
             {
                 Database.Instance.InsertCustomer(newCustomer);
+
                 int spaces = 40;
                 WindowHelper.Top(spaces);
                 Console.WriteLine("│{0,-40}│", $"{newCustomer.FullName} oprettet");
+                Console.WriteLine("│{0,-40}│", "Tryk på en tast for at fortsætte");
                 WindowHelper.Bot(spaces);
                 Console.ReadKey();
             }
             catch (Exception ex)
             {
-                Console.WriteLine("Fejl under oprettelse af kunde: " + ex.Message);
-                Console.WriteLine("Tryk på en tast for at fortsætte");
+                int spaces = 70;
+                WindowHelper.Top(spaces);
+                Console.WriteLine("│{0,-70}│", $"Fejl under oprettelse af kunde: " + ex.Message);
+                Console.WriteLine("│{0,-70}│", "Tryk på en tast for at fortsætte");
+                WindowHelper.Bot(spaces);
                 Console.ReadKey();
             }
         }
@@ -95,14 +100,18 @@ namespace MyERP.CustomerView
                 Database.Instance.UpdateCustomer(selected);
                 int spaces = 40;
                 WindowHelper.Top(spaces);
-                Console.WriteLine("│{0,-40}│", $"{selected.FullName} opdateret");
+                Console.WriteLine("│{0,-40}│", $"{selected.FullName} redigeret");
+                Console.WriteLine("│{0,-40}│", "Tryk på en tast for at fortsætte");
                 WindowHelper.Bot(spaces);
                 Console.ReadKey();
             }
             catch (Exception ex)
             {
-                Console.WriteLine("Fejl under redigering af kunde: " + ex.Message);
-                Console.WriteLine("Tryk på en tast for at fortsætte");
+                int spaces = 70;
+                WindowHelper.Top(spaces);
+                Console.WriteLine("│{0,-70}│", $"Fejl under redigering af kunde: " + ex.Message);
+                Console.WriteLine("│{0,-70}│", "Tryk på en tast for at fortsætte");
+                WindowHelper.Bot(spaces);
                 Console.ReadKey();
             }
         }
@@ -115,25 +124,37 @@ namespace MyERP.CustomerView
                 try
                 {
                     Database.Instance.DeleteCustomerByID(selected.CustomerID);
+
                     int spaces = 40;
                     Console.SetCursorPosition(0, 7);
                     WindowHelper.Top(spaces);
                     Console.WriteLine("│{0,-40}│", $"{selected.FullName} slettet");
+                    Console.WriteLine("│{0,-40}│", "Tryk på en tast for at fortsætte");
                     WindowHelper.Bot(spaces);
                     Console.ReadKey();
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine($"Fejl Under sletning af kunde: {ex.Message} ");
-                    Console.WriteLine("Tryk på en tast for at fortsætte");
+                    int spaces = 120;
+                    Console.SetCursorPosition(0, 7);
+                    WindowHelper.Top(spaces);
+                    Console.WriteLine("│{0,-120}│", $"Fejl Under sletning af kunde:{WindowHelper.Truncate(ex.Message, 70)}");
+                    Console.WriteLine("│{0,-120}│", "Tryk på en tast for at fortsætte");
+                    WindowHelper.Bot(spaces);
                     Console.ReadKey();
                 }
-          
+                     
 
             }
             else
             {
-                Console.WriteLine("Ingen kunde valgt.");
+                int spaces = 60;
+                Console.SetCursorPosition(0, 7);
+                WindowHelper.Top(spaces);
+                Console.WriteLine("│{0,-60}│", "Ingen kunde valgt");
+                Console.WriteLine("│{0,-60}│", "Tryk på en tast for at fortsætte");
+                WindowHelper.Bot(spaces);
+                Console.ReadKey();
             }
         }
     }

@@ -39,7 +39,7 @@ namespace MyERP.ProductView
 
             WindowHelper.Bot(spaces);
 
-            for (int i = 0; i < 3; i++)
+            for (int i = 0; i < 4; i++)
             {
                 Console.WriteLine();
             }
@@ -90,9 +90,40 @@ namespace MyERP.ProductView
         {
             if (selected != null)
             {
-                Database.Instance.DeleteProductById(selected.ProductID);
-                listPage.Remove(selected);
-                Console.WriteLine($"Produktet '{selected.Name}' er blevet slettet.");
+                try
+                {
+                    Database.Instance.DeleteCustomerByID(selected.ProductID);
+
+                    int spaces = 40;
+                    Console.SetCursorPosition(0, 7);
+                    WindowHelper.Top(spaces);
+                    Console.WriteLine("│{0,-40}│", $"{selected.Name} slettet");
+                    Console.WriteLine("│{0,-40}│", $"Tryk på en tast for at fortsætte");
+                    WindowHelper.Bot(spaces);
+                    Console.ReadKey();
+                }
+                catch (Exception ex)
+                {
+                    int spaces = 120;
+                    Console.SetCursorPosition(0, 7);
+                    WindowHelper.Top(spaces);
+                    Console.WriteLine("│{0,-120}│", $"Fejl Under sletning af produkt:{WindowHelper.Truncate(ex.Message, 70)}");
+                    Console.WriteLine("│{0,-120}│", "Tryk på en tast for at fortsætte");
+                    WindowHelper.Bot(spaces);
+                    Console.ReadKey();
+                }
+
+
+            }
+            else
+            {
+                int spaces = 60;
+                Console.SetCursorPosition(0, 7);
+                WindowHelper.Top(spaces);
+                Console.WriteLine("│{0,-60}│", "Ingen produkt valgt");
+                Console.WriteLine("│{0,-60}│", "Tryk på en tast for at fortsætte");
+                WindowHelper.Bot(spaces);
+                Console.ReadKey();
             }
         }
     }
