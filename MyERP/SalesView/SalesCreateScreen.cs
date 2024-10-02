@@ -1,7 +1,4 @@
-﻿using Google.Protobuf.Reflection;
-using System;
-using System.Collections.Generic;
-using TECHCOOL.UI;
+﻿using TECHCOOL.UI;
 
 namespace MyERP.SalesView
 {
@@ -28,17 +25,35 @@ namespace MyERP.SalesView
 
             int spaces = 35;
             WindowHelper.Top(spaces);
+            Console.WriteLine("│{0,-35}│", "Skriv exit for at gå tilbage");
+            WindowHelper.Bot(spaces);
+
+            WindowHelper.Top(spaces);
             Console.WriteLine("│{0,-35}│", "Skriv et kunde nummer:");
             WindowHelper.Bot(spaces);
-            Console.SetCursorPosition(25, 2);
-            if (!int.TryParse(Console.ReadLine(), out int customerID))
+            Console.SetCursorPosition(25, 5);
+
+            string readline = Console.ReadLine();
+            if (readline == "exit")
             {
-                // Display an error message if the input is not a valid integer
-                WindowHelper.Top(spaces);
-                Console.WriteLine("│{0,-35}│", "Ugyldig nummer. Skriv et gyldigt tal.");
-                WindowHelper.Bot(spaces);
+                this.Quit();
                 return;
             }
+
+            if (!int.TryParse(readline, out int customerID))
+            {
+                // Display an error message if the input is not a valid integer
+                Console.Clear();
+                WindowHelper.Top(40);
+                Console.WriteLine("│{0,-40}│", "Ugyldig nummer. Skriv et gyldigt tal.");
+                Console.WriteLine("│{0,-40}│", "Tryk på en tast for at fortsætte");
+                WindowHelper.Bot(40);
+                Console.ReadKey();
+
+                return;
+            }
+
+            // Continue with the rest of your code using customerID
 
             // Get the customer details from the database
             var customer = Database.Instance.GetCustomerbyID(customerID);
@@ -109,7 +124,11 @@ namespace MyERP.SalesView
                         return;
                     }
                 }
-                else
+                else 
+                
+                
+                
+                if (input == 'n' || input == 'N')
                 {
                     // Display an error message if the user does not want to create a new customer
                     Console.WriteLine("Ordre oprettelse annulleret.");
@@ -127,6 +146,8 @@ namespace MyERP.SalesView
 
             try
             {
+                _salesOrder.CustomerNumber = Database.Instance.GetCustomerbyID(customer.CustomerID).CustomerID;
+
                 // Insert the sales order into the database
                 Database.Instance.InsertSalesOrderHeader(_salesOrder);
 
