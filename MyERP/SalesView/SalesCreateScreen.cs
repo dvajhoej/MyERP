@@ -19,8 +19,11 @@ namespace MyERP.SalesView
         protected override void Draw()
         {
             Clear();
-
-            Console.WriteLine("Skriv et kunde nummer:");
+            int spaces = 35;
+            WindowHelper.Top(spaces);
+            Console.WriteLine("│{0,-35}│", "Skriv et kunde nummer:");
+            WindowHelper.Bot(spaces);
+            Console.SetCursorPosition(25, 2);
             if (!int.TryParse(Console.ReadLine(), out int customerID))
             {
                 Console.WriteLine("Ugyldig nummer. Skriv et gyldigt tal.");
