@@ -4,26 +4,28 @@ using System.Threading.Tasks;
 
 namespace MyERP
 {
-
+    // Define a partial class Database to store data
     public partial class Database
     {
+        // Private static field to store the instance of the Database class
         public static Database? instance;
 
+        // Public static property to get the instance of the Database class
         public static Database Instance
         {
             get
             {
+                // If the instance is null, create a new instance
                 if (instance == null)
                 {
-
-                    
                     instance = new Database();
-
                 }
+                // Return the instance
                 return instance;
             }
         }
 
+        // Private fields to store lists of data
         private List<Company> companies;
         private List<Product> products;
         private List<Person> persons;
@@ -32,8 +34,10 @@ namespace MyERP
         private List<Customer> customers;
         private List<Invoice> invoices;
 
+        // Constructor to initialize the lists of data
         public Database()
         {
+            // Initialize the lists of data
             persons = new List<Person>();
             companies = new List<Company>();
             products = new List<Product>();
@@ -41,6 +45,8 @@ namespace MyERP
             customers = new List<Customer>();
             salesOrderLines = new List<SalesOrderLine>();
             invoices = new List<Invoice>();
+
+            // Call methods to get all data from the database
             GetAllInvoices();
             GetAllCustomers();
             GetAllCompanies();
@@ -49,7 +55,7 @@ namespace MyERP
             GetAllSalesOrderLines();
         }
 
-
+        // Public properties to get the lists of data
         public List<Person> Persons
         {
             get { return persons; }
@@ -63,7 +69,7 @@ namespace MyERP
         public List<SalesOrderLine> SalesOrderLines
         {
             get { return salesOrderLines; }
-        }            
+        }
 
         public List<Company> Companies
         {
@@ -80,15 +86,10 @@ namespace MyERP
             get { return salesOrderHeaders; }
         }
 
-
         public List<Product> Products
         {
             get { return products; }
         }
 
-        public List<Product> Produkter
-        {
-            get { return products; }
-        }
     }
 }

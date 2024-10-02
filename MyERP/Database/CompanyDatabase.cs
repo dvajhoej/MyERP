@@ -3,29 +3,36 @@ using System.Data.SqlClient;
 
 namespace MyERP
 {
+    // Define a partial class Database to store data
     public partial class Database
     {
+        // Method to get a company by ID
         public Company? GetCompanyById(int companyID)
         {
+            // Iterate through the list of companies
             foreach (var company in companies)
             {
+                // Check if the company ID matches
                 if (company.CompanyID == companyID)
                 {
+                    // Return the company
                     return company;
                 }
-
             }
+            // Return null if no company is found
             return null;
         }
 
-
-
+        // Method to get all companies
         public List<Company> GetAllCompanies()
         {
+            // Define the connection string
             string connectionString = DatabaseString.ConnectionString;
 
+            // Create a new SqlConnection object
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
+                // Define the query to get all companies
                 string query = "SELECT" +
                                     " Companies.name," +
                                     " Addresses.street," +
@@ -40,13 +47,19 @@ namespace MyERP
                                     " Addresses" +
                               " INNER JOIN companies ON Addresses.addressID = companies.addressID";
 
+                // Create a new SqlCommand object
                 SqlCommand command = new SqlCommand(query, connection);
+
+                // Open the connection
                 connection.Open();
 
+                // Create a new SqlDataReader object
                 using (SqlDataReader reader = command.ExecuteReader())
                 {
+                    // Iterate through the reader
                     while (reader.Read())
                     {
+                        // Create a new Company object
                         Company company = new Company
                         {
                             CompanyName = reader.GetString(0),
@@ -58,22 +71,28 @@ namespace MyERP
                             Currency = (Currency)Enum.Parse(typeof(Currency), reader.GetString(6)),
                             CompanyID = reader.GetInt32(7),
                             AddressID = reader.GetInt32(8),
-
                         };
+
+                        // Add the company to the list
                         companies.Add(company);
                     }
                 }
             }
 
+            // Return the list of companies
             return companies;
         }
 
-        // Insert a company
+        // Method to insert a company
         public void InsertCompany(Company company)
         {
+            // Create a new SqlConnection object
             using (SqlConnection connection = new SqlConnection(DatabaseString.ConnectionString))
             {
+                // Open the connection
                 connection.Open();
+
+                // Create a new SqlTransaction object
                 SqlTransaction transaction = connection.BeginTransaction();
 
                 try
@@ -94,18 +113,20 @@ namespace MyERP
                                                    " @City," +
                                                    " @Country)";
 
+                    // Create a new SqlCommand object
                     using (SqlCommand addressCommand = new SqlCommand(insertAddressQuery, connection, transaction))
                     {
+                        // Add parameters to the command
                         addressCommand.Parameters.AddWithValue("@Street", company.Street);
                         addressCommand.Parameters.AddWithValue("@HouseNumber", company.HouseNumber);
                         addressCommand.Parameters.AddWithValue("@ZipCode", company.ZipCode);
                         addressCommand.Parameters.AddWithValue("@City", company.City);
                         addressCommand.Parameters.AddWithValue("@Country", company.Country);
 
-                        // Retrieve the inserted addressID
+                        // Execute the command and get the inserted address ID
                         company.AddressID = (int)addressCommand.ExecuteScalar();
 
-                        // Insert into Persons table
+                        // Insert into Companies table
                         string insertCompanyQuery = "INSERT INTO Companies (" +
                                                         " name," +
                                                         " currency," +
@@ -116,50 +137,65 @@ namespace MyERP
                                                         " @Currency," +
                                                         " @AddressID)";
 
+                        // Create a new SqlCommand object
                         using (SqlCommand companyCommand = new SqlCommand(insertCompanyQuery, connection, transaction))
                         {
+                            // Add parameters to the command
                             companyCommand.Parameters.AddWithValue("@CompanyName", company.CompanyName);
                             companyCommand.Parameters.AddWithValue("@Currency", company.Currency.ToString());
                             companyCommand.Parameters.AddWithValue("@AddressID", company.AddressID);
 
+                            // Execute the command and get the inserted company ID
                             company.CompanyID = (int)companyCommand.ExecuteScalar();
-
                         }
                     }
 
-
-
+                    // Add the company to the list
                     Instance.companies.Add(company);
+
+                    // Commit the transaction
                     transaction.Commit();
                 }
                 catch (Exception ex)
                 {
+                    // Rollback the transaction
                     transaction.Rollback();
+
+                    // Throw an exception with a error message
                     throw new Exception("Error while inserting customer: " + ex.Message);
                 }
             }
         }
 
-        // Update an existing company
+        // Method to update a company
         public void UpdateCompany(Company updatedCompany)
         {
+            // Check if the company ID is valid
             if (updatedCompany.CompanyID == 0)
             {
                 throw new ArgumentException("Customer ID is invalid.");
             }
 
+            // Get the existing company
             var existingCompany = GetCompanyById(updatedCompany.CompanyID);
+
+            // Check if the existing company is not null
             if (existingCompany != null)
             {
                 try
                 {
+                    // Create a new SqlConnection object
                     using (SqlConnection connection = new SqlConnection(DatabaseString.ConnectionString))
                     {
+                        // Open the connection
                         connection.Open();
+
+                        // Create a new SqlTransaction object
                         using (SqlTransaction transaction = connection.BeginTransaction())
                         {
                             try
                             {
+                                // Define the query to update the company
                                 string updateQuery = "UPDATE Companies SET " +
                                                          "name = @Name, " +
                                                          "currency = @Currency " +
@@ -172,14 +208,15 @@ namespace MyERP
                                                         "country = @Country " +
                                                      "WHERE addressID = @AddressID;";
 
+                                // Create a new SqlCommand object
                                 using (SqlCommand command = new SqlCommand(updateQuery, connection, transaction))
                                 {
-                                    // Update Companies table
+                                    // Add parameters to the command
                                     command.Parameters.AddWithValue("@Name", updatedCompany.CompanyName);
                                     command.Parameters.AddWithValue("@Currency", updatedCompany.Currency.ToString());
                                     command.Parameters.AddWithValue("@CompanyId", updatedCompany.CompanyID);
 
-                                    // Update Addresses table
+                                    // Add parameters to the command
                                     command.Parameters.AddWithValue("@AddressID", updatedCompany.AddressID);
                                     command.Parameters.AddWithValue("@Street", updatedCompany.Street);
                                     command.Parameters.AddWithValue("@HouseNumber", updatedCompany.HouseNumber);
@@ -187,22 +224,31 @@ namespace MyERP
                                     command.Parameters.AddWithValue("@City", updatedCompany.City);
                                     command.Parameters.AddWithValue("@Country", updatedCompany.Country);
 
+                                    // Execute the command
                                     int rowsAffected = command.ExecuteNonQuery();
 
+                                    // Check if any rows were affected
                                     if (rowsAffected > 0)
                                     {
+                                        // Commit the transaction
                                         transaction.Commit();
                                     }
                                     else
                                     {
-                                        throw new Exception("No rows were updated.");
+                                        // Rollback the transaction
                                         transaction.Rollback();
+
+                                        // Throw an exception
+                                        throw new Exception("No rows were updated.");
                                     }
                                 }
                             }
                             catch (Exception ex)
                             {
+                                // Rollback the transaction
                                 transaction.Rollback();
+
+                                // Throw an exception
                                 throw new Exception($"Error while updating company: {ex.Message}");
                             }
                         }
@@ -210,61 +256,79 @@ namespace MyERP
                 }
                 catch (Exception ex)
                 {
+                    // Throw an exception with a error message
                     throw new Exception($"Error while connecting to the database: {ex.Message}");
                 }
             }
             else
             {
+                // Throw an exception
                 throw new Exception($"Company with ID {updatedCompany.CompanyID} not found.");
             }
         }
 
-        // Delete a company by ID
+        // Method to delete a company by ID
         public void DeleteCompanyById(int companyID)
         {
+            // Create a new SqlConnection object
             using (SqlConnection connection = new SqlConnection(DatabaseString.ConnectionString))
             {
+                // Open the connection
                 connection.Open();
+
+                // Create a new SqlTransaction object
                 SqlTransaction transaction = connection.BeginTransaction();
 
                 try
                 {
-
+                    // Get the company to delete
                     var company = GetCompanyById(companyID);
+
+                    // Check if the company is not null
                     if (company != null)
                     {
+                        // Define the query to delete the company
                         string deleteCompanyQuery = "DELETE FROM Companies WHERE companyID = @CompanyID";
+
+                        // Create a new SqlCommand object
                         using (SqlCommand command = new SqlCommand(deleteCompanyQuery, connection, transaction))
                         {
+                            // Add a parameter to the command
                             command.Parameters.AddWithValue("@CompanyID", company.CompanyID);
+
+                            // Execute the command
                             command.ExecuteNonQuery();
                         }
 
+                        // Define the query to delete the address
                         string deleteAddressQuery = "DELETE FROM addresses WHERE addressID = @AddressID";
-                        using (SqlCommand command = new SqlCommand(@deleteAddressQuery, connection, transaction))
+
+                        // Create a new SqlCommand object
+                        using (SqlCommand command = new SqlCommand(deleteAddressQuery, connection, transaction))
                         {
+                            // Add a parameter to the command
                             command.Parameters.AddWithValue("@AddressID", company.AddressID);
+
+                            // Execute the command
                             command.ExecuteNonQuery();
                         }
 
+                        // Commit the transaction
                         transaction.Commit();
+
+                        // Remove the company from the list
                         companies.Remove(company);
-
-
                     }
                 }
                 catch (Exception ex)
                 {
-
+                    // Rollback the transaction
                     transaction.Rollback();
+
+                    // Throw an exception with a error message
                     throw new Exception("Error while deleting company: " + ex.Message);
                 }
-
-
-
-
             }
         }
     }
 }
-

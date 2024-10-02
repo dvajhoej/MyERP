@@ -93,7 +93,7 @@ namespace MyERP.SalesView
                 WindowHelper.Top(70);
                 Console.WriteLine("│{0,-70}│", $"Der er sket en fejl under oprettelse af faktura : {ex.Message}");
                 WindowHelper.Bot(70);
-                Console.ReadLine();
+                Console.ReadKey();
             }
 
 
