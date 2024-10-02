@@ -176,7 +176,14 @@ namespace MyERP.SalesView
                 }
 
                 Product selectedProduct = products.Find(p => p.ProductID == productId);
-                Console.WriteLine($"Skriv mængde for {selectedProduct.Name}: ");
+                spaces = 73;
+                Console.SetCursorPosition(0, 14);
+
+                WindowHelper.Top(spaces);
+                Console.WriteLine("│{0,-73}│", $"Skriv mængde for {selectedProduct.Name}: ");
+                WindowHelper.Bot(spaces);
+                Console.SetCursorPosition(30, 15);
+
                 if (!double.TryParse(Console.ReadLine(), out double quantity) || quantity <= 0)
                 {
                     ShowError("Ugyldig mængde. Annullerer tilføjelse af produkt.");
@@ -204,10 +211,11 @@ namespace MyERP.SalesView
 
         private void ShowError(string message)
         {
-            int spacer = 45;
+            Clear();
+            int spacer = 70;
             WindowHelper.Top(spacer);
-            Console.WriteLine($"│{message,-45}│");
-            Console.WriteLine("│{0,-45}│", "Tryk på en tast for at fortsætte");
+            Console.WriteLine($"│{message,-70}│");
+            Console.WriteLine("│{0,-70}│", "Tryk på en tast for at fortsætte");
             WindowHelper.Bot(spacer);
             Console.ReadKey();
             Clear();
@@ -215,10 +223,11 @@ namespace MyERP.SalesView
 
         private void ShowMessage(string message)
         {
-            int spacer = 45;
+            Clear();
+            int spacer = 70;
             WindowHelper.Top(spacer);
-            Console.WriteLine($"│{message,-45}│");
-            Console.WriteLine("│{0,-45}│", "Tryk på en tast for at fortsætte");
+            Console.WriteLine($"│{message,-70}│");
+            Console.WriteLine("│{0,-70}│", "Tryk på en tast for at fortsætte");
             WindowHelper.Bot(spacer);
             Console.ReadKey();
         }
