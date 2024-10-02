@@ -1,6 +1,4 @@
-﻿using MyERP.productView;
-using MyERP.ProductView;
-using TECHCOOL.UI;
+﻿using TECHCOOL.UI;
 
 namespace MyERP.SalesView
 {
@@ -34,7 +32,7 @@ namespace MyERP.SalesView
         {
             Clear();
             int spaces = 35;
-            
+
             WindowHelper.Top(spaces);
             Console.WriteLine("│{0,-35}│", "Tryk F1 for at oprette en ordre");
             Console.WriteLine("│{0,-35}│", "Tryk F2 for at redigere en ordre");
@@ -57,7 +55,7 @@ namespace MyERP.SalesView
                 Screen.Display(new SalesViewScreen(selected));
             }
 
-           
+
         }
         void Quit(SalesOrderHeader _)
         {
@@ -65,12 +63,12 @@ namespace MyERP.SalesView
         }
         private void CreateOrder(SalesOrderHeader order)
         {
-            var newOrder = new SalesOrderHeader();          
+            var newOrder = new SalesOrderHeader();
             Screen.Display(new SalesCreateScreen(newOrder));
 
             try
             {
-                listPage.Add(newOrder);            
+                listPage.Add(newOrder);
 
                 Console.WriteLine("Order successfully created.");
                 Console.ReadLine();
@@ -83,10 +81,27 @@ namespace MyERP.SalesView
         }
         public void PrintInvoice(SalesOrderHeader selected)
         {
-            var newInvoice = new Invoice();
-            Database.Instance.InsertInvoice(selected, newInvoice);
-            Invoice.GenerateInvoice(selected, newInvoice);
+            try
+            {
+                var newInvoice = new Invoice();
+                Database.Instance.InsertInvoice(selected, newInvoice);
+                Invoice.GenerateInvoice(selected, newInvoice);
+            }
+            catch (Exception ex)
+            {
+                Console.SetCursorPosition(0,8);
+                WindowHelper.Top(70);
+                Console.WriteLine("│{0,-70}│", $"Der er sket en fejl under oprettelse af faktura : {ex.Message}");
+                WindowHelper.Bot(70);
+                Console.ReadLine();
+            }
+
+
+
         }
+
+
+
         private void EditOrder(SalesOrderHeader selected)
         {
             Screen.Display(new SalesEditScreen(selected));
@@ -109,7 +124,7 @@ namespace MyERP.SalesView
                     Console.WriteLine($"An error occured: {ex.Message}");
                     Console.ReadLine();
                 }
-                
+
             }
         }
     }

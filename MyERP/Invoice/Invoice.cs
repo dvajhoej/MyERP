@@ -28,119 +28,126 @@ namespace MyERP
 
             string htmlTemplate = File.ReadAllText("../../../Invoice/template.html");
 
-
-            string CompanyName = "LNE SECURITY A/S";
-            string InvoiceID = invoice.InvoiceID.ToString();
-            Enum OrderStatus  = data.Status;
-            string CompanyAddress = "Struervej 55";
-            string CompanyAddress2 = "9220 Aalborg Øst";
-            string CompanyEmail = "LNE@Security.dk";
-            string CompanyPhone = "+45 19901990";
-            string CustomerName = customer.FirstName + " " + customer.LastName;
-            string CustomerAddress = customer.FullAddress;
-            string CustomerEmail = customer.Email;
-            string CustomerPhone = customer.Phone;
-            int CustomerID = customer.CustomerID;
-            DateTime InvoiceDate = invoice.InvoiceDate.Date;
-            DateTime DueDate = invoice.InvoiceDate.Date.AddDays(30);
-            int OrderID = data.OrderNumber;
-            //string InfoSalesLineNr = data.GetOrderLines;
-
-            double PriceSubTotal = 0;
-            foreach (var line in Database.Instance.SalesOrderLines)
+            if (customer != null)
             {
-                if (line.SalesOrderHeadID == data.OrderNumber)
+                string CompanyName = "LNE SECURITY A/S";
+                string InvoiceID = invoice.InvoiceID.ToString();
+                Enum OrderStatus = data.Status;
+                string CompanyAddress = "Struervej 55";
+                string CompanyAddress2 = "9220 Aalborg Øst";
+                string CompanyEmail = "LNE@Security.dk";
+                string CompanyPhone = "+45 19901990";
+                string CustomerName = customer.FirstName + " " + customer.LastName;
+                string CustomerAddress = customer.FullAddress;
+                string CustomerEmail = customer.Email;
+                string CustomerPhone = customer.Phone;
+                int CustomerID = customer.CustomerID;
+                DateTime InvoiceDate = invoice.InvoiceDate.Date;
+                DateTime DueDate = invoice.InvoiceDate.Date.AddDays(30);
+                int OrderID = data.OrderNumber;
+
+                double PriceSubTotal = 0;
+                foreach (var line in Database.Instance.SalesOrderLines)
                 {
-                    PriceSubTotal += line.Price * line.Quantity;
+                    if (line.SalesOrderHeadID == data.OrderNumber)
+                    {
+                        PriceSubTotal += line.Price * line.Quantity;
+                    }
+
+                }
+                string PriceShipping = "49";
+                string PriceDiscount = "0";
+                double PriceTotal = PriceSubTotal * 1.25;
+                double PriceTax = PriceTotal - PriceSubTotal;
+
+
+                int LineNo = 1;
+                var stringBuilder = new StringBuilder();
+
+                foreach (var line in Database.Instance.SalesOrderLines)
+                {
+                    if (line.SalesOrderHeadID == data.OrderNumber)
+                    {
+                        string SalesOrderLine =
+                        ("<tr>" +
+                        $"<th scope=\"row\">{LineNo:D1}</th>" + // No. Nummer
+                        "<td>" +
+                        "<div>" +
+                        $"<h5 class=\"text-truncate font-size-14 mb-1\">{System.Net.WebUtility.HtmlEncode(line.Name)}</h5>" + // Vare navn
+                        $"<p class=\"text-muted mb-0\">{System.Net.WebUtility.HtmlEncode(line.Description)}</p>" +// vare beskrivelse
+                        "</div>" +
+                        "</td>" +
+                        $"<td>DKK {line.Price},-</td>" + // vare pris
+                        $"<td>{line.Quantity}</td>" + // vare antal
+                        $"<td>{line.Unit}</td>" +// vare enhed
+                        $"<td class=\"text-end\">DKK {line.Price * line.Quantity}</td>" + // vare total
+                        "</tr>");
+
+                        stringBuilder.Append(SalesOrderLine);
+                        LineNo++;
+                    }
                 }
 
-            }
-            string PriceShipping = "49";
-            string PriceDiscount = "0";
-            double PriceTotal = PriceSubTotal * 1.25;
-            double PriceTax =   PriceTotal - PriceSubTotal;
+                string SalesOrderLines = stringBuilder.ToString();
 
 
-            int LineNo = 1;
-            var stringBuilder = new StringBuilder();
+                //string vareLinjer = "<tr><td>Produkt 1</td><td>100 DKK</td></tr>";
 
-            foreach (var line in Database.Instance.SalesOrderLines)
-            {
-                if (line.SalesOrderHeadID == data.OrderNumber)
+                string fakturaHtml = htmlTemplate
+                    .Replace("{{WebTitle}}", CompanyName)
+                    .Replace("{{InvoiceID}}", InvoiceID)
+                    .Replace("{{Status}}", OrderStatus.ToString())
+                    .Replace("{{CompanyName}}", CompanyName)
+                    .Replace("{{CompanyAddress}}", CompanyAddress)
+                    .Replace("{{CompanyEmail}}", CompanyEmail)
+                    .Replace("{{CompanyPhone}}", CompanyPhone)
+                    .Replace("{{CustomerName}}", CustomerName)
+                    .Replace("{{CustomerAddress}}", CustomerAddress)
+                    .Replace("{{CustomerEmail}}", CustomerEmail)
+                    .Replace("{{CustomerPhone}}", CustomerPhone)
+                    .Replace("{{CustomerID}}", CustomerID.ToString())
+                    .Replace("{{InvoiceDate}}", InvoiceDate.ToShortDateString())
+                    .Replace("{{OrderID}}", OrderID.ToString())
+                    .Replace("{{PriceSubTotal}}", PriceSubTotal.ToString())
+                    .Replace("{{PriceDiscount}}", PriceDiscount.ToString())
+                    .Replace("{{PriceShipping}}", PriceShipping)
+                    .Replace("{{PriceTax}}", PriceTax.ToString())
+                    .Replace("{{PriceTotal}}", PriceTotal.ToString())
+                    .Replace("{{SalesOrderLines}}", SalesOrderLines)
+                    .Replace("{{DueDate}}", DueDate.ToShortDateString())
+                    .Replace("{{CompanyAddress2}}", CompanyAddress2);
+                string filePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, $"../../../Invoice/invoices/invoice-{invoice.InvoiceID}-{invoice.InvoiceDate:d}.html");
+                if (File.Exists(filePath))
                 {
-                    string SalesOrderLine =
-                    ("<tr>" +
-                    $"<th scope=\"row\">{LineNo:D1}</th>" + // No. Nummer
-                    "<td>" +
-                    "<div>" +
-                    $"<h5 class=\"text-truncate font-size-14 mb-1\">{System.Net.WebUtility.HtmlEncode(line.Name)}</h5>" + // Vare navn
-                    $"<p class=\"text-muted mb-0\">{System.Net.WebUtility.HtmlEncode(line.Description)}</p>" +// vare beskrivelse
-                    "</div>" +
-                    "</td>" +
-                    $"<td>DKK {line.Price},-</td>" + // vare pris
-                    $"<td>{line.Quantity}</td>" + // vare antal
-                    $"<td>{line.Unit}</td>" +// vare enhed
-                    $"<td class=\"text-end\">DKK {line.Price * line.Quantity}</td>" + // vare total
-                    "</tr>");
-
-                    stringBuilder.Append(SalesOrderLine);
-                    LineNo++;
+                    Process.Start(new ProcessStartInfo(filePath) { UseShellExecute = true });
                 }
-            }
-
-            string SalesOrderLines = stringBuilder.ToString();
-
-
-            //string vareLinjer = "<tr><td>Produkt 1</td><td>100 DKK</td></tr>";
-
-            string fakturaHtml = htmlTemplate
-                .Replace("{{WebTitle}}", CompanyName)
-                .Replace("{{InvoiceID}}", InvoiceID)
-                .Replace("{{Status}}", OrderStatus.ToString())
-                .Replace("{{CompanyName}}", CompanyName)
-                .Replace("{{CompanyAddress}}", CompanyAddress)
-                .Replace("{{CompanyEmail}}", CompanyEmail)
-                .Replace("{{CompanyPhone}}", CompanyPhone)
-                .Replace("{{CustomerName}}", CustomerName)
-                .Replace("{{CustomerAddress}}", CustomerAddress)
-                .Replace("{{CustomerEmail}}", CustomerEmail)
-                .Replace("{{CustomerPhone}}", CustomerPhone)
-                .Replace("{{CustomerID}}", CustomerID.ToString())
-                .Replace("{{InvoiceDate}}", InvoiceDate.ToShortDateString())
-                .Replace("{{OrderID}}", OrderID.ToString())
-                .Replace("{{PriceSubTotal}}", PriceSubTotal.ToString())
-                .Replace("{{PriceDiscount}}", PriceDiscount.ToString())
-                .Replace("{{PriceShipping}}", PriceShipping)
-                .Replace("{{PriceTax}}", PriceTax.ToString())
-                .Replace("{{PriceTotal}}", PriceTotal.ToString())
-                .Replace("{{SalesOrderLines}}", SalesOrderLines)
-                .Replace("{{DueDate}}", DueDate.ToShortDateString())
-                .Replace("{{CompanyAddress2}}", CompanyAddress2);
+                else
+                {
+                    Console.WriteLine("File not found: " + filePath);
+                    CreateInvoiceFile(filePath);
+                }
 
 
+                File.WriteAllText(filePath, fakturaHtml);
 
-            string filePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, $"../../../Invoice/invoices/invoice-{invoice.InvoiceID}-{invoice.InvoiceDate:d}.html");
-            if (File.Exists(filePath))
-            {
-                Process.Start(new ProcessStartInfo(filePath) { UseShellExecute = true });
+                ProcessStartInfo psi = new ProcessStartInfo
+                {
+                    FileName = filePath,
+                    UseShellExecute = true
+                };
+
+                Process.Start(psi);
             }
             else
             {
-                Console.WriteLine("File not found: " + filePath);
-                CreateInvoiceFile(filePath);
+                throw new Exception("Kunde existere ikke");
             }
-
-
-            File.WriteAllText(filePath, fakturaHtml);
-
-            ProcessStartInfo psi = new ProcessStartInfo
-            {
-                FileName = filePath,
-                UseShellExecute = true
-            };
-
-            Process.Start(psi);
         }
+            
+
+
+
+           
         static void CreateInvoiceFile(string filePath)
         {
             try
