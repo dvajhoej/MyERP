@@ -81,10 +81,10 @@ namespace MyERP.CustomerView
             }
             catch (Exception ex)
             {
-                int spaces = 70;
+                int spaces = 120;
                 WindowHelper.Top(spaces);
-                Console.WriteLine("│{0,-70}│", $"Fejl under oprettelse af kunde: " + ex.Message);
-                Console.WriteLine("│{0,-70}│", "Tryk på en tast for at fortsætte");
+                Console.WriteLine("│{0,-120}│", $"Fejl under oprettelse af kunde: " + WindowHelper.Truncate(ex.Message, 70));
+                Console.WriteLine("│{0,-120}│", "Tryk på en tast for at fortsætte");
                 WindowHelper.Bot(spaces);
                 Console.ReadKey();
             }
@@ -107,10 +107,10 @@ namespace MyERP.CustomerView
             }
             catch (Exception ex)
             {
-                int spaces = 70;
+                int spaces = 120;
                 WindowHelper.Top(spaces);
-                Console.WriteLine("│{0,-70}│", $"Fejl under redigering af kunde: " + ex.Message);
-                Console.WriteLine("│{0,-70}│", "Tryk på en tast for at fortsætte");
+                Console.WriteLine("│{0,-120}│", $"Fejl under redigering af kunde: " + WindowHelper.Truncate(ex.Message, 70));
+                Console.WriteLine("│{0,-120}│", "Tryk på en tast for at fortsætte");
                 WindowHelper.Bot(spaces);
                 Console.ReadKey();
             }

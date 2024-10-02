@@ -38,7 +38,6 @@ namespace MyERP.ProductView
             editor.AddOption("Enhed", "Meter", UnitType.Meter);
 
             editor.Edit(_product);
-            Database.Instance.UpdateProduct(_product);
 
 
             this.Quit();

@@ -19,6 +19,11 @@ namespace MyERP.productView
 
             Form<Product> editor = new Form<Product>();
 
+            int spacer = 35;
+            WindowHelper.Top(spacer);
+            Console.WriteLine("│{0,-35}│", "Tryk Esc for at gemme");
+            WindowHelper.Bot(spacer);
+
             editor.IntBox("Varenummer", "ProductNumber");
             editor.TextBox("Navn", "Name");
             editor.TextBox("Beskrivelse", "Description");

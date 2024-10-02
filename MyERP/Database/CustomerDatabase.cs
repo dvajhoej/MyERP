@@ -245,7 +245,6 @@ namespace MyERP
                                     if (rowsAffected > 0)
                                     {
                                         transaction.Commit();
-                                        throw new Exception("Customer update successful.");
                                     }
                                     else
                                     {

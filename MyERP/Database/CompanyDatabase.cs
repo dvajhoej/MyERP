@@ -135,7 +135,7 @@ namespace MyERP
                 catch (Exception ex)
                 {
                     transaction.Rollback();
-                    throw new Exception("Fejl under oprettelse af kunde: " + ex.Message);
+                    throw new Exception(ex.Message);
                 }
             }
         }
@@ -145,7 +145,7 @@ namespace MyERP
         {
             if (updatedCompany.CompanyID == 0)
             {
-                throw new ArgumentException("Kunde ID ikke gyldigt.");
+                throw new Exception("Kunde ID ikke gyldigt.");
             }
 
             var existingCompany = GetCompanyById(updatedCompany.CompanyID);
@@ -203,7 +203,7 @@ namespace MyERP
                             catch (Exception ex)
                             {
                                 transaction.Rollback();
-                                throw new Exception($"Fejl under opdatering af virksohed: {ex.Message}");
+                                throw new Exception($"{ex.Message}");
                             }
                         }
                     }

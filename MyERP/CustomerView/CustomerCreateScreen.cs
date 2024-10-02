@@ -21,6 +21,11 @@ namespace MyERP.CustomerView
 
             Form<Customer> editor = new Form<Customer>();
 
+            int spacer = 35;
+            WindowHelper.Top(spacer);
+            Console.WriteLine("│{0,-35}│", "Tryk Esc for at gemme");
+            WindowHelper.Bot(spacer);
+
             editor.TextBox("Fornavn", "FirstName");    
             editor.TextBox("Efternavn", "LastName");   
             editor.TextBox("Telefon", "Phone");        

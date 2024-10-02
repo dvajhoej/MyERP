@@ -100,8 +100,9 @@ namespace MyERP
 
                         // Use itemID as needed
                     }
-                    Instance.Products.Add(product);
+                    
                     transaction.Commit();
+                    Instance.products.Add(product);
                 }
                 catch (Exception ex)
                 {

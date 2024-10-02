@@ -19,6 +19,12 @@ namespace MyERP.CompanyView
 
             Form<Company> editor = new Form<Company>();
 
+            int spacer = 35;
+            WindowHelper.Top(spacer);
+            Console.WriteLine("│{0,-35}│", "Tryk Esc for at gemme");
+            WindowHelper.Bot(spacer);
+
+
             editor.TextBox("Virksomheds Navn", "CompanyName");
             editor.TextBox("Vej", "Street");
             editor.TextBox("Hus nummer", "HouseNumber");
@@ -33,7 +39,7 @@ namespace MyERP.CompanyView
 
             editor.Edit(_company);
 
-            
+
             this.Quit();
 
         }

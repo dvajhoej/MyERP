@@ -36,7 +36,6 @@ namespace MyERP.ProductView
             Console.WriteLine("│{0,-35}│", "Tryk F2 for at redigere en produkt");
             Console.WriteLine("│{0,-35}│", "Tryk F5 for at slette   en produkt");
             Console.WriteLine("│{0,-35}│", "Tryk Esc for at forlade siden");
-
             WindowHelper.Bot(spaces);
 
             for (int i = 0; i < 4; i++)
@@ -67,16 +66,21 @@ namespace MyERP.ProductView
             try
             {
                 Database.Instance.InsertProduct(newProduct);
-                listPage.Add(newProduct);
-                Console.WriteLine("Product successfully created.");
-                Console.ReadLine();
+                int spaces = 40;
+                WindowHelper.Top(spaces);
+                Console.WriteLine("│{0,-40}│", $"{newProduct.Name} oprettet");
+                Console.WriteLine("│{0,-40}│", "Tryk på en tast for at fortsætte");
+                WindowHelper.Bot(spaces);
+                Console.ReadKey();
             }
             catch (Exception ex)
             {
-                // Handle the exception (e.g., log it or show an error message)
-                Console.WriteLine($"An error occurred: {ex.Message}");
-                Console.ReadLine();
-
+                int spaces = 120;
+                WindowHelper.Top(spaces);
+                Console.WriteLine("│{0,-120}│", $"Fejl under oprettelse af produkt: " + WindowHelper.Truncate(ex.Message, 70));
+                Console.WriteLine("│{0,-120}│", "Tryk på en tast for at fortsætte");
+                WindowHelper.Bot(spaces);
+                Console.ReadKey();
             }
         }
 
@@ -84,6 +88,26 @@ namespace MyERP.ProductView
         private void EditProduct(Product selected)
         {
             Screen.Display(new ProductEditScreen(selected));
+
+            try
+            {
+                Database.Instance.UpdateProduct(selected);
+                int spaces = 40;
+                WindowHelper.Top(spaces);
+                Console.WriteLine("│{0,-40}│", $"{selected.Name} redigeret");
+                Console.WriteLine("│{0,-40}│", "Tryk på en tast for at fortsætte");
+                WindowHelper.Bot(spaces);
+                Console.ReadKey();
+            }
+            catch (Exception ex)
+            {
+                int spaces = 120;
+                WindowHelper.Top(spaces);
+                Console.WriteLine("│{0,-120}│", $"Fejl under redigering af produkt: " + WindowHelper.Truncate(ex.Message, 70));
+                Console.WriteLine("│{0,-120}│", "Tryk på en tast for at fortsætte");
+                WindowHelper.Bot(spaces);
+                Console.ReadKey();
+            }
         }
 
         private void DeleteProduct(Product selected)
