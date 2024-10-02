@@ -133,6 +133,33 @@ namespace MyERP.SalesView
         {
             // Display the sales edit screen
             Screen.Display(new SalesEditScreen(selected));
+
+
+            try
+            {
+
+                Database.Instance.UpdateSalesOrderHeader(selected);
+
+                int spaces = 40;
+                WindowHelper.Top(spaces);
+                Console.WriteLine("│{0,-40}│", $"Ordre nr: {selected.OrderNumber} redigeret");
+                Console.WriteLine("│{0,-40}│", "Tryk på en tast for at fortsætte");
+                WindowHelper.Bot(spaces);
+                Console.ReadKey();
+
+
+            }
+            catch (Exception ex)
+            {
+                int spaces = 120;
+                WindowHelper.Top(spaces);
+                Console.WriteLine("│{0,-120}│", $"Fejl under redigering af ordre: " + WindowHelper.Truncate(ex.Message, 70));
+                Console.WriteLine("│{0,-120}│", "Tryk på en tast for at fortsætte");
+                WindowHelper.Bot(spaces);
+                Console.ReadKey();
+            }
+
+
         }
 
         // Method to delete a sales order

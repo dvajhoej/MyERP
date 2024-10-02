@@ -130,7 +130,7 @@ namespace MyERP
                                "    LEFT JOIN Customers ON SalesOrderHeader.customerID = Customers.customerID                      " +
                                "    LEFT JOIN Persons ON Customers.personID = Persons.personID                                     " +
                                "    LEFT JOIN SalesOrderLines ON SalesOrderHeader.orderID = SalesOrderLines.salesOrderHeadID       " +
- "    LEFT JOIN Products ON SalesOrderLines.productID = Products.productID                           " +
+                               "    LEFT JOIN Products ON SalesOrderLines.productID = Products.productID                           " +
                                "GROUP BY                                                                                           " +
                                "    SalesOrderHeader.orderID,                                                                      " +
                                "    SalesOrderHeader.creationDate,                                                                 " +
@@ -297,6 +297,21 @@ namespace MyERP
 
             // Get the existing sales order header
             var existingSalesOrderHeader = GetSalesOrderHeaderById(salesOrderHeader.OrderNumber);
+            try
+            {
+                if (salesOrderHeader.CustomerNumber == 0)
+                {
+                    throw new Exception("Kunden existerer ikke");
+                }
+
+                // Proceed with your logic if Customer.id is not zero
+            }
+            catch (Exception ex)
+            {
+                // Handle the exception or rethrow it
+                throw new Exception("Kunden existerer ikke", ex);
+            }
+
 
             // Check if the existing sales order header is not null
             if (existingSalesOrderHeader != null)

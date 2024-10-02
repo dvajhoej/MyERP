@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using TECHCOOL.UI;
+﻿using TECHCOOL.UI;
 
 namespace MyERP.SalesView
 {
@@ -25,29 +23,21 @@ namespace MyERP.SalesView
             // Clear the screen
             Clear();
 
-            // Calculate the number of spaces for the window border
-            int spaces = 45;
+            if (_salesOrder.CustomerNumber != 0)
+            {
 
-            // Draw the top border of the window
-            WindowHelper.Top(spaces);
-
-            // Display messages to the user
-            Console.WriteLine("│{0,-45}│", "Tryk F1 for at ændre status på valgte ordre");
-            Console.WriteLine("│{0,-45}│", "Tryk F2 for at ændre varer på ordren");
-
-            // Draw the bottom border of the window
-            WindowHelper.Bot(spaces);
+                int spaces = 45;
+                WindowHelper.Top(spaces);
+                Console.WriteLine("│{0,-45}│", "Tryk F1 for at ændre status på valgte ordre");
+                Console.WriteLine("│{0,-45}│", "Tryk F2 for at ændre varer på ordren");
+                WindowHelper.Bot(spaces);
 
             // Get the key pressed by the user
             var key = Console.ReadKey();
 
-            // Check if the user wants to change the status of the order
-            if (key.Key == ConsoleKey.F1)
-            {
-                // Check if the order number is valid
-                if (_salesOrder.OrderNumber != 0)
+                if (key.Key == ConsoleKey.F1)
                 {
-                    // Create a new Form object to edit the order status
+
                     Form<SalesOrderHeader> editor = new Form<SalesOrderHeader>();
 
                     // Display the order number
@@ -66,20 +56,22 @@ namespace MyERP.SalesView
                         _salesOrder.CompletionDate = DateTime.Now;
                     }
 
-                    // Update the order in the database
-                    Database.Instance.UpdateSalesOrderHeader(_salesOrder);
+
+
                 }
-                else
+                else if (key.Key == ConsoleKey.F2)
                 {
-                    // Throw an exception if the order number is not valid
-                    throw new Exception("Du kan ikke ændre status på denne ordre");
+                    EditOrderLines();
                 }
             }
-            // Check if the user wants to edit the order lines
-            else if (key.Key == ConsoleKey.F2)
+            else
             {
-                // Edit the order lines
-                EditOrderLines();
+                int spaces = 45;
+                WindowHelper.Top(spaces);
+                Console.WriteLine("│{0,-45}│", "Du kan ikke ændre status på denne ordre.");
+                Console.WriteLine("│{0,-45}│", "Tryk på en tast for at fortsætte");
+                WindowHelper.Bot(spaces);
+                Console.ReadKey();
             }
 
             // Quit the screen
