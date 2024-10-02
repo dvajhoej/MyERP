@@ -29,19 +29,26 @@ namespace MyERP.SalesView
 
             if (key.Key == ConsoleKey.F1)
             {
-                Form<SalesOrderHeader> editor = new Form<SalesOrderHeader>();
-                Console.WriteLine($"Ordre nummer:       {_salesOrder.OrderNumber}");
-                editor.SelectBox("Order Status", "Status", GetStatusOptions());
-
-                editor.Edit(_salesOrder);
-
-                if (_salesOrder.Status == SalesOrderHeader.OrderStatus.Færdig)
+                if (_salesOrder.OrderNumber != 0)
                 {
-                    _salesOrder.CompletionDate = DateTime.Now;
+                    Form<SalesOrderHeader> editor = new Form<SalesOrderHeader>();
+                    Console.WriteLine($"Ordre nummer:       {_salesOrder.OrderNumber}");
+                    editor.SelectBox("Order Status", "Status", GetStatusOptions());
+
+                    editor.Edit(_salesOrder);
+
+                    if (_salesOrder.Status == SalesOrderHeader.OrderStatus.Færdig)
+                    {
+                        _salesOrder.CompletionDate = DateTime.Now;
+                    }
+
+
+                    Database.Instance.UpdateSalesOrderHeader(_salesOrder);
                 }
-
-
-                Database.Instance.UpdateSalesOrderHeader(_salesOrder);
+                else
+                {
+                    throw new Exception("Du kan ikke ændre status på denne ordre");
+                }
             }
             else if (key.Key == ConsoleKey.F2)
             {
