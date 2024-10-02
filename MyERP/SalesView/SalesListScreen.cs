@@ -85,22 +85,21 @@ namespace MyERP.SalesView
 
             // Display the sales create screen
             Screen.Display(new SalesCreateScreen(newOrder));
+          
+            //try
+            //{
+            //    // Add the new sales order to the list page
 
-            try
-            {
-                // Add the new sales order to the list page
-                listPage.Add(newOrder);
-
-                // Display a message to the user
-                Console.WriteLine("Order successfully created.");
-                Console.ReadLine();
-            }
-            catch (Exception ex)
-            {
-                // Display an error message to the user
-                Console.WriteLine($"An error occurred: {ex.Message}");
-                Console.ReadLine();
-            }
+            //    // Display a message to the user
+            //    Console.WriteLine("Order successfully created.");
+            //    Console.ReadLine();
+            //}
+            //catch (Exception ex)
+            //{
+            //    // Display an error message to the user
+            //    Console.WriteLine($"An error occurred: {ex.Message}");
+            //    Console.ReadLine();
+            //}
         }
 
         // Method to print an invoice for a sales order

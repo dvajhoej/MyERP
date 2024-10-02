@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MyERP", "MyERP\MyERP.csproj
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LNE Unit test", "LNE Unit test\LNE Unit test.csproj", "{EABE0461-F211-4342-AFF2-BF3CA6DD2382}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TECHCOOL", "..\TECHCOOL\TECHCOOL.csproj", "{31CCA679-5C51-411C-AA42-FDBD3B960CD9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{EABE0461-F211-4342-AFF2-BF3CA6DD2382}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EABE0461-F211-4342-AFF2-BF3CA6DD2382}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EABE0461-F211-4342-AFF2-BF3CA6DD2382}.Release|Any CPU.Build.0 = Release|Any CPU
+		{31CCA679-5C51-411C-AA42-FDBD3B960CD9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{31CCA679-5C51-411C-AA42-FDBD3B960CD9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{31CCA679-5C51-411C-AA42-FDBD3B960CD9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{31CCA679-5C51-411C-AA42-FDBD3B960CD9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
