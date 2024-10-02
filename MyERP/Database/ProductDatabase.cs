@@ -128,6 +128,12 @@ namespace MyERP
                         // Commit the transaction
                         transaction.Commit();
                     }
+<<<<<<< HEAD
+=======
+                    
+                    transaction.Commit();
+                    Instance.products.Add(product);
+>>>>>>> 012bc92e9689e5e97bc8cbcb570b1c3506e4706c
                 }
                 catch (Exception ex)
                 {

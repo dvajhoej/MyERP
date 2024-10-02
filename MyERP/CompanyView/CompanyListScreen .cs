@@ -47,8 +47,12 @@ namespace MyERP.CompanyView
             // Draw the bottom border of the window
             WindowHelper.Bot(spaces);
 
+<<<<<<< HEAD
             // Add some empty lines for spacing
             for (int i = 0; i < 3; i++)
+=======
+            for (int i = 0; i < 4; i++)
+>>>>>>> 012bc92e9689e5e97bc8cbcb570b1c3506e4706c
             {
                 Console.WriteLine();
             }
@@ -65,7 +69,11 @@ namespace MyERP.CompanyView
         // Method to quit the screen
         void Quit(Company _)
         {
+<<<<<<< HEAD
             // Quit the screen
+=======
+
+>>>>>>> 012bc92e9689e5e97bc8cbcb570b1c3506e4706c
             Quit();
         }
 
@@ -87,14 +95,23 @@ namespace MyERP.CompanyView
                 int spaces = 40;
                 WindowHelper.Top(spaces);
                 Console.WriteLine("│{0,-40}│", $"{newCompany.CompanyName} oprettet");
+                Console.WriteLine("│{0,-40}│", "Tryk på en tast for at fortsætte");
                 WindowHelper.Bot(spaces);
                 Console.ReadKey();
             }
             catch (Exception ex)
             {
+<<<<<<< HEAD
                 // Display an error message to the user
                 Console.WriteLine("Fejl under oprettelse af virksomhed: " + ex.Message);
                 Console.WriteLine("Tryk på en tast for at fortsætte");
+=======
+                int spaces = 120;
+                WindowHelper.Top(spaces);
+                Console.WriteLine("│{0,-120}│", $"Fejl under oprettelse af virksomhed: " +  WindowHelper.Truncate(ex.Message, 70));
+                Console.WriteLine("│{0,-120}│", "Tryk på en tast for at fortsætte");
+                WindowHelper.Bot(spaces);
+>>>>>>> 012bc92e9689e5e97bc8cbcb570b1c3506e4706c
                 Console.ReadKey();
             }
         }
@@ -113,17 +130,30 @@ namespace MyERP.CompanyView
                 // Display a success message to the user
                 int spaces = 40;
                 WindowHelper.Top(spaces);
-                Console.WriteLine("│{0,-40}│", $"{selected.CompanyName} opdateret");
+                Console.WriteLine("│{0,-40}│", $"{selected.CompanyName} redigeret");
+                Console.WriteLine("│{0,-40}│", "Tryk på en tast for at fortsætte");
                 WindowHelper.Bot(spaces);
                 Console.ReadKey();
             }
             catch (Exception ex)
             {
+<<<<<<< HEAD
                 // Display an error message to the user
                 Console.WriteLine("Fejl under redigering af virksomhed: " + ex.Message);
                 Console.WriteLine("Tryk på en tast for at fortsætte");
                 Console.ReadKey();
             }
+=======
+                int spaces = 120;
+                WindowHelper.Top(spaces);
+                Console.WriteLine("│{0,-120}│", $"Fejl under redigering af virksomhed: " + WindowHelper.Truncate(ex.Message, 70));
+                Console.WriteLine("│{0,-120}│", "Tryk på en tast for at fortsætte");
+                WindowHelper.Bot(spaces);
+                Console.ReadKey();
+            }
+
+
+>>>>>>> 012bc92e9689e5e97bc8cbcb570b1c3506e4706c
         }
 
         // Method to delete a company
@@ -136,15 +166,21 @@ namespace MyERP.CompanyView
                     // Delete the company from the database
                     Database.Instance.DeleteCompanyById(selected.CompanyID);
 
+<<<<<<< HEAD
                     // Display a success message to the user
+=======
+>>>>>>> 012bc92e9689e5e97bc8cbcb570b1c3506e4706c
                     int spaces = 40;
+                    Console.SetCursorPosition(0, 7);
                     WindowHelper.Top(spaces);
                     Console.WriteLine("│{0,-40}│", $"{selected.CompanyName} slettet");
+                    Console.WriteLine("│{0,-40}│", "Tryk på en tast for at fortsætte");
                     WindowHelper.Bot(spaces);
                     Console.ReadKey();
                 }
                 catch (Exception ex)
                 {
+<<<<<<< HEAD
                     // Display an error message to the user
                     Console.WriteLine($"Fejl Under sletning af virksomhed: {ex.Message} ");
                     Console.WriteLine("Tryk på en tast for at fortsætte");
@@ -155,6 +191,28 @@ namespace MyERP.CompanyView
             {
                 // Display a message to the user if no company is selected
                 Console.WriteLine("Ingen virksomhed valgt");
+=======
+                    int spaces = 120;
+                    Console.SetCursorPosition(0, 7);
+                    WindowHelper.Top(spaces);
+                    Console.WriteLine("│{0,-120}│", $"Fejl Under sletning af virksomhed:{WindowHelper.Truncate(ex.Message, 70)}");
+                    Console.WriteLine("│{0,-120}│", "Tryk på en tast for at fortsætte");
+                    WindowHelper.Bot(spaces);
+                    Console.ReadKey();
+                }
+
+            }
+            else
+            {
+                int spaces = 60;
+                Console.SetCursorPosition(0, 7);
+                WindowHelper.Top(spaces);
+                Console.WriteLine("│{0,-60}│", "Ingen virksomhed valgt");
+                Console.WriteLine("│{0,-60}│", "Tryk på en tast for at fortsætte");
+                WindowHelper.Bot(spaces);
+                Console.ReadKey();
+
+>>>>>>> 012bc92e9689e5e97bc8cbcb570b1c3506e4706c
             }
         }
     }

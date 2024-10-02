@@ -55,9 +55,9 @@ namespace MyERP
                     }
 
                 }
-                string PriceShipping = "49";
+                double PriceShipping = 49;
                 string PriceDiscount = "0";
-                double PriceTotal = PriceSubTotal * 1.25;
+                double PriceTotal = PriceShipping + (PriceSubTotal * 1.25);
                 double PriceTax = PriceTotal - PriceSubTotal;
 
 
@@ -110,7 +110,7 @@ namespace MyERP
                     .Replace("{{OrderID}}", OrderID.ToString())
                     .Replace("{{PriceSubTotal}}", PriceSubTotal.ToString())
                     .Replace("{{PriceDiscount}}", PriceDiscount.ToString())
-                    .Replace("{{PriceShipping}}", PriceShipping)
+                    .Replace("{{PriceShipping}}", PriceShipping.ToString())
                     .Replace("{{PriceTax}}", PriceTax.ToString())
                     .Replace("{{PriceTotal}}", PriceTotal.ToString())
                     .Replace("{{SalesOrderLines}}", SalesOrderLines)

@@ -26,7 +26,16 @@ namespace MyERP.CompanyView
             // Create a new Form object to edit the Company object
             Form<Company> editor = new Form<Company>();
 
+<<<<<<< HEAD
             // Add text boxes to the form for editing company details
+=======
+            int spacer = 35;
+            WindowHelper.Top(spacer);
+            Console.WriteLine("│{0,-35}│", "Tryk Esc for at gemme");
+            WindowHelper.Bot(spacer);
+
+
+>>>>>>> 012bc92e9689e5e97bc8cbcb570b1c3506e4706c
             editor.TextBox("Virksomheds Navn", "CompanyName");
             editor.TextBox("Vej", "Street");
             editor.TextBox("Hus nummer", "HouseNumber");
@@ -46,7 +55,11 @@ namespace MyERP.CompanyView
             // Edit the Company object using the form
             editor.Edit(_company);
 
+<<<<<<< HEAD
             // Quit the screen
+=======
+
+>>>>>>> 012bc92e9689e5e97bc8cbcb570b1c3506e4706c
             this.Quit();
         }
     }

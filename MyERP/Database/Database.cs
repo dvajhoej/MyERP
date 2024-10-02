@@ -1,6 +1,7 @@
 ﻿using Google.Protobuf.Collections;
 using System.Text;
 using System.Threading.Tasks;
+using TECHCOOL.UI;
 
 namespace MyERP
 {
@@ -37,7 +38,11 @@ namespace MyERP
         // Constructor to initialize the lists of data
         public Database()
         {
+<<<<<<< HEAD
             // Initialize the lists of data
+=======
+
+>>>>>>> 012bc92e9689e5e97bc8cbcb570b1c3506e4706c
             persons = new List<Person>();
             companies = new List<Company>();
             products = new List<Product>();
@@ -45,6 +50,7 @@ namespace MyERP
             customers = new List<Customer>();
             salesOrderLines = new List<SalesOrderLine>();
             invoices = new List<Invoice>();
+<<<<<<< HEAD
 
             // Call methods to get all data from the database
             GetAllInvoices();
@@ -53,9 +59,17 @@ namespace MyERP
             GetAllProducts();
             GetAllSalesOrderHeaders();
             GetAllSalesOrderLines();
+=======
+>>>>>>> 012bc92e9689e5e97bc8cbcb570b1c3506e4706c
         }
+            
 
+<<<<<<< HEAD
         // Public properties to get the lists of data
+=======
+  
+
+>>>>>>> 012bc92e9689e5e97bc8cbcb570b1c3506e4706c
         public List<Person> Persons
         {
             get { return persons; }

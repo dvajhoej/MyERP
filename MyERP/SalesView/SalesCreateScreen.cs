@@ -40,6 +40,11 @@ namespace MyERP.SalesView
                     Customer newCustomer = new Customer();
                     Form<Customer> customerEditor = new Form<Customer>();
 
+                    int spacer = 35;
+                    WindowHelper.Top(spacer);
+                    Console.WriteLine("│{0,-35}│", "Tryk Esc for at gemme");
+                    WindowHelper.Bot(spacer);
+
                     customerEditor.TextBox("Fornavn", "FirstName");
                     customerEditor.TextBox("Efternavn", "LastName");
                     customerEditor.TextBox("Telefon", "Phone");
