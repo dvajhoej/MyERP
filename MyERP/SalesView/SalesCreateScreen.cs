@@ -50,8 +50,65 @@ namespace MyERP.SalesView
                 cust = CreateNewCustomer();
                 if (cust == null)
                 {
+<<<<<<< HEAD
+                    // Create a new Customer object
+                    Customer newCustomer = new Customer();
+
+                    // Create a new Form object to edit the customer details
+                    Form<Customer> customerEditor = new Form<Customer>();
+
+                    // Define the layout of the form
+                    Console.Clear();
+                    int spacer = 35;
+                    WindowHelper.Top(spacer);
+                    Console.WriteLine("│{0,-35}│", "Tryk Esc for at gemme");
+                    WindowHelper.Bot(spacer);
+
+                    // Add fields to the form to edit the customer details
+                    customerEditor.TextBox("Fornavn", "FirstName");
+                    customerEditor.TextBox("Efternavn", "LastName");
+                    customerEditor.TextBox("Telefon", "Phone");
+                    customerEditor.TextBox("Email", "Email");
+                    customerEditor.TextBox("Vej", "Street");
+                    customerEditor.TextBox("Husnummer", "HouseNumber");
+                    customerEditor.TextBox("Postnummer", "ZipCode");
+                    customerEditor.TextBox("By", "City");
+                    customerEditor.TextBox("Land", "Country");
+
+                    // Edit the customer details using the form
+                    bool success = customerEditor.Edit(newCustomer);
+
+                    // Check if the customer details were edited successfully
+                    if (success)
+                    {
+                        // Set the customer ID and last purchase date
+                        newCustomer.CustomerID = customerID;
+                        newCustomer.LastPurchaseDate = DateTime.Now;
+
+                        // Display a message to the user
+                        Console.WriteLine($"Ordre skabt for {newCustomer.FullName}.");
+
+                        // Insert the new customer into the database
+                        Database.Instance.InsertCustomer(newCustomer);
+
+                        // Set the customer number of the sales order
+                        _salesOrder.CustomerNumber = Database.Instance.GetCustomerbyID(newCustomer.CustomerID).CustomerID;
+                    }
+                    else
+                    {
+                        // Display an error message if the customer details were not edited successfully
+                        Console.WriteLine("Kunde oprettelse annulleret.");
+                        return;
+                    }
+                }
+                else
+                {
+                    // Display an error message if the user does not want to create a new customer
+                    Console.WriteLine("Ordre oprettelse annulleret.");
+=======
                     // User canceled customer creation
                     ShowError("Kunde oprettelse annulleret.");
+>>>>>>> 5231a982e217c81f667aacb8684f7bd67d605e4d
                     return;
                 }
             }
