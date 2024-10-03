@@ -90,7 +90,7 @@ namespace MyERP.SalesView
                     if (success)
                     {
                         // Set the customer ID and last purchase date
-                        //newCustomer.CustomerID = customerID;
+                        newCustomer.CustomerID = customerID;
                         newCustomer.LastPurchaseDate = DateTime.Now;
 
                         // Display a message to the user
