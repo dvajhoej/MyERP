@@ -85,5 +85,6 @@ namespace LNE_Unit_test
             // Assert
             Assert.Equal("Tom Smith, Email: tom.smith@example.com, Phone: 1122334455, Customer Number: 2, Last Purchase: ", result);
         }
+
     }
 }

@@ -1,4 +1,7 @@
-﻿namespace MyERP
+﻿using Google.Protobuf.WellKnownTypes;
+using System.Globalization;
+
+namespace MyERP
 {
     // Define a class Customer to represent a customer
     public class Customer : Person
@@ -24,8 +27,12 @@
         // Override the ToString method to provide a string representation of the customer
         public override string ToString()
         {
+            string lastPurchase = LastPurchaseDate.HasValue
+        ? LastPurchaseDate.Value.ToString("dd-MM-yyyy", CultureInfo.InvariantCulture)
+        : "";
             // Return a string that includes the customer's details and the last purchase date
-            return $"{base.ToString()}, Customer Number: {CustomerID}, Last Purchase: {LastPurchaseDate?.ToShortDateString()}";
+            return $"{base.ToString()}, Customer Number: {CustomerID}, Last Purchase: {lastPurchase}";
         }
+
     }
 }
