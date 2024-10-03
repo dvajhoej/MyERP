@@ -11,6 +11,8 @@ namespace MyERP
         public DateTime? CompletionDate { get; set; }
         public int CustomerNumber { get; set; }
         public OrderStatus Status { get; set; }
+        public Customer Customer { get; set; }
+        public double OrderAmount { get; set; }
 
         // Private field to store the order lines
         private List<SalesOrderLine> OrderLines { get; set; } = new List<SalesOrderLine>();
@@ -19,14 +21,11 @@ namespace MyERP
         public decimal TotalPrice { get; set; }
 
         // Public property to get the order amount
-        public double OrderAmount
-        {
-            get
-            {
-                // Calculate the order amount by summing the amounts of all order lines
-                return OrderLines.Sum(line => line.Amount);
-            }
-        }
+        
+
+        // Backing field for the OrderAmount property
+        private double _orderAmount;
+
 
         // Default constructor
         public SalesOrderHeader()

@@ -114,7 +114,7 @@ namespace MyERP
                     .Replace("{{CustomerName}}", CustomerName)
                     .Replace("{{CustomerAddress}}", CustomerAddress)
                     .Replace("{{CustomerEmail}}", CustomerEmail)
-                    .Replace(" {{CustomerPhone}}", CustomerPhone)
+                    .Replace("{{CustomerPhone}}", CustomerPhone)
                     .Replace("{{CustomerID}}", CustomerID.ToString())
                     .Replace("{{InvoiceDate}}", InvoiceDate.ToShortDateString())
                     .Replace("{{OrderID}}", OrderID.ToString())
