@@ -65,8 +65,9 @@ namespace MyERP
                 }
                 double PriceShipping = 49;
                 string PriceDiscount = "0";
-                double PriceTotal = PriceShipping + (PriceSubTotal * 1.25);
+                double PriceTotal = PriceSubTotal * 1.25;
                 double PriceTax = PriceTotal - PriceSubTotal;
+                double TotalWithShipping = PriceTotal + PriceShipping;
 
                 // Create a StringBuilder to build the HTML for the sales order lines
                 var stringBuilder = new StringBuilder();
@@ -122,7 +123,7 @@ namespace MyERP
                     .Replace("{{PriceDiscount}}", PriceDiscount.ToString())
                     .Replace("{{PriceShipping}}", PriceShipping.ToString())
                     .Replace("{{PriceTax}}", PriceTax.ToString())
-                    .Replace("{{PriceTotal}}", PriceTotal.ToString())
+                    .Replace("{{PriceTotal}}", TotalWithShipping.ToString())
                     .Replace("{{SalesOrderLines}}", SalesOrderLines)
                     .Replace("{{DueDate}}", DueDate.ToShortDateString())
                     .Replace("{{CompanyAddress2}}", CompanyAddress2);

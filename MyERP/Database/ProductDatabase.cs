@@ -33,7 +33,17 @@ namespace MyERP
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 // Define the query to get all products
-                string query = "SELECT productID, name, description, sellingPrice, purchasePrice, location, quantity, unit, itemnumber FROM Products";
+                string query =      " SELECT " +
+                                    "           productID," +
+                                    "           name," +
+                                    "           description," +
+                                    "           sellingPrice," +
+                                    "           purchasePrice," +
+                                    "           location," +
+                                    "           quantity," +
+                                    "           unit," +
+                                    "           itemnumber" +
+                                    " FROM Products";
 
                 // Create a new SqlCommand object
                 SqlCommand command = new SqlCommand(query, connection);
@@ -170,14 +180,14 @@ namespace MyERP
                             {
                                 // Define the query to update a product
                                 string updateQuery = "UPDATE Products SET " +
-                                                     "itemnumber = @ItemNumber, " +
-                                                     "name = @Name, " +
-                                                     "description = @Description, " +
-                                                     "sellingPrice = @SellingPrice, " +
-                                                     "purchasePrice = @PurchasePrice, " +
-                                                     "location = @Location, " +
-                                                     "quantity = @Quantity, " +
-                                                     "unit = @Unit " +
+                                                         "itemnumber = @ItemNumber, " +
+                                                         "name = @Name, " +
+                                                         "description = @Description, " +
+                                                         "sellingPrice = @SellingPrice, " +
+                                                         "purchasePrice = @PurchasePrice, " +
+                                                         "location = @Location, " +
+                                                         "quantity = @Quantity, " +
+                                                         "unit = @Unit " +
                                                      "WHERE productID = @ProductID;";
 
                                 // Create a new SqlCommand object
